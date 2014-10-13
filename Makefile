@@ -1,4 +1,4 @@
-Sources=main.cpp classes.cpp Ray.cpp Pixel.cpp
+Sources=main.cpp classes.cpp Ray.cpp Pixel.cpp Light.cpp
 Executable=CornellBox
 
 CFlags=-c -Wall -g -Iinc

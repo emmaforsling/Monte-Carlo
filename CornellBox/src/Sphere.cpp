@@ -11,22 +11,24 @@
 */
 
 /* Default Constructor */
-Sphere::Sphere() {
-	
+Sphere::Sphere()
+{	
 	//TODO: Write code 
 }
 
 /* Destructor */
-Sphere::~Sphere() {
-	
+Sphere::~Sphere()
+{	
 	//TODO: Write code 
 }
 
-glm::vec3 Sphere::calculateIntersection() {
+glm::vec3 Sphere::calculateIntersection()
+{
 	//TODO: Write code
 	return glm::vec3(0.0,0.0,0.0);
 }
 
-void Sphere::calculateChildRays() {
+void Sphere::calculateChildRays()
+{
 
 }

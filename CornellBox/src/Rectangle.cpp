@@ -8,23 +8,25 @@
 */
 
 /* Default Constructor */
-Rectangle::Rectangle() {
-	
+Rectangle::Rectangle()
+{
 	//TODO: Write code 
 }
 
 /* Destructor */
-Rectangle::~Rectangle() {
-	
+Rectangle::~Rectangle()
+{
 	//TODO: Write code 
 }
 
 
-glm::vec3 Rectangle::calculateIntersection() {
+glm::vec3 Rectangle::calculateIntersection()
+{
 	return glm::vec3(0.0,0.0,0.0);
 }
 
 
-void calculateChildRays() { // only called on cube
+void calculateChildRays()
+{
 
 }					

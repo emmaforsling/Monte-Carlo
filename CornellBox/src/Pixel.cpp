@@ -9,19 +9,19 @@
 */
 
 /* Default Constructor */
-Pixel::Pixel() {
-	
+Pixel::Pixel()
+{
 	//TODO: Write code 
 }
 
 /* Destructor */
-Pixel::~Pixel() {
-	
+Pixel::~Pixel()
+{
 	//TODO: Write code 
 }
 
 /* Should also track the rays within the scene (tree structure?) */
-void Pixel::shootRays() {
-
+void Pixel::shootRays()
+{
 	//TODO: Write code 
 }

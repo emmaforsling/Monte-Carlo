@@ -22,11 +22,12 @@ Rectangle::~Rectangle()
 
 glm::vec3 Rectangle::calculateIntersection()
 {
+	//TODO: Write code
 	return glm::vec3(0.0,0.0,0.0);
 }
 
 
 void calculateChildRays()
 {
-
+	//TODO: Write code
 }					

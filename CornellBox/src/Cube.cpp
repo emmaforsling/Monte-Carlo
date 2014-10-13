@@ -29,10 +29,10 @@ Cube::~Cube()
 */
 void Cube::initializeRectangles()
 {
-
+	//TODO: Write code
 }				
 
 void Cube::calculateChildRays()
 {
-
+	//TODO: Write code
 }

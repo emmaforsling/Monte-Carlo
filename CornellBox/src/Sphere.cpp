@@ -30,5 +30,5 @@ glm::vec3 Sphere::calculateIntersection()
 
 void Sphere::calculateChildRays()
 {
-
+	//TODO: Write code
 }

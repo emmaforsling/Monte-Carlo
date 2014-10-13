@@ -26,11 +26,12 @@ Wall::~Wall()
 	
 void Wall::initializeRectangles()
 {
-
+	//TODO: Write code
 }
 
 /* either one intersection or none (ray leaving) */				
 glm::vec3 Wall::calculateIntersection()
 {
+	//TODO: Write code
 	return glm::vec3(0,0,0);
 }

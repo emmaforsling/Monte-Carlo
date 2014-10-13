@@ -1,4 +1,4 @@
-Sources=main.cpp classes.cpp Ray.cpp Pixel.cpp Sphere.cpp Rectangle.cpp Cube.cpp
+Sources=main.cpp classes.cpp Ray.cpp Pixel.cpp Sphere.cpp Rectangle.cpp Cube.cpp Light.cpp
 Executable=CornellBox
 
 CFlags=-c -Wall -g -Iinc

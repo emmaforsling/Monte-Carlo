@@ -18,6 +18,9 @@ CExecutable=$(addprefix $(BinDir),$(Executable))
 
 all: $(CSources) $(CExecutable)
 
+run: $(CExecutable) 
+	./$(addprefix $(BinDir),$(Executable))
+
 $(CExecutable): $(CObjects)
 	$(CC) $(LDFlags) $(CObjects) -o $@
 

@@ -30,8 +30,8 @@ Ray::~Ray() {
 */
 glm::vec3 Ray::calculateColor() {
 
-	return glm::vec3(0.0, 0.0, 0.0);
 	//TODO: Write Code
+	return glm::vec3(0.0, 0.0, 0.0);
 }
 
 

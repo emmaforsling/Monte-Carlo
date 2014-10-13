@@ -1,6 +1,9 @@
 #ifndef PIXEL_H
 #define PIXEL_H value
 
+#include "glm/glm.hpp"
+#include "Ray.h"
+
 class Pixel
 {
 public:

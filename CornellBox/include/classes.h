@@ -13,7 +13,6 @@
 * - "something else" in OSX
 **/
 
-#include "glm/glm.hpp"
 
 #include "Ray.h"
 #include "Pixel.h"

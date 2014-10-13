@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H value
 
+#include "glm/glm.hpp"
+
 class Camera
 {
 public:

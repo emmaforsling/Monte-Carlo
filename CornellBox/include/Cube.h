@@ -1,6 +1,8 @@
 #ifndef CUBE_H
 #define CUBE_H value
 
+#include "glm/glm.hpp"
+
 class Cube
 {
 public:

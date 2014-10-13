@@ -1,6 +1,8 @@
 #ifndef WALL_H
 #define WALL_H value
 
+#include "glm/glm.hpp"
+
 class Wall
 {
 public:

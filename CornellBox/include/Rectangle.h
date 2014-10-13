@@ -1,6 +1,8 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H value
 
+#include "glm/glm.hpp"
+
 class Rectangle
 {
 public:

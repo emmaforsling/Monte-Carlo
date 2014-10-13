@@ -1,6 +1,8 @@
 #ifndef SPHERE_H
 #define SPHERE_H value
 
+#include "glm/glm.hpp"
+
 class Sphere
 {
 public:

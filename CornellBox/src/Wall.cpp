@@ -10,7 +10,7 @@
 
 /* Default Constructor */
 Wall::Wall()
-{	
+{
 	//TODO: Write code 
 }
 
@@ -32,5 +32,5 @@ void Wall::initializeRectangles()
 /* either one intersection or none (ray leaving) */				
 glm::vec3 Wall::calculateIntersection()
 {
-	
-}			
+	return glm::vec3(0,0,0);
+}

@@ -41,4 +41,3 @@ void Ray::calculateLocalLightingContribution()
 {
 	//TODO: Write Code
 }
-

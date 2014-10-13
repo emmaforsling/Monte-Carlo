@@ -2,6 +2,7 @@
 #define CUBE_H value
 
 #include "glm/glm.hpp"
+#include "Rectangle.h"
 
 class Cube
 {

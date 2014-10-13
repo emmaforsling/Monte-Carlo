@@ -1,4 +1,4 @@
-#include "../include/Pixel.h"
+#include "../include/Sphere.h"
 
 /* 	
 	Class Sphere  

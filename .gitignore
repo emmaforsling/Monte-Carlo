@@ -4,5 +4,6 @@
 Thumbs.db
 *.m~
 /CornellBox/bin/CornellBox
+/CornellBox/bin/CornellBox.exe
 /CornellBox/obj/*.o
 obj/*.o

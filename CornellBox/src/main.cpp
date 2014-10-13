@@ -1,7 +1,8 @@
 #include <iostream>
 #include "../include/classes.h"
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[])
+{
 	// char* argument1 = argv[0];
 	// int argument2 = argc;
 	
@@ -12,5 +13,3 @@ int main(int argc, char *argv[]){
 
 	//Write to file
 }
-
-

@@ -12,14 +12,13 @@
 */
 
 /* Default Constructor */
-Cube::Cube() {
-	
+Cube::Cube()
+{
 	//TODO: Write code 
 }
 
 /* Destructor */
-Cube::~Cube() {
-	
+Cube::~Cube(){
 	//TODO: Write code 
 }
 
@@ -27,10 +26,12 @@ Cube::~Cube() {
 	Sets corners of rectangles to (0,0,0), (1,0,0), (0,1,0) etc.
 	and multiplies them by size (float) and adds the position (glm::vec3))
 */
-void Cube::initializeRectangles() {
+void Cube::initializeRectangles()
+{
 
 }				
 
-void Cube::calculateChildRays() {
+void Cube::calculateChildRays()
+{
 
 }

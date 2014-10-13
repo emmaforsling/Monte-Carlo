@@ -13,23 +13,22 @@
 */
 
 /* Default Constructor */
-Ray::Ray() {
-	
+Ray::Ray()
+{
 	//TODO: Write code 
-
 }
 
 /* Destructor */
-Ray::~Ray() {
-
+Ray::~Ray()
+{
 	//TODO: Write Code
 }
 
 /* 	Combines color contributions from childNodes and
 	 a local lighting model (Phong's) to a single RGB vector 
 */
-glm::vec3 Ray::calculateColor() {
-
+glm::vec3 Ray::calculateColor()
+{
 	//TODO: Write Code
 	return glm::vec3(0.0, 0.0, 0.0);
 }
@@ -38,8 +37,8 @@ glm::vec3 Ray::calculateColor() {
 /* Computes Le(x,theta) for the point where a ray
 	intersects a surface
 */
-void Ray::calculateLocalLightingContribution() {
-
+void Ray::calculateLocalLightingContribution()
+{
 	//TODO: Write Code
 }
 

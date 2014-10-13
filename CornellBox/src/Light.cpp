@@ -1,6 +1,5 @@
 #include "../include/Light.h"
 
-
 Light::Light()
 {
 	

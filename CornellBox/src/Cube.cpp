@@ -18,7 +18,8 @@ Cube::Cube()
 }
 
 /* Destructor */
-Cube::~Cube(){
+Cube::~Cube()
+{
 	//TODO: Write code 
 }
 

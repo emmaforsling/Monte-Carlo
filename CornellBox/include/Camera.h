@@ -2,6 +2,7 @@
 #define CAMERA_H value
 
 #include "glm/glm.hpp"
+#include "Pixels.h"
 
 class Camera
 {

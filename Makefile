@@ -3,9 +3,9 @@ Executable=CornellBox
 
 CFlags=-c -Wall -g -Iinc
 LDFlags=
-ObjectDir=obj/
-SourceDir=src/
-BinDir=bin/
+ObjectDir=CornellBox/obj/
+SourceDir=CornellBox/src/
+BinDir=CornellBox/bin/
 
 CC=g++
 RM=rm

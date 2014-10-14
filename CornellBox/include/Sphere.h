@@ -7,6 +7,7 @@ class Sphere
 {
 public:
 	Sphere();
+	Sphere(glm::vec3 pos, float rad, float trans, float refract);
 	~Sphere();
 	glm::vec3 calculateIntersection();
 	void calculateChildRays();

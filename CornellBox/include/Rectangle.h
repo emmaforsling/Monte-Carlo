@@ -11,8 +11,10 @@ public:
 	glm::vec3 calculateIntersection();
 	void calculateChildRays();					// only called on cube
 
-private:
 	glm::vec3 positionsOfCorners[4];
+
+private:
+	
 };
 
 #endif

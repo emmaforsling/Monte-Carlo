@@ -8,6 +8,7 @@ class Cube
 {
 public:
 	Cube();
+	Cube(glm::vec3 _position, float _size, float _transparency, float _refractiveIndex);
 	~Cube();
 	void initializeRectangles();				// sets corners of rectangles to (0,0,0),
 												// (1,0,0), (0,1,0) etc. and multiplies

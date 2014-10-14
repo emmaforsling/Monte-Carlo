@@ -2,11 +2,14 @@
 #define WALL_H value
 
 #include "glm/glm.hpp"
+#include "Rectangle.h"
+#include <iostream>
 
 class Wall
 {
 public:
 	Wall();
+	Wall(glm::vec3 _position, float _size);
 	~Wall();
 	void initializeRectangles();				// sets corners of rectangles to (0,0,0),
 												// (1,0,0), (0,1,0) etc. and multiplies
@@ -17,6 +20,7 @@ public:
 private:
 	glm::vec3 position;
 	float size;
+	Rectangle* walls[5];
 };
 
 #endif

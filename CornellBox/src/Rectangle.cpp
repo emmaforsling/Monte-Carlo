@@ -10,7 +10,10 @@
 /* Default Constructor */
 Rectangle::Rectangle()
 {
-	//TODO: Write code 
+	positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0);
+	positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0);
+	positionsOfCorners[2] = glm::vec3(0.0, 0.0, 0.0);
+	positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0);
 }
 
 /* Destructor */

@@ -1,4 +1,11 @@
 #include "../include/Light.h"
+/* Class Light
+	private:
+	- Rectangle* sumthin;
+	- float radiance;
+	- glm::vec3 position;
+	- float size;
+*/
 
 /* Default constructor */
 Light::Light()

@@ -25,17 +25,25 @@ Camera::Camera()
 	pixels = nullptr; 
 }
 
-Camera::Camera(glm::vec3 _position, glm::vec3 _direction, float _viewPlaneDistance, int _resolutionX, int _resolutionY, int _raysPerPixel)
+Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutionY, int _raysPerPixel)
 {	
-	position = _position - _direction * _viewPlaneDistance;
-	direction = _direction;
-	viewPlaneDistance = _viewPlaneDistance;
+	direction = glm::vec3(0.0, 0.0, -1.0);
+	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
+	
+	position = oppositeWallCenterPosition + direction * _eyeDistance;
+	
+	viewPlaneSizeX = 1;
+	viewPlaneSizeY = 1;
+
+	viewPlaneDistance = _eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
+
 	resolutionX = _resolutionX;
 	resolutionY = _resolutionY;
 	raysPerPixel = _raysPerPixel;
 	pixels = new Pixel[resolutionX * resolutionY]();
 	
 	std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
+	std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
 }
 
 /* Destructor */

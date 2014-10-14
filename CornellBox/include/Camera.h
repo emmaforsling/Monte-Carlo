@@ -3,12 +3,13 @@
 
 #include "glm/glm.hpp"
 #include "Pixel.h"
+#include "Wall.h"
 
 class Camera
 {
 public:
 	Camera();
-	Camera(glm::vec3 _position, glm::vec3 _direction, float _viewPlaneDistance, int _resolutionX, int _resolutionY, int _raysPerPixel);
+	Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutionY, int _raysPerPixel);
 	~Camera();
 	void renderImage();							// Loops over all pixels and computes
 												// their values.
@@ -20,6 +21,8 @@ private:
 	glm::vec3 position;
 	glm::vec3 direction;
 	float viewPlaneDistance;
+	int viewPlaneSizeX;
+	int viewPlaneSizeY;
 	int resolutionX;
 	int resolutionY;
 	int raysPerPixel;

@@ -8,6 +8,7 @@ class Camera
 {
 public:
 	Camera();
+	Camera(glm::vec3 _position, glm::vec3 _direction, float _viewPlaneDistance, int _resolutionX, int _resolutionY, int _raysPerPixel);
 	~Camera();
 	void renderImage();							// Loops over all pixels and computes
 												// their values.

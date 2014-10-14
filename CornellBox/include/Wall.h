@@ -17,10 +17,11 @@ public:
 												// position (glm::vec3)
 	glm::vec3 calculateIntersection();			// either one intersection or none (ray leaving)
 
+	Rectangle* walls[5];
+
 private:
 	glm::vec3 position;
 	float size;
-	Rectangle* walls[5];
 };
 
 #endif

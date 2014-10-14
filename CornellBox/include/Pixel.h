@@ -8,6 +8,7 @@ class Pixel
 {
 public:
 	Pixel();
+	Pixel(int raysPerPixel);
 	~Pixel();
 	void shootRays();							// Should also track the rays
 												// witin the scene (tree structure?)

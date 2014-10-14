@@ -48,41 +48,47 @@ Wall::~Wall()
 	
 void Wall::initializeRectangles()
 {
+	/*
+	   3 -- 2
+	   |    |
+	   0 -- 1
+	*/
 	walls[0] = new Rectangle();		//left
-	walls[0]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
-	walls[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, size) + position;
+	walls[0]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
+	walls[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0) + position;
 	walls[0]->positionsOfCorners[2] = glm::vec3(0.0, size, 0.0) + position;
 	walls[0]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
 
 	walls[1] = new Rectangle();		//up
 	walls[1]->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
-	walls[1]->positionsOfCorners[1] = glm::vec3(0.0, size, size) + position;
+	walls[1]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
 	walls[1]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
-	walls[1]->positionsOfCorners[3] = glm::vec3(size, 0.0, size) + position;
+	walls[1]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
 
 	walls[2] = new Rectangle();		//right
-	walls[2]->positionsOfCorners[0] = glm::vec3(size, size, size) + position;
-	walls[2]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
-	walls[2]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
-	walls[2]->positionsOfCorners[3] = glm::vec3(size, 0.0, size) + position;
-
+	walls[2]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
+	walls[2]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
+	walls[2]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
+	walls[2]->positionsOfCorners[3] = glm::vec3(size, size, 0.0) + position;
+	
 	walls[3] = new Rectangle();		//down
-	walls[3]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
+	walls[3]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
 	walls[3]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
-	walls[3]->positionsOfCorners[2] = glm::vec3(0.0, 0.0, size) + position;
+	walls[3]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[3]->positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0) + position;
 
 	walls[4] = new Rectangle();		//back
 	walls[4]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
-	walls[4]->positionsOfCorners[1] = glm::vec3(0.0, size, 0.0) + position;
+	walls[4]->positionsOfCorners[1] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[2] = glm::vec3(size, size, 0.0) + position;
-	walls[4]->positionsOfCorners[3] = glm::vec3(size, 0.0, 0.0) + position;
+	walls[4]->positionsOfCorners[3] = glm::vec3(0.0, size, 0.0) + position;
 
 	std::cout << "Nu har jag initialiserat alla sidor på rummet! Titta så fina:" << std::endl;
 	for(int i=0; i<5; i++)
 	{
 		for(int j=0; j<4; j++)
 		{
+			std::cout << "Vägg " << j << std::endl;
 			std::cout << walls[i]->positionsOfCorners[j].x << " " << walls[i]->positionsOfCorners[j].y << " " << walls[i]->positionsOfCorners[j].z << std::endl;
 		}
 	} 

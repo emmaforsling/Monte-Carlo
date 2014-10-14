@@ -48,6 +48,7 @@ Cube::Cube(glm::vec3 _position, float _size, float _transparency, float _refract
 /* Destructor */
 Cube::~Cube()
 {
+	
 	//TODO: Write code 
 }
 
@@ -57,41 +58,48 @@ Cube::~Cube()
 */
 void Cube::initializeRectangles()
 {
+	/*
+	   3 -- 2
+	   |    |
+	   0 -- 1
+	*/
 	sides[0] = new Rectangle();		//left
-	sides[0]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
-	sides[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, size) + position;
+	sides[0]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
+	sides[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0) + position;
 	sides[0]->positionsOfCorners[2] = glm::vec3(0.0, size, 0.0) + position;
 	sides[0]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
 
 	sides[1] = new Rectangle();		//up
 	sides[1]->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
-	sides[1]->positionsOfCorners[1] = glm::vec3(0.0, size, size) + position;
+	sides[1]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
 	sides[1]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
-	sides[1]->positionsOfCorners[3] = glm::vec3(size, 0.0, size) + position;
+	sides[1]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
 
 	sides[2] = new Rectangle();		//right
-	sides[2]->positionsOfCorners[0] = glm::vec3(size, size, size) + position;
-	sides[2]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
-	sides[2]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
-	sides[2]->positionsOfCorners[3] = glm::vec3(size, 0.0, size) + position;
-
+	sides[2]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
+	sides[2]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
+	sides[2]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
+	sides[2]->positionsOfCorners[3] = glm::vec3(size, size, 0.0) + position;
+	
 	sides[3] = new Rectangle();		//down
-	sides[3]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
+	sides[3]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
 	sides[3]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
-	sides[3]->positionsOfCorners[2] = glm::vec3(0.0, 0.0, size) + position;
+	sides[3]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
 	sides[3]->positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0) + position;
 
 	sides[4] = new Rectangle();		//back
 	sides[4]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
-	sides[4]->positionsOfCorners[1] = glm::vec3(0.0, size, 0.0) + position;
+	sides[4]->positionsOfCorners[1] = glm::vec3(size, 0.0, 0.0) + position;
 	sides[4]->positionsOfCorners[2] = glm::vec3(size, size, 0.0) + position;
-	sides[4]->positionsOfCorners[3] = glm::vec3(size, 0.0, 0.0) + position;
+	sides[4]->positionsOfCorners[3] = glm::vec3(0.0, size, 0.0) + position;
 
 	sides[5] = new Rectangle();		//front
-	sides[5]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
-	sides[5]->positionsOfCorners[1] = glm::vec3(0.0, size, size) + position;
-	sides[5]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
-	sides[5]->positionsOfCorners[3] = glm::vec3(size, 0.0, size) + position;
+	sides[5]->positionsOfCorners[0] = glm::vec3(size, 0.0, size) + position;
+	sides[5]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, size) + position;
+	sides[5]->positionsOfCorners[2] = glm::vec3(0.0, size, size) + position;
+	sides[5]->positionsOfCorners[3] = glm::vec3(size, size, size) + position;
+	
+
 
 	std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
 	for(int i=0; i<6; i++)

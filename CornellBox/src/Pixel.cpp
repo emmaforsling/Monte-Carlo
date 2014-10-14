@@ -11,12 +11,20 @@
 /* Default Constructor */
 Pixel::Pixel()
 {
-	//TODO: Write code 
+	rays = nullptr;
+	colorOfPixel = glm::vec3(0.0,0.0,0.0);		//black to begin with 
+}
+
+Pixel::Pixel(int raysPerPixel)
+{
+	rays = new Ray[raysPerPixel]();
+	colorOfPixel = glm::vec3(0.0,0.0,0.0);		//black to begin with 
 }
 
 /* Destructor */
 Pixel::~Pixel()
 {
+	delete[] rays;
 	//TODO: Write code 
 }
 

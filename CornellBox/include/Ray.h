@@ -16,6 +16,9 @@ public:
 	void calculateLocalLightingContribution();	// computes Le(x,theta) for the
 												// point where a ray intersects
 												// a surface.
+	glm::vec3 getStartingPoint();
+	glm::vec3 getDirection();
+	bool isInsideObject();
 
 private:
 	glm::vec3 startingPoint;

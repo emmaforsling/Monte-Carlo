@@ -41,7 +41,8 @@ Ray::~Ray()
 	delete childNodes;
 }
 
-/* 	Combines color contributions from childNodes and
+/* 	
+	Combines color contributions from childNodes and
 	a local lighting model (Phong's) to a single RGB vector 
 */
 glm::vec3 Ray::calculateColor()
@@ -49,6 +50,30 @@ glm::vec3 Ray::calculateColor()
 	// TODO: Write Code
 	// Track ray through its children and blend final color.
 	return glm::vec3(0.0, 0.0, 0.0);
+}
+
+/*
+	Returns the startingPoint
+*/
+glm::vec3 Ray::getStartingPoint()
+{
+	return startingPoint;
+}
+
+/*
+	Returns the startingPoint
+*/
+glm::vec3 Ray::getDirection()
+{
+	return direction;
+}
+
+/*
+	Returns true/false 
+*/
+bool Ray::isInsideObject()
+{
+
 }
 
 

@@ -7,7 +7,7 @@ class Sphere
 {
 public:
 	Sphere();
-	Sphere(glm::vec3 pos, float rad, float trans, float refract);
+	Sphere(glm::vec3 _position, float _radius, bool _transparency, float _refractiveIndex);
 	~Sphere();
 	glm::vec3 calculateIntersection();
 	void calculateChildRays();
@@ -15,8 +15,8 @@ public:
 private:
 	glm::vec3 position;
 	float radius;
-	float transparency;
-	float refractiveIndex;
+	bool transparency;			//true = transparent, false = not transparent
+	float refractiveIndex;		//glass = 1.5, air = 1.0
 };
 
 #endif

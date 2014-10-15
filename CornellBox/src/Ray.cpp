@@ -46,12 +46,13 @@ Ray::~Ray()
 */
 glm::vec3 Ray::calculateColor()
 {
-	//TODO: Write Code
+	// TODO: Write Code
+	// Track ray through its children and blend final color.
 	return glm::vec3(0.0, 0.0, 0.0);
 }
 
 
-/* Computes Le(x,theta) for the point where a ray
+/* 	Computes Le(x,theta) for the point where a ray
 	intersects a surface
 */
 void Ray::calculateLocalLightingContribution()

@@ -19,13 +19,14 @@ Camera::Camera()
 	position = glm::vec3(0.0,0.0,0.0);
 	direction = glm::vec3(0.0,0.0,0.0);
 	viewPlaneDistance = 0.0;
-	resolutionX = 0;
-	resolutionY = 0;
 	raysPerPixel = 0;
-	pixels = nullptr; 
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		pixels[i] = nullptr;
+	}
 }
 
-Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutionY, int _raysPerPixel)
+Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 {	
 	direction = glm::vec3(0.0, 0.0, -1.0);
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
@@ -37,10 +38,11 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutio
 
 	viewPlaneDistance = _eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
 
-	resolutionX = _resolutionX;
-	resolutionY = _resolutionY;
 	raysPerPixel = _raysPerPixel;
-	pixels = new Pixel[resolutionX * resolutionY]();
+		for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		pixels[i] = new Pixel(raysPerPixel);
+	}
 	
 	std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
 	std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
@@ -49,7 +51,10 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutio
 /* Destructor */
 Camera::~Camera()
 {
-	delete[] pixels;
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		delete pixels[i];
+	}
 	//TODO: Write code 
 }
 

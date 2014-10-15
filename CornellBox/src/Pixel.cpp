@@ -1,4 +1,5 @@
 #include "../include/Pixel.h"
+#include <iostream>
 
 /* 	
 	Class Pixel  
@@ -11,12 +12,14 @@
 /* Default Constructor */
 Pixel::Pixel()
 {
+	std::cout << "Pixel::tom konstruktor" << std::endl;
 	rays = nullptr;
 	colorOfPixel = glm::vec3(0.0,0.0,0.0);		//black to begin with 
 }
 
 Pixel::Pixel(int raysPerPixel)
 {
+	//std::cout << "Pixel::full konstruktor" << std::endl;
 	rays = new Ray[raysPerPixel]();
 	colorOfPixel = glm::vec3(0.0,0.0,0.0);		//black to begin with 
 }

@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
 
 	float eyeDistance = 2.0;
-	Camera* camera = new Camera(room, eyeDistance, 512, 512, 1);
+	Camera* camera = new Camera(room, eyeDistance, 1);
 	//Loop over cols and rows
 
 	//Write to file

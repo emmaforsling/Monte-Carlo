@@ -15,26 +15,44 @@
 /* Default Constructor */
 Ray::Ray()
 {
-	//TODO: Write code 
+	startingPoint = glm::vec3(0.0, 0.0, 0.0);
+	direction = glm::vec3(0.0, 0.0, 0.0);
+	importance = 0;
+	color = glm::vec3(0.0, 0.0, 0.0);
+	finalNode = false;
+	childNodes = nullptr;
+	insideObject = false;
+}
+
+Ray::Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm::vec3 _color, bool _insideObject)
+{
+	startingPoint = _startingPoint;
+	direction = _direction;
+	importance = _importance;
+	color = _color;
+	insideObject = _insideObject;
+	finalNode = false;
+	childNodes = nullptr;
 }
 
 /* Destructor */
 Ray::~Ray()
 {
-	//TODO: Write Code
+	delete childNodes;
 }
 
 /* 	Combines color contributions from childNodes and
-	 a local lighting model (Phong's) to a single RGB vector 
+	a local lighting model (Phong's) to a single RGB vector 
 */
 glm::vec3 Ray::calculateColor()
 {
-	//TODO: Write Code
+	// TODO: Write Code
+	// Track ray through its children and blend final color.
 	return glm::vec3(0.0, 0.0, 0.0);
 }
 
 
-/* Computes Le(x,theta) for the point where a ray
+/* 	Computes Le(x,theta) for the point where a ray
 	intersects a surface
 */
 void Ray::calculateLocalLightingContribution()

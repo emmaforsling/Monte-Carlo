@@ -40,7 +40,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutio
 	resolutionX = _resolutionX;
 	resolutionY = _resolutionY;
 	raysPerPixel = _raysPerPixel;
-	pixels = new Pixel[resolutionX * resolutionY]();
+	pixels = new Pixel[resolutionX * resolutionY](raysPerPixel);
 	
 	std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
 	std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
@@ -56,7 +56,9 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage()
 {
-	//TODO: Write code
+	// TODO: Write code
+	// "pixels[i]->shootRays()"
+	// "pixels[i]->calculate"
 }
 
 /* Converts radiometric values into photometric ones. */

@@ -25,11 +25,14 @@ Pixel::Pixel(int raysPerPixel)
 Pixel::~Pixel()
 {
 	delete[] rays;
-	//TODO: Write code 
+	//TODO: Write code
 }
 
 /* Should also track the rays within the scene (tree structure?) */
 void Pixel::shootRays()
 {
-	//TODO: Write code 
+	// TODO: Write code
+	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.
+	// 2. Append the new rays to Pixel::rays
+	// 3. colorOfPixel += rays[i]->calculateColor()
 }

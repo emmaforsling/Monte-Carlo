@@ -8,13 +8,14 @@ class Pixel
 {
 public:
 	Pixel();
-	Pixel(int raysPerPixel);
+	Pixel(int _raysPerPixel);
 	~Pixel();
-	void shootRays();							// Should also track the rays
+	void shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize);			// Should also track the rays
 												// witin the scene (tree structure?)
 private:
 	Ray* rays;
 	glm::vec3 colorOfPixel;						// vec4 for alpha?
+	glm::vec3 position;
 };
 
 

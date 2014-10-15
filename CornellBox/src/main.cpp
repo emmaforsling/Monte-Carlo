@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 	// Create camera
 	float eyeDistance = 2.0;
-	Camera* camera = new Camera(room, eyeDistance, 1);
+	Camera* camera = new Camera(room, eyeDistance, 4);
 	
 	// Render scene
 	camera->renderImage();

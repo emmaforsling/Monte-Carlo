@@ -37,8 +37,8 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	viewPlaneSizeY = 1;
 
 	viewPlaneDistance = _eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
-
 	raysPerPixel = _raysPerPixel;
+
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		pixels[i] = new Pixel(raysPerPixel);
@@ -61,9 +61,22 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage()
 {
+	float viewPlanePosZ = position.z + viewPlaneDistance;
+	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::vec3 viewPlaneCorner1 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::vec3 viewPlaneCorner2 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::vec3 viewPlaneCorner3 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
+	
+	float pixelSize = viewPlaneSizeX / (float)resolutionX;			// or viewPlaneSizeY / resolutionY
+	std::cout << "pixelSize = " << pixelSize << std::endl;
+	glm::vec3 pixelPosition;
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
-		pixels[i]->shootRays();
+		//TODO::::: KONSTIGT ATT viewPlaneSizeX inte fungerar som en int fast den är det!!!!
+		std::cout << "TEEEEEEEEEEEEEST " << i << " % " << viewPlaneSizeX << " = " << i % 2 << std::endl;
+		pixelPosition = glm::vec3((i % 2) / (float)resolutionX + viewPlaneCorner0.x, (i/(int)2) / (float)resolutionY + viewPlaneCorner0.y, viewPlanePosZ);
+		std::cout << "======== pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
+		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize);
 	}
 	// TODO: Write code
 	// "pixels[i]->shootRays()"

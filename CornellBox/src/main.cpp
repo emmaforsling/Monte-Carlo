@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
 	Light* lightsource = new Light(positionLight, size, radiance); 
 	Cube* c1 = new Cube(positionCube, 1.0, 0.0, 0.0);
 
-
-
+	// Create camera
 	float eyeDistance = 2.0;
 	Camera* camera = new Camera(room, eyeDistance, 1);
-	//Loop over cols and rows
-
+	
+	// Render scene
+	camera->renderImage();
 	//Write to file
 }

@@ -34,6 +34,11 @@ Pixel::~Pixel()
 /* Should also track the rays within the scene (tree structure?) */
 void Pixel::shootRays()
 {
+	std::cout << "shooting ray! " << std::endl;
+	/*for(int i = 0; i <rays.size(); i++)
+	{
+
+	}*/
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.
 	// 2. Append the new rays to Pixel::rays

@@ -39,7 +39,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	viewPlaneDistance = _eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
 
 	raysPerPixel = _raysPerPixel;
-		for(int i = 0; i < resolutionX * resolutionY; i++)
+	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		pixels[i] = new Pixel(raysPerPixel);
 	}
@@ -61,6 +61,10 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage()
 {
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		pixels[i]->shootRays();
+	}
 	// TODO: Write code
 	// "pixels[i]->shootRays()"
 	// "pixels[i]->calculate"

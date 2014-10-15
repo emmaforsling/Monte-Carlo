@@ -40,7 +40,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutio
 	resolutionX = _resolutionX;
 	resolutionY = _resolutionY;
 	raysPerPixel = _raysPerPixel;
-	pixels = new Pixel[resolutionX * resolutionY](raysPerPixel);
+	pixels = new Pixel[resolutionX * resolutionY]();
 	
 	std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
 	std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;

@@ -21,6 +21,7 @@
 #include "Rectangle.h"
 #include "Cube.h"
 #include "Wall.h"
+#include "Light.h"
 
 
 #endif

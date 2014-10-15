@@ -36,28 +36,18 @@ Sphere::~Sphere()
 
 /*
 	This function should calculate the intersectionpoints between a ray 
-	and the surface of the Sphere. //For the surface of the sphere, use the radius
-	and the centerpoint. //
-	Zero intersection corresponds to a miss
-	One intersection corresponds to tangential hit
-	If(two)
-		If(Outside the sphere)
-			//determine correct intersectionPoint
-			compare the length of the vectors from the ray's 
-			origin to the two intersection points
-			Select the closer one....
-		If(Inside the sphere)
+	and the surface of the Sphere.
 */
 glm::vec3 Sphere::calculateIntersection(Ray* ray){
 	/*
 		Using the equations:
-			S: r^2 = x^2 + y^2 + z^2		//for sphere
+			S: r^2 = x^2 + y^2 + z^2		
 			R = t*(x,y,z)
 			where 
 			t = direction.xyz
 
 			The equation is then rewritten into this:
-			 
+
 			a = (direction.x)^2 + (direction.y)^2 + (direction.z)^2;
 			b = 2*( (direction.x)*(startingPoint.x - centerPoint.x) + 
 					(direction.y)*(startingPoint.y - centerPoint.y) +
@@ -66,7 +56,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* ray){
 				(startingPoint.y - centerPoint.y)^2 +
 				(startingPoint.z - centerPoint.z)^2;
 
-			then 
+			then
 			delta = b^2 + 4*a*c;
 
 			if(delta<0) no intersection

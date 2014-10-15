@@ -9,7 +9,7 @@ class Camera
 {
 public:
 	Camera();
-	Camera(Wall* _room, float _eyeDistance, int _resolutionX, int _resolutionY, int _raysPerPixel);
+	Camera(Wall* _room, float _eyeDistance, int _raysPerPixel);
 	~Camera();
 	void renderImage();							// Loops over all pixels and computes
 												// their values.
@@ -23,10 +23,10 @@ private:
 	float viewPlaneDistance;
 	int viewPlaneSizeX;
 	int viewPlaneSizeY;
-	int resolutionX;
-	int resolutionY;
+	static const int resolutionX = 512;
+	static const int resolutionY = 512;
 	int raysPerPixel;
-	Pixel* pixels;
+	Pixel* pixels[resolutionX * resolutionY];
 };
 
 #endif

@@ -15,7 +15,7 @@ public:
 											// light source rectangle
 	
 private:
-	Rectangle* sumthin;
+	Rectangle* lightSource;
 	float radiance;							//Le - emitted radiance
 											//where the lightsource should be a diffuse emitter
 	glm::vec3 position;

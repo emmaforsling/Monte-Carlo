@@ -7,6 +7,7 @@ class Ray
 {
 public:
 	Ray();
+	Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm::vec3 _color, bool _insideObject);
 	~Ray();
 	glm::vec3 calculateColor();					// combines color contributions from
 												// childNodes and a local lighting

@@ -56,7 +56,8 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage()
 {
-	//TODO: Write code
+	// TODO: Write code
+	// "pixels[i]->shootRays()"
 }
 
 /* Converts radiometric values into photometric ones. */

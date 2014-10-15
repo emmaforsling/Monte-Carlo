@@ -11,7 +11,7 @@
 /* Default constructor */
 Light::Light()
 {
-	sumthin = new Rectangle();
+	lightSource = new Rectangle();
 	radiance = 0.0;
 	position = glm::vec3(0.0,0.0,0.0);
 	size = 0;
@@ -35,16 +35,16 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 		For the new rectangle, the y coord, should be max, and thereby size 
 		The x coord and z coord should then be divided by 6 to become the lightsource
 	*/
-	sumthin = new Rectangle();		//up
-	sumthin->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
-	sumthin->positionsOfCorners[1] = glm::vec3(size/6.0, size, 0.0) + position;
-	sumthin->positionsOfCorners[2] = glm::vec3(size/6.0, size, size/6.0) + position;
-	sumthin->positionsOfCorners[3] = glm::vec3(0.0, size, size/6.0) + position;
+	lightSource = new Rectangle();		//up
+	lightSource->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
+	lightSource->positionsOfCorners[1] = glm::vec3(size/6.0, size, 0.0) + position;
+	lightSource->positionsOfCorners[2] = glm::vec3(size/6.0, size, size/6.0) + position;
+	lightSource->positionsOfCorners[3] = glm::vec3(0.0, size, size/6.0) + position;
 
 	std::cout << "Nu har jag initialiserat lampan i taket. Kolla på dessa koordinater:" << std::endl;
 	for(int j=0; j<4; j++)
 	{
-		std::cout << sumthin->positionsOfCorners[j].x << " " << sumthin->positionsOfCorners[j].y << " " << sumthin->positionsOfCorners[j].z << std::endl;
+		std::cout << lightSource->positionsOfCorners[j].x << " " << lightSource->positionsOfCorners[j].y << " " << lightSource->positionsOfCorners[j].z << std::endl;
 	}
 }
 
@@ -52,7 +52,7 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 /* Destructor */
 Light::~Light()
 {
-	delete sumthin;	
+	delete lightSource;	
 }
 
 glm::vec3 Light::getRandomPosition()

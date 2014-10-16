@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 		// Light
 	float radiance = 1.0;	//emitted radiance Le
-	glm::vec3 positionLight = glm::vec3(0.0, 0.0, 0.0);
+	glm::vec3 positionLight = glm::vec3(size/2.0, 0.0, size/2);
 	
 		// Cube
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);

@@ -41,6 +41,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
+		std:: cout << "skapar pixel " << i << std::endl;
 		pixels[i] = new Pixel(raysPerPixel);
 	}
 	
@@ -73,9 +74,9 @@ void Camera::renderImage()
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		//TODO::::: KONSTIGT ATT viewPlaneSizeX inte fungerar som en int fast den är det!!!!
-		std::cout << "TEEEEEEEEEEEEEST " << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
+		std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
 		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, (i/(int)resolutionY) / (float)resolutionY + viewPlaneCorner0.y, viewPlanePosZ);
-		std::cout << "======== pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
+		std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
 		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize);
 	}
 	// TODO: Write code

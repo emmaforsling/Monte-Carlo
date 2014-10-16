@@ -44,10 +44,12 @@ int main(int argc, char *argv[])
 	Cube* c1 = new Cube(positionCube, 1.0, 0.0, 0.0);
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular );
 	//Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent);
-	Camera* camera = new Camera(room, eyeDistance, 1);
-	
 
-	//Loop over cols and rows
+	// Create camera
+	Camera* camera = new Camera(room, eyeDistance, 4);
+	
+	// Render scene
+	camera->renderImage();
 
 	//Write to file
 }

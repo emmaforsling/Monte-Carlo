@@ -38,7 +38,8 @@ Sphere::~Sphere()
 	This function should calculate the intersectionpoints between a ray 
 	and the surface of the Sphere.
 */
-glm::vec3 Sphere::calculateIntersection(Ray* ray){
+glm::vec3 Sphere::calculateIntersection(Ray* ray)
+{
 	/*
 		Using the equations:
 			S: r^2 = x^2 + y^2 + z^2		
@@ -91,7 +92,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* ray){
 	{
 		return glm::vec3(0.0,0.0,0.0); //no intersection
 	}
-	else if(delta == 0)	//singe intersection
+	else if(delta == 0)	//single intersection
 	{
 		t = -b/(2*a);
 		return t * direction; //returns the point where it intersects
@@ -106,7 +107,6 @@ glm::vec3 Sphere::calculateIntersection(Ray* ray){
 			return std::min(t1,t2) * direction;
 	}
 
-	
 }
 
 void Sphere::calculateChildRays()

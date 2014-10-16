@@ -78,13 +78,13 @@ void Camera::renderImage()
 		std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
 		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize);
 
-		for( object)
+		/*for( object)
 		{
 			for(ray)
 			{
 
 			}
-		}
+		}*/
 			
 	}
 	// TODO: Write code

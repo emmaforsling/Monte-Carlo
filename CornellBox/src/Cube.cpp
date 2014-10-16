@@ -101,7 +101,7 @@ void Cube::initializeRectangles()
 	
 
 
-	std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
+	//std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
 	for(int i=0; i<6; i++)
 	{
 		for(int j=0; j<4; j++)

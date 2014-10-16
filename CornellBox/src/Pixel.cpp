@@ -59,20 +59,24 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		std::cout << "=======shooting ray!=======" << std::endl;
 		std::cout << "Slumpar mellan " << _pixelPosition.x << " och " << _pixelPosition.x + _pixelSize << " i x" << std::endl;
 		std::cout << "Slumpar mellan " << _pixelPosition.y << " och " << _pixelPosition.y + _pixelSize << " i y" << std::endl;
-		randomPointX = _pixelPosition.x + static_cast <float>(rand()) / (static_cast<float>(RAND_MAX / (_pixelPosition.x + _pixelSize - _pixelPosition.x)));
-		randomPointY = _pixelPosition.y + static_cast <float>(rand()) / (static_cast<float>(RAND_MAX / (_pixelPosition.y + _pixelSize - _pixelPosition.y)));
+		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
+		randomPointY = _pixelPosition.y + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
+		//randomPointY = _pixelPosition.y + static_cast <float>(rand()) / (static_cast<float>(RAND_MAX / (_pixelPosition.y + _pixelSize - _pixelPosition.y)));
 		
 		std::cout << "Nu har jag slumpat ut two values for dig: " << randomPointX << ", " << randomPointY << std::endl;
 		
-		
+		// The random point on the pixel
 		randomPoint = glm::vec3(randomPointX, randomPointY, _pixelPosition.z);
+
+		// Determine the normalized direction from eye to generated position
 		direction = (randomPoint - _cameraPosition) / glm::length(randomPoint - _cameraPosition);
 
+		// Debugging grejer
 		std::cout << "Kameraposition: " << _cameraPosition.x << ", " << _cameraPosition.y << ", " << _cameraPosition.z << ")" << std::endl;
 		std::cout << "ger riktning: (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
 
-		glm::vec3 _color = glm::vec3(0.0, 0.0, 0.0);
-		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, _color, false);
+		// 
+		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
 	}
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.

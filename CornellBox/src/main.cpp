@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 		Initialize variables 
 	*/
 		// Eye
-	float eyeDistance = 2.0;
+	float eyeDistance = 10.0;
 	
 		// Room
 	float size = 5.0;		// Is also used in lightsource, where it is scaled
@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);
 		
 		// Sphere
-	glm::vec3 positionSphereSpecular = glm::vec3(0.0, 0.0, 0.0);
-	float radiusForSphereSpecular = 0.5;
+	glm::vec3 positionSphereSpecular = glm::vec3(1.0, 4.0, 0.0);
+	float radiusForSphereSpecular = 4.0;
 	bool transparencyForSphereSpecular = false;
 	float refractiveIndexForSphereSpecular = 1.5;	//glass
 
@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
 	// float radiusForSphereTransparent = 1.0;
 	// bool transparencyForSphereTransparent = true;
 	// float refractiveIndexForSphereTransparent = 1.5;	//glass
-
+	
+		
 	/*
 		Create Scene
 	*/
@@ -48,6 +49,11 @@ int main(int argc, char *argv[])
 	// Create camera
 	Camera* camera = new Camera(room, eyeDistance, 4);
 	
+	// Ray
+	Ray* ray = new Ray(glm::vec3(1.0, 2.0, 3.0), glm::vec3(1.0, 0.0, -2.0), 1.0, glm::vec3(0.0,0.0,0.0), false);
+	sphereSpecular->calculateIntersection(ray);
+
+
 	// Render scene
 	camera->renderImage();
 

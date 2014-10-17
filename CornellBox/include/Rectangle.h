@@ -15,7 +15,7 @@ public:
 	glm::vec3 positionsOfCorners[4];
 
 private:
-	
+	float A, B, C, D;
 };
 
 #endif

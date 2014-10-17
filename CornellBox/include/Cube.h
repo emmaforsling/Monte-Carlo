@@ -15,6 +15,7 @@ public:
 												// them by size (float) and adds the
 												// position (glm::vec3)
 	void calculateChildRays();
+	glm::vec3 calculateIntersection(Ray* ray); 
 
 private:
 	Rectangle* sides[6];

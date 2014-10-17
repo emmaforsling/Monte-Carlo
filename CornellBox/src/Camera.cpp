@@ -31,7 +31,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	direction = glm::vec3(0.0, 0.0, -1.0);
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
 	
-	position = oppositeWallCenterPosition + direction * _eyeDistance;
+	position = oppositeWallCenterPosition - direction * _eyeDistance;
 	
 	viewPlaneSizeX = 1;
 	viewPlaneSizeY = 1;
@@ -62,7 +62,7 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage()
 {
-	float viewPlanePosZ = position.z + viewPlaneDistance;
+	float viewPlanePosZ = position.z - viewPlaneDistance;
 	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
 	glm::vec3 viewPlaneCorner1 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
 	glm::vec3 viewPlaneCorner2 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);

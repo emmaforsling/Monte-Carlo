@@ -109,6 +109,77 @@ void Cube::initializeRectangles()
 			std::cout << sides[i]->positionsOfCorners[j].x << " " << sides[i]->positionsOfCorners[j].y << " " << sides[i]->positionsOfCorners[j].z << std::endl;
 		}
 	} 
+}
+
+glm::vec3 Cube::calculateIntersection(Ray* ray) 
+{
+
+	glm::vec3 intersection;
+	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
+
+	// Loopa igenom de 6 rektanglarna
+	// Kolla ifall de intersectar med kuben
+	// Ta reda på insida/utsida
+
+
+	for(int i=0; i<6; i++)
+	{
+		intersection = sides[i]->calculateIntersection(ray);
+		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
+
+		if(intersection != glm::vec3(0.0, 0.0, 0.0))
+		{
+			// first detected intersection
+			if(finalIntersection == glm::vec3(0.0, 0.0, 0.0))
+			{
+				finalIntersection = intersection;
+			}
+			// second detected intersection
+			else
+			{
+				/* message */
+				std::cout << "sides[" << i << "].calculateIntersection(Ray* ray) = " << intersection.x << ", " 
+				<< intersection.y << ", " << intersection.z << std::endl;
+				/* end message */
+
+				// Ray inside object
+				if(ray->isInsideObject())
+				{
+					if( glm::length(intersection - ray->getStartingPoint()) > glm::length(finalIntersection - ray->getStartingPoint()) )
+					{
+						finalIntersection = intersection;
+					}
+				}
+				// Ray outside object
+				else
+				{
+					if( glm::length(intersection - ray->getStartingPoint()) < glm::length(finalIntersection - ray->getStartingPoint()) )
+					{
+						finalIntersection = intersection;
+					}
+				}
+			}			
+		}
+	}
+
+	//Fulkod
+	float backBottomLeftX = sides[0]->positionsOfCorners[1].x;
+	float backBottomLeftY = sides[0]->positionsOfCorners[1].y;
+	float backBottomLeftZ = sides[0]->positionsOfCorners[1].z;
+
+	float frontTopRightX = sides[3]->positionsOfCorners[2].x;
+	float frontTopRightY = sides[3]->positionsOfCorners[2].y;
+	float frontTopRightZ = sides[3]->positionsOfCorners[2].z;
+
+
+	if( (finalIntersection.x > backBottomLeftX && finalIntersection.y > backBottomLeftY && finalIntersection.z > backBottomLeftZ) && 
+		(finalIntersection.x) < frontTopRightX && finalIntersection.y < frontTopRightY && finalIntersection.z < frontTopRightZ )
+	{
+		//then it is inside
+		return finalIntersection;
+	}
+	return glm::vec3(0.0,0.0,0.0);
+		
 }				
 
 void Cube::calculateChildRays()

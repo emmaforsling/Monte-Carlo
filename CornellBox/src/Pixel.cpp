@@ -77,6 +77,11 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 
 		// 
 		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
+		// for(int j = 0; j < 4; j++)
+		// {
+		// 	objects[j]->calculateChildRays(objects[j]->calculateIntersection(rays[i]));
+		// }
+		
 	}
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.

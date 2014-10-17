@@ -23,9 +23,58 @@ Rectangle::~Rectangle()
 }
 
 
-glm::vec3 Rectangle::calculateIntersection()
+glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 {
-	//TODO: Write code
+	/*
+		Plane: Ax + By + Cz + D = 0
+		Line: x = startingPoint.x + (t * direction.x);
+			  y = startingPoint.y + (t * direction.y);
+			  z = startingPoint.z + (t * direction.z);
+
+		To determine A,B,C and D. Compute the crossproduct between two vectors
+		v1 and v2.  Where
+			v1 = positionsOfCorners[1] - positionsOfCorners[0];
+			v2 = positionsOfCorners[3] - positionsOfCorners[0];
+
+			glm::vec3 normal = glm::cross(v1,v2);
+			
+			where 
+			A = normal.x
+			B = normal.y
+			C = normal.z
+			
+			To get D, derive the plane equation by:
+			glm::vec3 D = glm::dot(positionsOfCorners[0], normal;
+
+		When A, B, C and D is derived, combine the equation for the Plane and the Line
+		to determine t (direction.xyz)
+		
+			float t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )/
+			( (A * direction.x) + (B * direction.y) +  (C * direction.z) )
+
+	*/
+
+	//initialize the variables
+	float A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
+	glm::vec3 v1 = glm::vec3(0.0, 0.0, 0.0), v2 = glm::vec3(0.0, 0.0, 0.0), normal = glm::vec3(0.0, 0.0, 0.0);
+
+	glm::vec3 startingPoint = ray->getStartingPoint();
+	glm::vec3 direction = ray->getDirection();
+
+	//determine two vectors
+	v1 = positionsOfCorners[1] - positionsOfCorners[0];
+	v2 = positionsOfCorners[3] - positionsOfCorners[0];
+
+	normal = glm::cross(v1,v2);
+
+	A = normal.x;
+	B = normal.y;
+	C = normal.z;
+	D = glm::dot(positionsOfCorners[0], normal);
+
+	t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )
+				/( (A * direction.x) + (B * direction.y) +  (C * direction.z) );
+
 	return glm::vec3(0.0,0.0,0.0);
 }
 

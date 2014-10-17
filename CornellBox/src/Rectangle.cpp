@@ -30,6 +30,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 		Line: x = startingPoint.x + (t * direction.x);
 			  y = startingPoint.y + (t * direction.y);
 			  z = startingPoint.z + (t * direction.z);
+			 	(where x,y,z is the intersectionPoint)
 
 		To determine A,B,C and D. Compute the crossproduct between two vectors
 		v1 and v2.  Where
@@ -52,6 +53,8 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 			float t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )/
 			( (A * direction.x) + (B * direction.y) +  (C * direction.z) )
 
+		When t is derived, the intersectionPoint.xyz can be calculated!
+
 	*/
 
 	//initialize the variables
@@ -60,6 +63,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 
 	glm::vec3 startingPoint = ray->getStartingPoint();
 	glm::vec3 direction = ray->getDirection();
+	glm::vec3 intersectionPoint = glm::vec3(0.0, 0.0, 0.0);
 
 	//determine two vectors
 	v1 = positionsOfCorners[1] - positionsOfCorners[0];
@@ -75,7 +79,12 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )
 				/( (A * direction.x) + (B * direction.y) +  (C * direction.z) );
 
-	return glm::vec3(0.0,0.0,0.0);
+	//Determine intersectionPoint
+	intersectionPoint.x = startingPoint.x + (t * direction.x);
+	intersectionPoint.y = startingPoint.y + (t * direction.y);
+	intersectionPoint.z = startingPoint.z + (t * direction.z);
+
+	return intersectionPoint;	//if glm::vec3(0.0,0.0,0.0) --> no intersection
 }
 
 

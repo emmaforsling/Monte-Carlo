@@ -3,8 +3,10 @@
 
 #include "glm/glm.hpp"
 #include "Rectangle.h"
+#include "Object.h"
+#include "Ray.h"
 
-class Cube
+class Cube : public Object
 {
 public:
 	Cube();
@@ -15,6 +17,7 @@ public:
 												// them by size (float) and adds the
 												// position (glm::vec3)
 	void calculateChildRays();
+	virtual glm::vec3 calculateIntersection(Ray* _ray);
 
 private:
 	Rectangle* sides[6];

@@ -3,14 +3,15 @@
 
 #include "glm/glm.hpp"
 #include "Ray.h"
+#include "Object.h"
 
-class Sphere
+class Sphere : public Object
 {
 public:
 	Sphere();
 	Sphere(glm::vec3 _position, float _radius, bool _transparency, float _refractiveIndex);
 	~Sphere();
-	glm::vec3 calculateIntersection(Ray* ray);
+	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	void calculateChildRays();
 
 private:

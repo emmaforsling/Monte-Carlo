@@ -95,7 +95,7 @@ void Wall::initializeRectangles()
 }
 
 /* either one intersection or none (ray leaving) */				
-glm::vec3 Wall::calculateIntersection()
+glm::vec3 Wall::calculateIntersection(Ray* _ray)
 {
 	//TODO: Write code
 	return glm::vec3(0,0,0);

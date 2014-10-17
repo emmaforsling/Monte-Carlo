@@ -115,3 +115,8 @@ void Cube::calculateChildRays()
 {
 	//TODO: Write code
 }
+
+glm::vec3 Cube::calculateIntersection(Ray* _ray)
+{
+	return glm::vec3(0,0,0);
+}

@@ -65,15 +65,15 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			if(delta>0) two intersection
 
 	*/
-	std::cout << "\n======= TIME FOR SPHERE ======= \n\n";
+	std::cout << "==== intersecting sphere ==== \n";
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
-	std::cout << "startingPoint of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
 	glm::vec3 direction = _ray->getDirection();
+	std::cout << "startingPoint of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
 	std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;
-	std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z << std::endl;
-	std::cout << "Radius of sphere: " << radius << std::endl;
+	std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
+	std::cout << ", radius of sphere: " << radius << std::endl;
 
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
@@ -88,11 +88,11 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		(startingPoint.z - centerPoint.z)*(startingPoint.z - centerPoint.z)
 		- radius*radius;
 
-	std::cout << "a = " << a << "\nb = " << b << "\nc = "<< c << std::endl;
-	//calculates delta
+	// std::cout << "a = " << a << "\nb = " << b << "\nc = "<< c << std::endl;
+	// calculates delta
 	delta = b*b - 4*a*c;
 	
-	std::cout << "delta = " << delta << std::endl;
+	// std::cout << "delta = " << delta << std::endl;
 	
 	if(delta<0)	//no intersection
 	{

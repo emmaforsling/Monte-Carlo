@@ -167,13 +167,13 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	float backBottomLeftY = sides[0]->positionsOfCorners[1].y;
 	float backBottomLeftZ = sides[0]->positionsOfCorners[1].z;
 
-	float frontTopRightX = sides[3]->positionsOfCorners[2].x;
-	float frontTopRightY = sides[3]->positionsOfCorners[2].y;
-	float frontTopRightZ = sides[3]->positionsOfCorners[2].z;
+	float frontCeilRightX = sides[3]->positionsOfCorners[2].x;
+	float frontCeilRightY = sides[3]->positionsOfCorners[2].y;
+	float frontCeilRightZ = sides[3]->positionsOfCorners[2].z;
 
 
-	if( (finalIntersection.x > backBottomLeftX && finalIntersection.y > backBottomLeftY && finalIntersection.z > backBottomLeftZ) && 
-		(finalIntersection.x) < frontTopRightX && finalIntersection.y < frontTopRightY && finalIntersection.z < frontTopRightZ )
+	if( (finalIntersection.x >= backBottomLeftX && finalIntersection.y >= backBottomLeftY && finalIntersection.z >= backBottomLeftZ) && 
+		(finalIntersection.x <= frontCeilRightX && finalIntersection.y <= frontCeilRightY && finalIntersection.z <= frontCeilRightZ ) )
 	{
 		//then it is inside
 		return finalIntersection;

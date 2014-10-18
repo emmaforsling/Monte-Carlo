@@ -1,5 +1,5 @@
 #include "../include/Rectangle.h"
-
+#include <iostream>
 /* 	
 	Class Rectangle  
 	
@@ -56,6 +56,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 		When t is derived, the intersectionPoint.xyz can be calculated!
 
 	*/
+	// std::cout << "\n\n Determine rectangle intersection \n\n";
 
 	//initialize the variables
 	float A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
@@ -69,22 +70,54 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	v1 = positionsOfCorners[1] - positionsOfCorners[0];
 	v2 = positionsOfCorners[3] - positionsOfCorners[0];
 
-	normal = glm::cross(v1,v2);
+	// std::cout << "v1 = " << v1.x << ", " << v1.y << ", " << v1.z << std::endl;
+	// std::cout << "v2 = " << v2.x << ", " << v2.y << ", " << v2.z << std::endl;
+	
+	normal = glm::normalize(glm::cross(v1,v2));				// denna stämmer, det har vi fyrtrippelcheckat!
+	// std::cout << "normalen = " << normal.x << ", " << normal.y << ", " << normal.z << std::endl;
+	
+	//if normal is orthogonal to the direction, then there are no intersections.
+	//if the dot product = 0	
+	// std::cout << "Skalärprodukten = " << glm::dot(normal,direction) << "\n";
+	if(glm::dot(normal, direction) != 0.0)		// if not orthogonal
+	{
+		A = normal.x;
+		B = normal.y;
+		C = - normal.z;							// this is weird, we don't get it, but it works =/
+		D = glm::dot(positionsOfCorners[0], normal);
+		
+		// std::cout << "A = " << A << std::endl;
+		// std::cout << "B = " << B << std::endl;
+		// std::cout << "C = " << C << std::endl;
+		// std::cout << "D = " << D << std::endl;
 
-	A = normal.x;
-	B = normal.y;
-	C = normal.z;
-	D = glm::dot(positionsOfCorners[0], normal);
+		// std::cout << "direction = " << direction.x << "," << direction.y << "," << direction.z << std::endl;
 
-	t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) ) /
-		 ( (A * direction.x)     + (B * direction.y)     + (C * direction.z) );
+		t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) ) /
+			 ( (A * direction.x)     + (B * direction.y)     + (C * direction.z) );
+		// std::cout << "t = " << t << std::endl;
+		
+		//Determine intersectionPoint
+		intersectionPoint.x = startingPoint.x + (t * direction.x);
+		intersectionPoint.y = startingPoint.y + (t * direction.y);
+		intersectionPoint.z = startingPoint.z + (t * direction.z);
+		// std::cout << "x1 = " << startingPoint.x << std::endl;
+		// std::cout << "y1 = " << startingPoint.y << std::endl;
+		// std::cout << "z1 = " << startingPoint.z << std::endl;
+		// std::cout << "a = " << direction.x << std::endl;
+		// std::cout << "b = " << direction.y << std::endl;
+		// std::cout << "c = " << direction.z << std::endl;
 
-	//Determine intersectionPoint
-	intersectionPoint.x = startingPoint.x + (t * direction.x);
-	intersectionPoint.y = startingPoint.y + (t * direction.y);
-	intersectionPoint.z = startingPoint.z + (t * direction.z);
-
-	return intersectionPoint;	//if glm::vec3(0.0,0.0,0.0) --> no intersection
+		// std::cout << "intersectionPoint = " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl;
+		// std::cout << "\n\n";
+		
+		return intersectionPoint;	
+	}
+	else
+	{
+		// std::cout << "Alltså är det ingen intersection\n\n";
+		return glm::vec3(0.0,0.0,0.0); // no intersection
+	}
 }
 
 

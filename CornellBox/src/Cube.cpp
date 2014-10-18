@@ -105,6 +105,7 @@ void Cube::initializeRectangles()
 	std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
 	for(int i=0; i<6; i++)
 	{
+		std::cout << "side " << i << std::endl;
 		for(int j=0; j<4; j++)
 		{
 			std::cout << sides[i]->positionsOfCorners[j].x << " " << sides[i]->positionsOfCorners[j].y << " " << sides[i]->positionsOfCorners[j].z << std::endl;
@@ -138,8 +139,8 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 			else
 			{
 				/* message */
-				std::cout << "sides[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
-				<< intersection.y << ", " << intersection.z << std::endl;
+				// std::cout << "sides[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
+				// << intersection.y << ", " << intersection.z << std::endl;
 				/* end message */
 
 				// Ray inside object
@@ -167,17 +168,27 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	float backBottomLeftY = sides[0]->positionsOfCorners[1].y;
 	float backBottomLeftZ = sides[0]->positionsOfCorners[1].z;
 
-	float frontCeilRightX = sides[3]->positionsOfCorners[2].x;
-	float frontCeilRightY = sides[3]->positionsOfCorners[2].y;
-	float frontCeilRightZ = sides[3]->positionsOfCorners[2].z;
+	// std::cout << "backBottomLeftX = " << backBottomLeftX << std::endl;
+	// std::cout << "backBottomLeftY = " << backBottomLeftY << std::endl;
+	// std::cout << "backBottomLeftZ = " << backBottomLeftZ << std::endl;
 
+	float frontCeilRightX = sides[2]->positionsOfCorners[2].x;
+	float frontCeilRightY = sides[2]->positionsOfCorners[2].y;
+	float frontCeilRightZ = sides[2]->positionsOfCorners[2].z;
 
+	// std::cout << "frontCeilRightX = " << frontCeilRightX << std::endl;
+	// std::cout << "frontCeilRightY = " << frontCeilRightY << std::endl;
+	// std::cout << "frontCeilRightZ = " << frontCeilRightZ << std::endl;
+
+	// std::cout << "\n\n ======= finalIntersection ========\n\n";
 	if( (finalIntersection.x >= backBottomLeftX && finalIntersection.y >= backBottomLeftY && finalIntersection.z >= backBottomLeftZ) && 
 		(finalIntersection.x <= frontCeilRightX && finalIntersection.y <= frontCeilRightY && finalIntersection.z <= frontCeilRightZ) )
 	{
 		// then it is inside
+		// std::cout << "finalIntersection = " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << "\n\n";
 		return finalIntersection;
 	}
+	// std::cout << "No finalIntersection\n\n";
 	return glm::vec3(0.0,0.0,0.0);
 		
 }				

@@ -21,7 +21,7 @@ public:
 
 private:
 	Rectangle* sides[6];
-	glm::vec3 position;
+	// glm::vec3 position;
 	float size;
 	float transparency;
 	float refractiveIndex;

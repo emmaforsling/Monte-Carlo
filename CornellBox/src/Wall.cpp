@@ -10,8 +10,9 @@
 
 /* Default Constructor */
 Wall::Wall()
+: Object(glm::vec3(0.0, 0.0, 0.0))
 {
-	position = glm::vec3(0.0, 0.0, 0.0);
+	// position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0.0;
 
 	walls[0] = nullptr;
@@ -22,8 +23,9 @@ Wall::Wall()
 }
 
 Wall::Wall(glm::vec3 _position, float _size)
+: Object(_position)
 {
-	position = _position;
+	// position = _position;
 	size = _size;
 
 	walls[0] = nullptr;

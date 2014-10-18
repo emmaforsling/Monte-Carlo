@@ -14,6 +14,7 @@
 
 /* Default Constructor */
 Cube::Cube()
+: Object(glm::vec3(0.0, 0.0, 0.0))
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -22,13 +23,14 @@ Cube::Cube()
 	sides[4] = nullptr;
 	sides[5] = nullptr;
 
-	position = glm::vec3(0.0, 0.0, 0.0);
+	// position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0.0;
 	transparency = 0.0;
 	refractiveIndex = 0.0;
 }
 
 Cube::Cube(glm::vec3 _position, float _size, float _transparency, float _refractiveIndex)
+: Object(_position)
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -37,7 +39,7 @@ Cube::Cube(glm::vec3 _position, float _size, float _transparency, float _refract
 	sides[4] = nullptr;
 	sides[5] = nullptr;
 
-	position = _position;
+	// position = _position;
 	size = _size;
 	transparency = _transparency;
 	refractiveIndex = _refractiveIndex;

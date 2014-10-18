@@ -8,11 +8,12 @@ class Object
 {
 public:
 	Object();
+	Object(glm::vec3 _position);
 	~Object();
 	virtual glm::vec3 calculateIntersection(Ray* _ray) = 0;
 
-private:
-	// glm::vec3 position;
+protected:
+	glm::vec3 position;
 };
 
 #endif

@@ -87,13 +87,13 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			intersectionPoints[j] = _objects[j]->calculateIntersection(rays[i]);
 			if(glm::length(finalIntersection) == 0)				// first encountered object
 			{
-				std::cout << "First encountered object" << std::endl;
+				std::cout << "First studied object" << std::endl;
 				finalIntersection = intersectionPoints[j];
 				closestIntersectedObjectIndex = j;
 			}
 			else												// not the first object
 			{
-				std::cout << "Not first encountered object" << std::endl;
+				std::cout << "Not first studied object" << std::endl;
 				if( glm::length(intersectionPoints[j] - rays[i]->getStartingPoint()) < glm::length(finalIntersection - rays[i]->getStartingPoint()) )
 				{
 					std::cout << "Intersection closer to ray origin!" << std::endl;

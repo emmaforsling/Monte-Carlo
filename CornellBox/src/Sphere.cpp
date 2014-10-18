@@ -65,7 +65,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			if(delta>0) two intersection
 
 	*/
-	std::cout << "==== intersecting sphere ==== \n";
+	std::cout << "==== studying sphere ==== \n";
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
 	glm::vec3 direction = _ray->getDirection();

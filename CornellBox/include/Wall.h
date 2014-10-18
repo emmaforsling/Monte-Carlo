@@ -17,6 +17,7 @@ public:
 												// (1,0,0), (0,1,0) etc. and multiplies
 												// them by size (float) and adds the
 												// position (glm::vec3)
+	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);			// either one intersection or none (ray leaving)
 
 	Rectangle* walls[5];

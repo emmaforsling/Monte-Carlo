@@ -76,8 +76,8 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	C = normal.z;
 	D = glm::dot(positionsOfCorners[0], normal);
 
-	t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )
-				/( (A * direction.x) + (B * direction.y) +  (C * direction.z) );
+	t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) ) /
+		 ( (A * direction.x)     + (B * direction.y)     + (C * direction.z) );
 
 	//Determine intersectionPoint
 	intersectionPoint.x = startingPoint.x + (t * direction.x);

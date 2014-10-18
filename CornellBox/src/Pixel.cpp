@@ -14,7 +14,7 @@
 /* Default Constructor */
 Pixel::Pixel()
 {
-	std::cout << "Pixel::tom konstruktor" << std::endl;
+	// std::cout << "Pixel::tom konstruktor" << std::endl;
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
 		rays[i] = nullptr;
@@ -45,9 +45,9 @@ Pixel::~Pixel()
 }
 
 /* Should also track the rays within the scene (tree structure?) */
-void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize)
+void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects)
 {
-	std::cout << "entering pixel! " << std::endl << std::endl;
+	// std::cout << "entering pixel! " << std::endl << std::endl;
 	float randomPointX;
 	float randomPointY;
 	glm::vec3 randomPoint;
@@ -56,14 +56,14 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 	srand(time(NULL));
 	for(int i = 0; i < _raysPerPixel; i++)
 	{
-		std::cout << "=======shooting ray!=======" << std::endl;
-		std::cout << "Slumpar mellan " << _pixelPosition.x << " och " << _pixelPosition.x + _pixelSize << " i x" << std::endl;
-		std::cout << "Slumpar mellan " << _pixelPosition.y << " och " << _pixelPosition.y + _pixelSize << " i y" << std::endl;
+		std::cout << "\n=======shooting ray!=======" << std::endl;
+		// std::cout << "Slumpar mellan " << _pixelPosition.x << " och " << _pixelPosition.x + _pixelSize << " i x" << std::endl;
+		// std::cout << "Slumpar mellan " << _pixelPosition.y << " och " << _pixelPosition.y + _pixelSize << " i y" << std::endl;
 		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
 		randomPointY = _pixelPosition.y + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
 		//randomPointY = _pixelPosition.y + static_cast <float>(rand()) / (static_cast<float>(RAND_MAX / (_pixelPosition.y + _pixelSize - _pixelPosition.y)));
 		
-		std::cout << "Nu har jag slumpat ut two values for dig: " << randomPointX << ", " << randomPointY << std::endl;
+		// std::cout << "Nu har jag slumpat ut two values for dig: " << randomPointX << ", " << randomPointY << std::endl;
 		
 		// The random point on the pixel
 		randomPoint = glm::vec3(randomPointX, randomPointY, _pixelPosition.z);
@@ -71,17 +71,35 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		// Determine the normalized direction from eye to generated position
 		direction = (randomPoint - _cameraPosition) / glm::length(randomPoint - _cameraPosition);
 
-		// Debugging grejer
+		/* === Debugging === */
 		std::cout << "Kameraposition: " << _cameraPosition.x << ", " << _cameraPosition.y << ", " << _cameraPosition.z << ")" << std::endl;
 		std::cout << "ger riktning: (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
 
 		// 
 		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
-		// for(int j = 0; j < 4; j++)
-		// {
-		// 	objects[j]->calculateChildRays(objects[j]->calculateIntersection(rays[i]));
-		// }
-		
+		glm::vec3 intersectionPoints[4];
+		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+		int closestIntersectedObjectIndex;
+		for(int j = 0; j < 1; j++)								// loop through objects
+		{
+			// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
+			
+			intersectionPoints[j] = _objects[j]->calculateIntersection(rays[i]);
+			if(glm::length(finalIntersection) == 0)				// first encountered object
+			{
+				finalIntersection = intersectionPoints[j];
+				closestIntersectedObjectIndex = j;
+			}
+			else												// not the first object
+			{
+				if(glm::length(intersectionPoints[j]) < glm::length(finalIntersection))
+				{
+					finalIntersection = intersectionPoints[j];	// object closest to ray origin
+					closestIntersectedObjectIndex = j;
+				}
+			}
+		}
+		_objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);
 	}
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.

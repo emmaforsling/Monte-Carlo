@@ -41,11 +41,13 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 	lightSource->positionsOfCorners[2] = glm::vec3(size/6.0, size, size/6.0) + position;
 	lightSource->positionsOfCorners[3] = glm::vec3(0.0, size, size/6.0) + position;
 
+	/*
 	std::cout << "Nu har jag initialiserat lampan i taket. Kolla på dessa koordinater:" << std::endl;
 	for(int j=0; j<4; j++)
 	{
 		std::cout << lightSource->positionsOfCorners[j].x << " " << lightSource->positionsOfCorners[j].y << " " << lightSource->positionsOfCorners[j].z << std::endl;
 	}
+	*/
 }
 
 

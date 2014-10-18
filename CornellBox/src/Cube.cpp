@@ -25,11 +25,11 @@ Cube::Cube()
 
 	// position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0.0;
-	transparency = 0.0;
+	transparent = false;
 	refractiveIndex = 0.0;
 }
 
-Cube::Cube(glm::vec3 _position, float _size, float _transparency, float _refractiveIndex)
+Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex)
 : Object(_position)
 {
 	sides[0] = nullptr;
@@ -41,7 +41,7 @@ Cube::Cube(glm::vec3 _position, float _size, float _transparency, float _refract
 
 	// position = _position;
 	size = _size;
-	transparency = _transparency;
+	transparent = _transparent;
 	refractiveIndex = _refractiveIndex;
 
 	initializeRectangles();
@@ -101,28 +101,26 @@ void Cube::initializeRectangles()
 	sides[5]->positionsOfCorners[2] = glm::vec3(0.0, size, size) + position;
 	sides[5]->positionsOfCorners[3] = glm::vec3(size, size, size) + position;
 	
-
-
-	//std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
+	/*
+	std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
 	for(int i=0; i<6; i++)
 	{
 		for(int j=0; j<4; j++)
 		{
 			std::cout << sides[i]->positionsOfCorners[j].x << " " << sides[i]->positionsOfCorners[j].y << " " << sides[i]->positionsOfCorners[j].z << std::endl;
 		}
-	} 
+	}
+	*/
 }
 
 glm::vec3 Cube::calculateIntersection(Ray* _ray) 
 {
-
 	glm::vec3 intersection;
 	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
 
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
 	// Ta reda på insida/utsida
-
 
 	for(int i=0; i<6; i++)
 	{
@@ -175,16 +173,16 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 
 
 	if( (finalIntersection.x >= backBottomLeftX && finalIntersection.y >= backBottomLeftY && finalIntersection.z >= backBottomLeftZ) && 
-		(finalIntersection.x <= frontCeilRightX && finalIntersection.y <= frontCeilRightY && finalIntersection.z <= frontCeilRightZ ) )
+		(finalIntersection.x <= frontCeilRightX && finalIntersection.y <= frontCeilRightY && finalIntersection.z <= frontCeilRightZ) )
 	{
-		//then it is inside
+		// then it is inside
 		return finalIntersection;
 	}
 	return glm::vec3(0.0,0.0,0.0);
 		
 }				
 
-void Cube::calculateChildRays()
+void Cube::calculateChildRays(glm::vec3 _intersectionPoint)
 {
 	//TODO: Write code
 }

@@ -11,7 +11,7 @@ public:
 	Camera();
 	Camera(Wall* _room, float _eyeDistance, int _raysPerPixel);
 	~Camera();
-	void renderImage();							// Loops over all pixels and computes
+	void renderImage(Object** _objects);		// Loops over all pixels and computes
 												// their values.
 	void mappingFunction();						// Converts radiometric values into
 												// photometric ones.

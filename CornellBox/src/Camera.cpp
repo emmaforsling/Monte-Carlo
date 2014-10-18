@@ -41,12 +41,12 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
-		std:: cout << "skapar pixel " << i << std::endl;
+		// std:: cout << "skapar pixel " << i << std::endl;
 		pixels[i] = new Pixel(raysPerPixel);
 	}
 	
-	std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
-	std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
+	// std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
+	// std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
 }
 
 /* Destructor */
@@ -60,7 +60,7 @@ Camera::~Camera()
 }
 
 /* Loops over all pixels and computes their values. */
-void Camera::renderImage()
+void Camera::renderImage(Object** _objects)
 {
 	float viewPlanePosZ = position.z - viewPlaneDistance;
 	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
@@ -69,14 +69,14 @@ void Camera::renderImage()
 	glm::vec3 viewPlaneCorner3 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
 	
 	float pixelSize = viewPlaneSizeX / (float)resolutionX;			// or viewPlaneSizeY / resolutionY
-	std::cout << "pixelSize = " << pixelSize << std::endl;
+	// std::cout << "pixelSize = " << pixelSize << std::endl;
 	glm::vec3 pixelPosition;
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
-		std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
+		// std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
 		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, (i/(int)resolutionY) / (float)resolutionY + viewPlaneCorner0.y, viewPlanePosZ);
-		std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
-		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize);
+		// std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
+		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects);
 
 		/*for( ray)
 		{

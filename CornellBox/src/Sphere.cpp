@@ -14,7 +14,6 @@
 Sphere::Sphere()
 : Object(glm::vec3(0.0,0.0,0.0))
 {
-	// position = glm::vec3(0.0,0.0,0.0);
 	radius = 0.0;
 	transparent = false;
 	refractiveIndex = 0.0;
@@ -24,7 +23,6 @@ Sphere::Sphere()
 Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex)
 : Object(_position)
 {
-	// position = _position;
 	radius = _radius;
 	transparent = _transparent;
 	refractiveIndex = _refractiveIndex;
@@ -67,14 +65,15 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			if(delta>0) two intersection
 
 	*/
-	std::cout << "\n\n TIME FOR SPHERE \n\n";
+	std::cout << "\n======= TIME FOR SPHERE ======= \n\n";
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
-	std::cout << "startingPoint: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
+	std::cout << "startingPoint of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
 	glm::vec3 direction = _ray->getDirection();
-	std::cout << "Direction: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
+	std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;
-	std::cout << "CenterPoint: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z << std::endl;
+	std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z << std::endl;
+	std::cout << "Radius of sphere: " << radius << std::endl;
 
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
@@ -97,12 +96,12 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	
 	if(delta<0)	//no intersection
 	{
-		std::cout << "NO intersection" << std::endl;
+		std::cout << "						 - NO INTERSECTIONS - " << std::endl;
 		return glm::vec3(0.0,0.0,0.0); //no intersection
 	}
 	else if(delta == 0)	//single intersection
 	{
-		std::cout << "One intersection" << std::endl;
+		std::cout << "						 - ONE INTERSECTION - " << std::endl;
 		t = -b/(2*a);
 		std::cout << "t = " << t << std::endl;
 		std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
@@ -110,7 +109,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	}
 	else //if(delta>0)	//two intersections
 	{
-		std::cout << "Two intersections" << std::endl;
+		std::cout << "						 - TWO INTERSECTIONS - " << std::endl;
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
@@ -138,7 +137,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	}
 }
 
-void Sphere::calculateChildRays()
+void Sphere::calculateChildRays(glm::vec3 _intersectionPoint)
 {
 	//Here we shall change the bool insideobject
 	//TODO: Write code

@@ -12,7 +12,7 @@ public:
 	Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex);
 	~Sphere();
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
-	void calculateChildRays();
+	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
 
 private:
 	float radius;				

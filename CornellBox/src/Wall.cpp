@@ -85,6 +85,7 @@ void Wall::initializeRectangles()
 	walls[4]->positionsOfCorners[2] = glm::vec3(size, size, 0.0) + position;
 	walls[4]->positionsOfCorners[3] = glm::vec3(0.0, size, 0.0) + position;
 
+	/*
 	std::cout << "Nu har jag initialiserat alla sidor på rummet! Titta så fina:" << std::endl;
 	for(int i=0; i<5; i++)
 	{
@@ -93,7 +94,13 @@ void Wall::initializeRectangles()
 			std::cout << "Vägg " << j << std::endl;
 			std::cout << walls[i]->positionsOfCorners[j].x << " " << walls[i]->positionsOfCorners[j].y << " " << walls[i]->positionsOfCorners[j].z << std::endl;
 		}
-	} 
+	}
+	*/
+}
+
+void Wall::calculateChildRays(glm::vec3 _intersectionPoint)
+{
+
 }
 
 /* either one intersection or none (ray leaving) */				

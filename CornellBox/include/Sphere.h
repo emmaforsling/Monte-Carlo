@@ -15,7 +15,6 @@ public:
 	void calculateChildRays();
 
 private:
-	// glm::vec3 position;			//where the position is the centerpoint of the sphere
 	float radius;				
 	bool transparent;			//true = transparent, false = not transparent
 	float refractiveIndex;		//glass = 1.5, air = 1.0

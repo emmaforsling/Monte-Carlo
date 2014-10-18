@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
 	Light* lightsource = new Light(positionLight, size, radiance); 
 	Cube* c1 = new Cube(positionCube, 1.0, 0.0, 0.0);
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular );
-	//Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent);
+	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 0), radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular );
+	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent);
 
 	// Create camera
 	Camera* camera = new Camera(room, eyeDistance, 4);
@@ -47,10 +48,11 @@ int main(int argc, char *argv[])
 	// sphereSpecular->calculateIntersection(ray);
 
 	Object* objects[4];
-	objects[0] = sphereSpecular;
+	objects[1] = sphereSpecular;
+	objects[0] = sphereSpecular2;
 
 	// Render scene
 	camera->renderImage(objects);
 
-	//Write to file
+	// Write to file
 }

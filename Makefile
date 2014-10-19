@@ -23,10 +23,51 @@ all: $(CSources) $(CExecutable)
 run: $(CExecutable) 
 	./$(addprefix $(BinDir),$(Executable))
 
-sense: room clean all run
+sense: room1 clean all room2 run
 
 room:
 	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+
+room1:
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo "=========== cleaning and compiling ==========="
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+
+room2:
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo "================== running ================== "
 	@echo ""
 	@echo ""
 	@echo ""

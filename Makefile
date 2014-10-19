@@ -16,10 +16,23 @@ CSources=$(addprefix $(SourceDir),$(Sources))
 CObjects=$(addprefix $(ObjectDir),$(Objects))
 CExecutable=$(addprefix $(BinDir),$(Executable))
 
+default: all
+
 all: $(CSources) $(CExecutable)
 
 run: $(CExecutable) 
 	./$(addprefix $(BinDir),$(Executable))
+
+sense: room clean all run
+
+room:
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
 
 $(CExecutable): $(CObjects)
 	$(CC) $(LDFlags) $(CObjects) -o $@

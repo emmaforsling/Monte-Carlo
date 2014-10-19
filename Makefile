@@ -23,7 +23,16 @@ all: $(CSources) $(CExecutable)
 run: $(CExecutable) 
 	./$(addprefix $(BinDir),$(Executable))
 
-sense: clean all run
+sense: room clean all run
+
+room:
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
 
 $(CExecutable): $(CObjects)
 	$(CC) $(LDFlags) $(CObjects) -o $@

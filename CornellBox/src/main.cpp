@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);		 
 	float sizeForCubeSpecular = 5.0;
 	bool transparencyForCubeSpecular = false;
-	float refractiveIndexForCubeSpecular = 1.5;			// glass
+	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
 	glm::vec3 positionSphereSpecular = glm::vec3(2.5, 2.5, 2.5);
@@ -59,8 +59,9 @@ int main(int argc, char *argv[])
 
 
 	Object* objects[4];
-	objects[1] = sphereSpecular;
-	objects[0] = sphereSpecular2;
+	objects[0] = sphereSpecular;
+	objects[1] = sphereSpecular2;
+	objects[2] = cubeSpecular;
 
 	// Render scene
 	camera->renderImage(objects);

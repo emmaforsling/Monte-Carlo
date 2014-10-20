@@ -60,7 +60,7 @@ Camera::~Camera()
 }
 
 /* Loops over all pixels and computes their values. */
-void Camera::renderImage(Object** _objects)
+void Camera::renderImage(Object** _objects, Light* _light)
 {
 	float viewPlanePosZ = position.z - viewPlaneDistance;
 	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
@@ -76,7 +76,7 @@ void Camera::renderImage(Object** _objects)
 		// std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
 		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, (i/(int)resolutionY) / (float)resolutionY + viewPlaneCorner0.y, viewPlanePosZ);
 		// std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
-		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects);
+		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects, _light);
 
 		/*for( ray)
 		{

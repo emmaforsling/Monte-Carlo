@@ -4,6 +4,9 @@
 #include "glm/glm.hpp"
 #include "Rectangle.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 class Light
 {
 public:
@@ -13,6 +16,7 @@ public:
 
 	glm::vec3 getRandomPosition();			// returns a random position on the
 											// light source rectangle
+	glm::vec3 getPosition();
 	
 private:
 	Rectangle* lightSource;

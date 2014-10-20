@@ -1,7 +1,5 @@
 #include "../include/Pixel.h"
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
 
 /* 	
 	Class Pixel  
@@ -45,7 +43,7 @@ Pixel::~Pixel()
 }
 
 /* Should also track the rays within the scene (tree structure?) */
-void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects)
+void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects, Light* _light)
 {
 	// std::cout << "entering pixel! " << std::endl << std::endl;
 	float randomPointX;
@@ -80,7 +78,8 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 intersectionPoints[4];
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
-		for(int j = 0; j < 3; j++)								// loop through objects
+		int numberOfObjects = 3;								// Temporary...
+		for(int j = 0; j < numberOfObjects; j++)				// loop through objects
 		{
 			// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
 			
@@ -89,29 +88,54 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			{
 				if(glm::length(intersectionPoints[j]) != 0)
 				{
-					std::cout << "(This was the first studied object)" << std::endl;
+					//std::cout << "(This was the first studied object)" << std::endl;
 					finalIntersection = intersectionPoints[j];
 					closestIntersectedObjectIndex = j;
 				}
 			}
 			else												// not the first object
 			{
-				std::cout << "(This was not the first studied object)" << std::endl;
+				//std::cout << "(This was not the first studied object)" << std::endl;
 				if( glm::length(intersectionPoints[j] - rays[i]->getStartingPoint()) < glm::length(finalIntersection - rays[i]->getStartingPoint()) )
 				{
-					std::cout << "Intersection closer to ray origin!" << std::endl;
+					//std::cout << "Intersection closer to ray origin!" << std::endl;
 					finalIntersection = intersectionPoints[j];	// object closest to ray origin
 					closestIntersectedObjectIndex = j;
 				}
 				else
 				{
-					std::cout << "Intersection farther from ray origin!" << std::endl;
+					//std::cout << "Intersection farther from ray origin!" << std::endl;
 				}
 			}
 		}
-		std::cout << "Calculating child rays for intersection point " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << std::endl;
 		if(closestIntersectedObjectIndex != 666)
 		{
+			int intersectionPointVisibleFromLightSource = 1;
+			glm::vec3 randomPositionOnLightSource = _light->getRandomPosition();
+			// shadow ray defined as ray from light source to surface, to be able to use Object::calculateIntersection();
+			Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+			// looping through all objects to check for occlusion
+			glm::vec3 shadowIntersection;
+			std::cout << "\n ====== Checking for occlusion ===== \n" << std::endl;
+			for(int j = 0; j < numberOfObjects; j++)
+			{
+				shadowIntersection = _objects[j]->calculateIntersection(shadowRay);
+				// std::cout << "objects[" << j << "]->calculateIntersection(shadowRay) returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
+				if( shadowIntersection != glm::vec3(0.0, 0.0, 0.0) )
+				{	
+					std::cout << "Found intersection along shadowRay direction!" << std::endl;
+					if( glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - finalIntersection) )
+					{
+						intersectionPointVisibleFromLightSource = 0;
+						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is closer to the light source than the surface point - occlusion!" << std::endl;
+					}
+					else
+					{
+						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is not closer to the light source than the surface point - no occlusion!" << std::endl;
+					}
+				}
+			}
+			// std::cout << "Calculating child rays for intersection point " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << std::endl;
 			_objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);
 		}
 	}

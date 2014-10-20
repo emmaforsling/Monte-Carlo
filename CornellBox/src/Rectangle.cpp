@@ -128,13 +128,13 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 			intersectionPoint.y >= yPosMin && intersectionPoint.y <= yPosMax &&
 			intersectionPoint.z >= zPosMin && intersectionPoint.z <= zPosMax )
 		{
-			std::cout << "(" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ") is contained within " << "[(" << xPosMin << ", " << yPosMin << ", " << zPosMin << "), (" << xPosMax << ", " << yPosMax << ", " << zPosMax << ")]" << std::endl;
+			//std::cout << "(" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ") is contained within " << "[(" << xPosMin << ", " << yPosMin << ", " << zPosMin << "), (" << xPosMax << ", " << yPosMax << ", " << zPosMax << ")]" << std::endl;
 
 			return intersectionPoint;				// intersection point on the rectangle
 		}
 		else
 		{
-			std::cout << "(" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ") is not contained within "  << "[(" << xPosMin << ", " << yPosMin << ", " << zPosMin << "), (" << xPosMax << ", " << yPosMax << ", " << zPosMax << ")]" << std::endl;
+			//std::cout << "(" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ") is not contained within "  << "[(" << xPosMin << ", " << yPosMin << ", " << zPosMin << "), (" << xPosMax << ", " << yPosMax << ", " << zPosMax << ")]" << std::endl;
 
 			return glm::vec3(0.0, 0.0, 0.0);			// intersection point not on the rectangle
 		}	

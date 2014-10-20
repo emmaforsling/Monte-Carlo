@@ -1,5 +1,6 @@
 #include "../include/Light.h"
 #include <iostream>
+
 /* Class Light
 	private:
 	- Rectangle* sumthin;
@@ -28,7 +29,7 @@ Light::Light()
 Light::Light(glm::vec3 _position, float _size, float _radiance)
 {
 	radiance = _radiance;
-	position = _position;
+	//position = _position;
 	size = _size;
 	
 	/* 
@@ -36,10 +37,12 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 		The x coord and z coord should then be divided by 6 to become the lightsource
 	*/
 	lightSource = new Rectangle();		// up
-	lightSource->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
-	lightSource->positionsOfCorners[1] = glm::vec3(size/6.0, size, 0.0) + position;
-	lightSource->positionsOfCorners[2] = glm::vec3(size/6.0, size, size/6.0) + position;
-	lightSource->positionsOfCorners[3] = glm::vec3(0.0, size, size/6.0) + position;
+	lightSource->positionsOfCorners[0] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 - size/6.0);
+	lightSource->positionsOfCorners[1] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 - size/6.0);
+	lightSource->positionsOfCorners[2] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
+	lightSource->positionsOfCorners[3] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
+
+	position = lightSource->positionsOfCorners[0];
 
 	/*
 	std::cout << "Nu har jag initialiserat lampan i taket. Kolla på dessa koordinater:" << std::endl;
@@ -59,6 +62,17 @@ Light::~Light()
 
 glm::vec3 Light::getRandomPosition()
 {
-	//TODO: Write code
-	return glm::vec3(0,0,0);
+	//srand(time(NULL));					// Only Chronos is the master of time!
+	float randomPointX = lightSource->positionsOfCorners[0].x + ((size/6.0) * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
+	float randomPointZ = lightSource->positionsOfCorners[0].z + ((size/6.0) * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
+
+	// The random point on the area light source
+	glm::vec3 randomPoint = glm::vec3(randomPointX, lightSource->positionsOfCorners[0].y, randomPointZ);
+	//std:: cout << "returning random point on light source: (" << randomPoint.x << ", " << randomPoint.y << ", " << randomPoint.z << ")" << std::endl;
+	return randomPoint;
+}
+
+glm::vec3 Light::getPosition()
+{
+	return position;
 }

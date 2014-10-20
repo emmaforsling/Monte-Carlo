@@ -65,15 +65,15 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			if(delta>0) two intersection
 
 	*/
-	std::cout << "==== studying sphere ==== \n";
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
 	glm::vec3 direction = _ray->getDirection();
-	std::cout << "startingPoint of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
-	std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
+	std::cout << "==== studying sphere (" << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << "), r = " << radius << " ==== "; //\n";
+	//std::cout << "starting point of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
+	//std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;
-	std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
-	std::cout << ", radius of sphere: " << radius << std::endl;
+	//std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
+	//std::cout << ", radius of sphere: " << radius << std::endl;
 
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
@@ -96,32 +96,32 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	
 	if(delta<0)	//no intersection
 	{
-		std::cout << "						 - NO INTERSECTIONS - " << std::endl;
+		std::cout << " - NO INTERSECTIONS - " << std::endl;
 		return glm::vec3(0.0,0.0,0.0); //no intersection
 	}
 	else if(delta == 0)	//single intersection
 	{
-		std::cout << "						 - ONE INTERSECTION - " << std::endl;
+		std::cout << " - ONE INTERSECTION - " << std::endl;
 		t = -b/(2*a);
-		std::cout << "t = " << t << std::endl;
-		std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
+		//std::cout << "t = " << t << std::endl;
+		//std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
 		return t * direction; //returns the point where it intersects
 	}
 	else //if(delta>0)	//two intersections
 	{
-		std::cout << "						 - TWO INTERSECTIONS - " << std::endl;
+		std::cout << " - TWO INTERSECTIONS - " << std::endl;
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
-		std::cout << "t1 = " << t1 << std::endl;
-		std::cout << "t2 = " << t2 << std::endl;
+		//std::cout << "t1 = " << t1 << std::endl;
+		//std::cout << "t2 = " << t2 << std::endl;
 		if(_ray->isInsideObject())			//if true
 		{
 			glm::vec3 tmp;
 			tmp.x = startingPoint.x + std::max(t1,t2) * direction.x;
 			tmp.y = startingPoint.y + std::max(t1,t2) * direction.y;
 			tmp.z = startingPoint.z + std::max(t1,t2) * direction.z;
-			std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
+			//std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
 			return tmp;
 		}	
 		else
@@ -130,7 +130,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			tmp.x = startingPoint.x + std::min(t1,t2) * direction.x;
 			tmp.y = startingPoint.y + std::min(t1,t2) * direction.y;
 			tmp.z = startingPoint.z + std::min(t1,t2) * direction.z;
-			std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
+			//std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
 			//return startingPoint + std::min(t1,t2) * direction;
 			return tmp;
 		}			

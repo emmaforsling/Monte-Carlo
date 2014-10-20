@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
 	
 		// Light
 	float radiance = 1.0;									// emitted radiance Le
-	glm::vec3 positionLight = glm::vec3(size/2.0, 0.0, size/2);
+	glm::vec3 positionLight = glm::vec3(0.0, 5.0, 0.0);
 	
 		// Cube
-	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);		 
-	float sizeForCubeSpecular = 2.0;
+	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);
+	float sizeForCubeSpecular = 3.0;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
@@ -51,9 +51,9 @@ int main(int argc, char *argv[])
 	Camera* camera = new Camera(room, eyeDistance, 4);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::vec3(5.0, 5.0, 5.0), glm::vec3(-6.0, -5.0, -6.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+	Ray* ray = new Ray(glm::vec3(2.5, 5.0, 2.5), glm::vec3(0.0, -1.0, 0.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 	//sphereSpecular->calculateIntersection(ray);
-	cubeSpecular->calculateIntersection(ray);
+	
 
 
 	Object* objects[4];
@@ -61,8 +61,39 @@ int main(int argc, char *argv[])
 	objects[1] = sphereSpecular2;
 	objects[2] = cubeSpecular;
 
+	/*
+	// super-duper test
+	glm::vec3 intersectionPoint = cubeSpecular->calculateIntersection(ray);
+	srand(time(NULL));
+	glm::vec3 randomPositionOnLightSource = lightsource->getRandomPosition();
+	Ray* shadowRay = new Ray(randomPositionOnLightSource, (intersectionPoint - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+	// looping through all objects to check for occlusion
+	glm::vec3 shadowIntersection;
+	int numberOfObjects = 3;
+	int intersectionPointVisibleFromLightSource = 1;
+	std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
+	for(int j = 0; j < numberOfObjects; j++)
+	{
+		shadowIntersection = objects[j]->calculateIntersection(shadowRay);
+		std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
+		if( shadowIntersection  != glm::vec3(0.0, 0.0, 0.0) )
+		{	
+			std::cout << "Found intersection along shadowRay direction!" << std::endl;
+			if(glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - intersectionPoint) )
+			{
+				intersectionPointVisibleFromLightSource = 0;
+				std::cout << "This intersection point is closer to the light source than the shadow ray origin - occlusion!" << std::endl;
+			}
+			else
+			{
+				std::cout << "This intersection point is not closer to the light source than the shadow ray origin - no occlusion!" << std::endl;
+			}
+		}
+	}
+	*/
+
 	// Render scene
-	camera->renderImage(objects);
+	camera->renderImage(objects, lightsource);
 
 	// Write to file
 }

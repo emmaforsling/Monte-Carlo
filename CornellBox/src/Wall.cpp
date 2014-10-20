@@ -109,12 +109,88 @@ void Wall::initializeRectangles()
 
 void Wall::calculateChildRays(glm::vec3 _intersectionPoint)
 {
-
+	
 }
 
 /* either one intersection or none (ray leaving) */				
 glm::vec3 Wall::calculateIntersection(Ray* _ray)
 {
 	//TODO: Write code
+	/*
+		To calculate the intesection point for the Wall,
+		first calculate the intersection point for a plane, 
+		then see if the intersection point on the plane is within the wall
+
+		The approach for determine the intersection point for a plane 
+		is the same that is used in Rectangle. 
+	*/
+	for(int i=0; i<5; i++)
+	{
+		std::cout << " - studying rectangle " << i << " - "; // << std::endl;
+		intersection = sides[i]->calculateIntersection(_ray);
+
+		//std::cout << "sides[" << i << "]->calculateIntersection(_ray) returned: (" << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
+
+		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
+		if( intersection == glm::vec3(0.0, 0.0, 0.0) )
+		{
+			std::cout << "				- NO INTERSECTIONS - " << std::endl;
+		}
+		if( intersection != glm::vec3(0.0, 0.0, 0.0) )
+		{
+			// first detected intersection
+			if(finalIntersection == glm::vec3(0.0, 0.0, 0.0))
+			{
+				std::cout << "Detected first intersection (";
+				finalIntersection = intersection;
+				std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
+
+			}
+			// second detected intersection
+			else
+			{
+				std::cout << "Detected second intersection (";
+				std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
+				/* message */
+				// std::cout << "sides[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
+				// << intersection.y << ", " << intersection.z << std::endl;
+				/* end message */
+
+				// Ray inside object
+				if(_ray->isInsideObject())
+				{
+					//std::cout << "Ray inside object. ";
+					if( glm::length(intersection - _ray->getStartingPoint()) > glm::length(finalIntersection - _ray->getStartingPoint()) )
+					{
+						//std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
+						finalIntersection = intersection;
+					}
+					else
+					{
+						//std::cout << "Discarding new intersection point (closer to ray origin - entry point)" << std::endl;
+					}
+				}
+				// Ray outside object
+				else
+				{
+					//std::cout << "Ray outside object. ";
+					if( glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()) )
+					{
+						//std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
+						finalIntersection = intersection;
+					}
+					else
+					{
+						//std::cout << "Discarding new intersection point (farther from ray origin - exit point)" << std::endl;
+					}
+				}
+			}			
+		}
+	}
+
+	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+	return finalIntersection;
+
+
 	return glm::vec3(0.0, 0.0, 0.0);
 }

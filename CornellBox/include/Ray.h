@@ -26,7 +26,7 @@ private:
 	float importance;
 	glm::vec3 color;							// vec4 for alpha?
 	bool finalNode;
-	Ray* childNodes;
+	Ray* childNodes;							// maybe just one
 	bool insideObject;
 };
 

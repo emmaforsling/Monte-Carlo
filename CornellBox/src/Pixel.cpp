@@ -73,12 +73,18 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		//std::cout << "Kameraposition: " << _cameraPosition.x << ", " << _cameraPosition.y << ", " << _cameraPosition.z << ")" << std::endl;
 		//std::cout << "ger riktning: (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
 
-		// 
+		//
 		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
-		glm::vec3 intersectionPoints[4];
+		glm::vec3 intersectionPoints[4];						// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
 		int numberOfObjects = 3;								// Temporary...
+		
+	for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr; currentChildRay = currentChildRay->childNodes)
+	{
+		
+	}
+
 		for(int j = 0; j < numberOfObjects; j++)				// loop through objects
 		{
 			// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
@@ -110,9 +116,9 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		}
 		if(closestIntersectedObjectIndex != 666)
 		{
-			int intersectionPointVisibleFromLightSource = 1;
+			int intersectionPointVisibleFromLightSource = 1;			// 1 = visible, 0 = not visible
 			glm::vec3 randomPositionOnLightSource = _light->getRandomPosition();
-			// shadow ray defined as ray from light source to surface, to be able to use Object::calculateIntersection();
+			// shadow ray defined as a ray from the light source to a surface, to be able to use Object::calculateIntersection();
 			Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 			// looping through all objects to check for occlusion
 			glm::vec3 shadowIntersection;
@@ -127,11 +133,11 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 					if( glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - finalIntersection) )
 					{
 						intersectionPointVisibleFromLightSource = 0;
-						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is closer to the light source than the surface point - occlusion!" << std::endl;
+						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is closer to the light source than the surface point is - occlusion!" << std::endl;
 					}
 					else
 					{
-						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is not closer to the light source than the surface point - no occlusion!" << std::endl;
+						std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is not closer to the light source than the surface point is - no occlusion!" << std::endl;
 					}
 				}
 			}

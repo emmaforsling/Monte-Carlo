@@ -91,6 +91,10 @@ int main(int argc, char *argv[])
 	}
 	*/
 
+	//next
+	// calc.child.rays
+	// ta fram färger för pixlarna (importance * )
+
 	// Render scene
 	camera->renderImage(objects, lightsource);
 

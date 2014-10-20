@@ -13,7 +13,7 @@ Light::Light()
 {
 	lightSource = new Rectangle();
 	radiance = 0.0;
-	position = glm::vec3(0.0,0.0,0.0);
+	position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0;
 }
 
@@ -35,7 +35,7 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 		For the new rectangle, the y coord, should be max, and thereby size 
 		The x coord and z coord should then be divided by 6 to become the lightsource
 	*/
-	lightSource = new Rectangle();		//up
+	lightSource = new Rectangle();		// up
 	lightSource->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
 	lightSource->positionsOfCorners[1] = glm::vec3(size/6.0, size, 0.0) + position;
 	lightSource->positionsOfCorners[2] = glm::vec3(size/6.0, size, size/6.0) + position;

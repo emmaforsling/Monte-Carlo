@@ -124,12 +124,15 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 		The approach for determine the intersection point for a plane 
 		is the same that is used in Rectangle. 
 	*/
+	std::cout << "==== studying wall (" << position.x << ", " << position.y << ", " << position.z << "), size = " << size << " ==== \n";
+	glm::vec3 intersection;
+	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
 	for(int i=0; i<5; i++)
 	{
 		std::cout << " - studying rectangle " << i << " - "; // << std::endl;
-		intersection = sides[i]->calculateIntersection(_ray);
+		intersection = walls[i]->calculateIntersection(_ray);
 
-		//std::cout << "sides[" << i << "]->calculateIntersection(_ray) returned: (" << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
+		//std::cout << "walls[" << i << "]->calculateIntersection(_ray) returned: (" << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 
 		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 		if( intersection == glm::vec3(0.0, 0.0, 0.0) )
@@ -152,7 +155,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 				std::cout << "Detected second intersection (";
 				std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 				/* message */
-				// std::cout << "sides[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
+				// std::cout << "walls[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
 				// << intersection.y << ", " << intersection.z << std::endl;
 				/* end message */
 
@@ -192,5 +195,5 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 	return finalIntersection;
 
 
-	return glm::vec3(0.0, 0.0, 0.0);
+	// return glm::vec3(0.0, 0.0, 0.0);
 }

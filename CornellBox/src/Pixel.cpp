@@ -145,7 +145,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			// std::cout << "Calculating child rays for intersection point " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << std::endl;
 			
 			// calculate direction for reflected or transmitted ray - WHITTED -
-			glm::reflect(currentChildRay->direction)
+			//glm::reflect(currentChildRay->direction)
 			// currentChildRay->childNodes = new Ray();
 
 			// _objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);

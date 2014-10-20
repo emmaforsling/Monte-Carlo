@@ -68,7 +68,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
 	glm::vec3 direction = _ray->getDirection();
-	std::cout << "==== studying sphere (" << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << "), r = " << radius << " ==== "; //\n";
+	std::cout << "==== studying sphere (" << position.x << ", " << position.y << ", " << position.z << "), r = " << radius << " ==== "; //\n";
 	//std::cout << "starting point of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
 	//std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;

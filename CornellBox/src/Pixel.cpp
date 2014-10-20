@@ -79,7 +79,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
 		glm::vec3 intersectionPoints[4];
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
-		int closestIntersectedObjectIndex;
+		int closestIntersectedObjectIndex = 666;
 		for(int j = 0; j < 3; j++)								// loop through objects
 		{
 			// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
@@ -110,7 +110,10 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			}
 		}
 		std::cout << "Calculating child rays for intersection point " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << std::endl;
-		_objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);
+		if(closestIntersectedObjectIndex != 666)
+		{
+			_objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);
+		}
 	}
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.

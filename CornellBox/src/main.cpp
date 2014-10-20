@@ -51,11 +51,9 @@ int main(int argc, char *argv[])
 	Camera* camera = new Camera(room, eyeDistance, 4);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::vec3(5.0, 5.0, 5.0), glm::vec3(-6.0, -5.0, -6.0), 1.0, glm::vec3(0.0,0.0,0.0), false);
+	Ray* ray = new Ray(glm::vec3(5.0, 5.0, 5.0), glm::vec3(-6.0, -5.0, -6.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 	//sphereSpecular->calculateIntersection(ray);
 	cubeSpecular->calculateIntersection(ray);
-
-
 
 
 	Object* objects[4];

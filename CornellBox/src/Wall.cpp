@@ -107,5 +107,5 @@ void Wall::calculateChildRays(glm::vec3 _intersectionPoint)
 glm::vec3 Wall::calculateIntersection(Ray* _ray)
 {
 	//TODO: Write code
-	return glm::vec3(0,0,0);
+	return glm::vec3(0.0, 0.0, 0.0);
 }

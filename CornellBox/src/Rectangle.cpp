@@ -62,8 +62,12 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	float A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
 	glm::vec3 v1 = glm::vec3(0.0, 0.0, 0.0), v2 = glm::vec3(0.0, 0.0, 0.0), normal = glm::vec3(0.0, 0.0, 0.0);
 
-	glm::vec3 startingPoint = ray->getStartingPoint();
-	glm::vec3 direction = ray->getDirection();
+	glm::vec3 startingPoint = glm::vec3(0.0, 0.0, 0.0);
+
+	startingPoint = ray->getStartingPoint();
+	glm::vec3 direction = glm::vec3(0.0, 0.0, 0.0);
+	
+	direction = ray->getDirection();
 	glm::vec3 intersectionPoint = glm::vec3(0.0, 0.0, 0.0);
 
 	//determine two vectors
@@ -132,13 +136,13 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 		{
 			std::cout << "(" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ") is not contained within "  << "[(" << xPosMin << ", " << yPosMin << ", " << zPosMin << "), (" << xPosMax << ", " << yPosMax << ", " << zPosMax << ")]" << std::endl;
 
-			return glm::vec3(0.0,0.0,0.0);			// intersection point not on the rectangle
+			return glm::vec3(0.0, 0.0, 0.0);			// intersection point not on the rectangle
 		}	
 	}
 	else
 	{
 		// std::cout << "Alltså är det ingen intersection\n\n";
-		return glm::vec3(0.0,0.0,0.0); // no intersection
+		return glm::vec3(0.0, 0.0, 0.0); // no intersection
 	}
 }
 

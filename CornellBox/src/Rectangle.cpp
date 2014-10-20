@@ -32,6 +32,11 @@ glm::vec3 Rectangle::getColor()
 	return color;
 }
 
+glm::vec3 Rectangle::getNormal()
+{
+	return normal;
+}
+
 glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 {
 	/*
@@ -69,7 +74,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 
 	//initialize the variables
 	float A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
-	glm::vec3 v1 = glm::vec3(0.0, 0.0, 0.0), v2 = glm::vec3(0.0, 0.0, 0.0), normal = glm::vec3(0.0, 0.0, 0.0);
+	glm::vec3 v1 = glm::vec3(0.0, 0.0, 0.0), v2 = glm::vec3(0.0, 0.0, 0.0);
 
 	glm::vec3 startingPoint = glm::vec3(0.0, 0.0, 0.0);
 

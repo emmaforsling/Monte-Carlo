@@ -18,10 +18,14 @@ public:
 
 	void setColor(glm::vec3 _color);
 	glm::vec3 getColor();
+	glm::vec3 getNormal();
+
 
 private:
 	float A, B, C, D;
 	glm::vec3 color;
+	glm::vec3 normal;
+
 };
 
 #endif

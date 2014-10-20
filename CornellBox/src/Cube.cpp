@@ -139,7 +139,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 		if( intersection == glm::vec3(0.0, 0.0, 0.0) )
 		{
-			std::cout << "		 - NO INTERSECTIONS - " << std::endl;
+			std::cout << "				- NO INTERSECTIONS - " << std::endl;
 		}
 		if( intersection != glm::vec3(0.0, 0.0, 0.0) )
 		{

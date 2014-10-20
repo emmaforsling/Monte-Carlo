@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
 	//sphereSpecular->calculateIntersection(ray);
 	cubeSpecular->calculateIntersection(ray);
 
-
 	Object* objects[4];
 	objects[0] = sphereSpecular;
 	objects[1] = sphereSpecular2;
@@ -66,5 +65,6 @@ int main(int argc, char *argv[])
 
 	// Write to file
 	//camera->saveImage();
-	
+
+	return 0;
 }

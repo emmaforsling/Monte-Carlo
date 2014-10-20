@@ -55,36 +55,45 @@ void Wall::initializeRectangles()
 	   |    |
 	   0 -- 1
 	*/
+	glm::vec3 WHITE = glm::vec3(255,255,255);
+	glm::vec3 RED = glm::vec3(255,0,0);
+	glm::vec3 BLUE = glm::vec3(0,255,0);
+	glm::vec3 GREEN = glm::vec3(0,0,255);
+
 	walls[0] = new Rectangle();		//left
 	walls[0]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
 	walls[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0) + position;
 	walls[0]->positionsOfCorners[2] = glm::vec3(0.0, size, 0.0) + position;
 	walls[0]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
+	walls[0]->setColor(GREEN); 	//green
 
 	walls[1] = new Rectangle();		//up
 	walls[1]->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
 	walls[1]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
 	walls[1]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
 	walls[1]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
+	walls[1]->setColor(WHITE); 	//white
 
 	walls[2] = new Rectangle();		//right
 	walls[2]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[2]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
 	walls[2]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
 	walls[2]->positionsOfCorners[3] = glm::vec3(size, size, 0.0) + position;
-	
+	walls[2]->setColor(RED); 	//red
+
 	walls[3] = new Rectangle();		//down
 	walls[3]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
 	walls[3]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
 	walls[3]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[3]->positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0) + position;
+	walls[3]->setColor(WHITE); 	//white
 
 	walls[4] = new Rectangle();		//back
 	walls[4]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[1] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[2] = glm::vec3(size, size, 0.0) + position;
 	walls[4]->positionsOfCorners[3] = glm::vec3(0.0, size, 0.0) + position;
-
+	walls[4]->setColor(WHITE); 	//white
 	/*
 	std::cout << "Nu har jag initialiserat alla sidor på rummet! Titta så fina:" << std::endl;
 	for(int i=0; i<5; i++)

@@ -22,6 +22,15 @@ Rectangle::~Rectangle()
 	//TODO: Write code 
 }
 
+void Rectangle::setColor(glm::vec3 _color)
+{
+	color = _color;
+}
+
+glm::vec3 Rectangle::getColor()
+{
+	return color;
+}
 
 glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 {

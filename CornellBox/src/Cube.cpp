@@ -116,7 +116,8 @@ void Cube::initializeRectangles()
 
 glm::vec3 Cube::calculateIntersection(Ray* _ray) 
 {
-	std::cout << "==== studying cube ==== \n";
+	std::cout << "==== studying cube (" << position.x << ", " << position.y << ", " << position.z << "), size = " << size << " ==== \n";
+
 	glm::vec3 intersection;
 	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
 

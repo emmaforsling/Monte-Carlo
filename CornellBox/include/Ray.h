@@ -20,13 +20,14 @@ public:
 	glm::vec3 getDirection();
 	bool isInsideObject();
 
+	Ray* childNodes;							// maybe just one
+
 private:
 	glm::vec3 startingPoint;
 	glm::vec3 direction;
 	float importance;
 	glm::vec3 color;							// vec4 for alpha?
 	bool finalNode;
-	Ray* childNodes;							// maybe just one
 	bool insideObject;
 };
 

@@ -81,9 +81,9 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	// std::cout << "Skalärprodukten = " << glm::dot(normal,direction) << "\n";
 	if(glm::dot(normal, direction) != 0.0)		// if not orthogonal
 	{
-		A = normal.x;
-		B = normal.y;
-		C = - normal.z;							// this is weird, we don't get it, but it works =/
+		A = -normal.x;
+		B = -normal.y;
+		C = -normal.z;							// this is weird, we don't get it, but it works =/
 		D = glm::dot(positionsOfCorners[0], normal);
 		
 		// std::cout << "A = " << A << std::endl;

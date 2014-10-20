@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	
 		// Cube
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);		 
-	float sizeForCubeSpecular = 5.0;
+	float sizeForCubeSpecular = 2.0;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
 	Camera* camera = new Camera(room, eyeDistance, 4);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::vec3(1.0, 2.0, 8.0), glm::vec3(0.0, 0.0, -2.0), 1.0, glm::vec3(0.0,0.0,0.0), false);
-	// sphereSpecular->calculateIntersection(ray);
+	Ray* ray = new Ray(glm::vec3(5.0, 5.0, 5.0), glm::vec3(-6.0, -5.0, -6.0), 1.0, glm::vec3(0.0,0.0,0.0), false);
+	//sphereSpecular->calculateIntersection(ray);
 	cubeSpecular->calculateIntersection(ray);
 
 

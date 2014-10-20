@@ -97,8 +97,27 @@ void Camera::mappingFunction()
 	//TODO: Write code
 }
 
+
+float Camera::clamp(float _x)
+{
+	return _x<0 ? 0 : _x>1 ? 1 : _x;
+}
+
+int Camera::toInt(float _x)
+{
+	return int(pow(clamp(_x),1/2.2)*255+.5);
+}
+
 /* Alternatively displayImage() */						 
 void Camera::saveImage()
 {
-	//TODO: Write code
+	/* This code, for saving the image into ppm-format, is taken from http://www.kevinbeason.com/smallpt/ */ 
+	glm::vec3 colorOfPixel = glm::vec3(0.0, 0.0, 0.0);
+	FILE* _file = fopen("image.ppm","w");
+	fprintf(_file, "P3\n%d %d\n%d\n", resolutionX, resolutionY, 255);
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		colorOfPixel = pixels[i]->getColorOfPixel();
+		fprintf(_file,"%d %d %d", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
+	}
 }

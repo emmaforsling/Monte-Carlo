@@ -96,4 +96,6 @@ int main(int argc, char *argv[])
 	camera->renderImage(objects, lightsource);
 
 	// Write to file
+	//camera->saveImage();
+	
 }

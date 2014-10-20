@@ -144,3 +144,8 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 	// 2. Append the new rays to Pixel::rays
 	// 3. colorOfPixel += rays[i]->calculateColor()
 }
+
+glm::vec3 Pixel::getColorOfPixel()
+{
+	return colorOfPixel;
+}

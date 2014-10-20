@@ -13,6 +13,9 @@ public:
 	~Pixel();
 	void shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects);			// Should also track the rays
 												// within the scene (tree structure?)
+
+	glm::vec3 getColorOfPixel();
+
 private:
 	static const int raysPerPixel = 4;
 	Ray* rays[raysPerPixel];

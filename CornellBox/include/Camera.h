@@ -1,6 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H value
 
+#include <stdio.h>
+#include <math.h> 
+
 #include "glm/glm.hpp"
 #include "Pixel.h"
 #include "Wall.h"
@@ -27,6 +30,9 @@ private:
 	static const int resolutionY = 1;
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
+
+	float clamp(float _x);
+	int toInt(float _x);
 };
 
 #endif

@@ -65,4 +65,6 @@ int main(int argc, char *argv[])
 	camera->renderImage(objects);
 
 	// Write to file
+	//camera->saveImage();
+	
 }

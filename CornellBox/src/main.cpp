@@ -56,9 +56,10 @@ int main(int argc, char *argv[])
 	
 
 	Object* objects[4];
-	objects[0] = sphereSpecular;
-	objects[1] = sphereSpecular2;
-	objects[2] = cubeSpecular;
+	objects[0] = room;
+	objects[1] = sphereSpecular;
+	objects[2] = sphereSpecular2;
+	objects[3] = cubeSpecular;
 
 	/*
 	// super-duper test

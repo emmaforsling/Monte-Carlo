@@ -78,17 +78,18 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 intersectionPoints[4];						// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
-		int numberOfObjects = 3;								// Temporary...
+		int numberOfObjects = 4;								// Temporary...
 		
 	for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr; currentChildRay = currentChildRay->childNodes)
 	{
-		
+
 	}
 
 		for(int j = 0; j < numberOfObjects; j++)				// loop through objects
 		{
 			// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
-			
+			glm::vec3 normal = _objects[j]->getIntersectedNormal();
+			std::cout << "\n\nTHIS IS PRETTY " << normal.x << ", " << normal.y << ", " << normal.z << "\n\n";
 			intersectionPoints[j] = _objects[j]->calculateIntersection(rays[i]);
 			if( glm::length(finalIntersection) == 0)			// first encountered object
 			{

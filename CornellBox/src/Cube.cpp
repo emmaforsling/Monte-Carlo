@@ -113,6 +113,15 @@ void Cube::initializeRectangles()
 	}
 	*/
 }
+glm::vec3 Cube::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+
+void Cube::setIntersectedNormal(glm::vec3 _intersectedNormal)
+{
+	intersectedNormal = _intersectedNormal;
+}
 
 glm::vec3 Cube::calculateIntersection(Ray* _ray) 
 {
@@ -129,7 +138,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
 	// Ta reda på insida/utsida
-
+	int side = 666;
 	for(int i=0; i<6; i++)
 	{
 		std::cout << " - studying rectangle " << i << " - "; // << std::endl;
@@ -149,6 +158,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 			{
 				std::cout << "Detected first intersection (";
 				finalIntersection = intersection;
+				side = i;
 				std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 
 			}
@@ -169,6 +179,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 					if( glm::length(intersection - _ray->getStartingPoint()) > glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
 						//std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
+						side = i;
 						finalIntersection = intersection;
 					}
 					else
@@ -183,6 +194,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 					if( glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
 						//std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
+						side = i;
 						finalIntersection = intersection;
 					}
 					else
@@ -193,7 +205,14 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 			}			
 		}
 	}
-
+	if(side != 666)
+	{
+		std::cout << "The side for the final intersection point is " << side << std::endl;
+		std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
+		setIntersectedNormal(sides[side]->getNormal());
+	}
+		
+	
 	/*
 	//Fulkod
 	float backBottomLeftX = sides[0]->positionsOfCorners[1].x;
@@ -224,6 +243,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	return glm::vec3(0.0,0.0,0.0);
 	*/
 	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+	
 	return finalIntersection;
 }				
 

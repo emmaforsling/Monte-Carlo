@@ -19,11 +19,15 @@ public:
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 
+	virtual glm::vec3 getIntersectedNormal();
+	void setIntersectedNormal(glm::vec3 _intersectedNormal);
 private:
 	Rectangle* sides[6];
 	float size;
 	bool transparent;
 	float refractiveIndex;
+
+	glm::vec3 intersectedNormal;
 };
 
 #endif

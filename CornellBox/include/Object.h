@@ -12,6 +12,7 @@ public:
 	~Object();
 	virtual glm::vec3 calculateIntersection(Ray* _ray) = 0;
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint) = 0;
+	virtual glm::vec3 getIntersectedNormal() = 0;
 protected:
 	glm::vec3 position;
 };

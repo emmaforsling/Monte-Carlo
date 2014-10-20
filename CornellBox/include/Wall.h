@@ -20,6 +20,7 @@ public:
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);			// either one intersection or none (ray leaving)
 
+	virtual glm::vec3 getIntersectedNormal(){return glm::vec3(0.0,0.0,0.0);};
 	Rectangle* walls[5];
 	float size;
 

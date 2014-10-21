@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 		=== Initializing variables ===
 	*/
 		// Eye
-	float eyeDistance = 10.0;
+	float eyeDistance = 15.0;
 	
 		// Room
 	float size = 5.0;										// also used in lightsource, for scale
@@ -71,22 +71,22 @@ int main(int argc, char *argv[])
 	glm::vec3 shadowIntersection;
 	int numberOfObjects = 3;
 	int intersectionPointVisibleFromLightSource = 1;
-	std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
+	// std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
 	for(int j = 0; j < numberOfObjects; j++)
 	{
 		shadowIntersection = objects[j]->calculateIntersection(shadowRay);
-		std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
+		// std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
 		if( shadowIntersection  != glm::vec3(0.0, 0.0, 0.0) )
 		{	
-			std::cout << "Found intersection along shadowRay direction!" << std::endl;
+			// std::cout << "Found intersection along shadowRay direction!" << std::endl;
 			if(glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - intersectionPoint) )
 			{
 				intersectionPointVisibleFromLightSource = 0;
-				std::cout << "This intersection point is closer to the light source than the shadow ray origin - occlusion!" << std::endl;
+				// std::cout << "This intersection point is closer to the light source than the shadow ray origin - occlusion!" << std::endl;
 			}
 			else
 			{
-				std::cout << "This intersection point is not closer to the light source than the shadow ray origin - no occlusion!" << std::endl;
+				// std::cout << "This intersection point is not closer to the light source than the shadow ray origin - no occlusion!" << std::endl;
 			}
 		}
 	}

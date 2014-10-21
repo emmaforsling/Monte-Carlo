@@ -20,7 +20,7 @@ public:
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 
 	virtual glm::vec3 getIntersectedNormal();
-	void setIntersectedNormal(glm::vec3 _intersectedNormal);
+	
 private:
 	Rectangle* sides[6];
 	float size;

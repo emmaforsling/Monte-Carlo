@@ -127,6 +127,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 	std::cout << "==== studying wall (" << position.x << ", " << position.y << ", " << position.z << "), size = " << size << " ==== \n";
 	glm::vec3 intersection;
 	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
+	int wall = 666;
 	for(int i=0; i<5; i++)
 	{
 		std::cout << " - studying rectangle " << i << " - "; // << std::endl;
@@ -146,6 +147,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 			{
 				std::cout << "Detected first intersection (";
 				finalIntersection = intersection;
+				wall = i;
 				std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 
 			}
@@ -166,6 +168,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 					if( glm::length(intersection - _ray->getStartingPoint()) > glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
 						//std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
+						wall = i;
 						finalIntersection = intersection;
 					}
 					else
@@ -180,6 +183,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 					if( glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
 						//std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
+						wall = i;
 						finalIntersection = intersection;
 					}
 					else
@@ -190,6 +194,11 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 			}			
 		}
 	}
+	if(wall!=666)
+	{
+		intersectedNormal = walls[wall]->getNormal();
+		std::cout << "\n\nINTERSECTED NORMAL FOR THE WALL IS : " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << "\n\n";
+	}
 
 	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 	return finalIntersection;
@@ -197,3 +206,9 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 
 	// return glm::vec3(0.0, 0.0, 0.0);
 }
+
+glm::vec3 Wall::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+

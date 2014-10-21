@@ -118,10 +118,6 @@ glm::vec3 Cube::getIntersectedNormal()
 	return intersectedNormal;
 }
 
-void Cube::setIntersectedNormal(glm::vec3 _intersectedNormal)
-{
-	intersectedNormal = _intersectedNormal;
-}
 
 glm::vec3 Cube::calculateIntersection(Ray* _ray) 
 {
@@ -209,7 +205,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	{
 		std::cout << "The side for the final intersection point is " << side << std::endl;
 		std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
-		setIntersectedNormal(sides[side]->getNormal());
+		intersectedNormal = sides[side]->getNormal();
 	}
 		
 	

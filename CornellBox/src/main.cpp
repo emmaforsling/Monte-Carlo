@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 		=== Initializing variables ===
 	*/
 		// Eye
-	float eyeDistance = 15.0;
+	float eyeDistance = 10.0;
 	
 		// Room
 	float size = 5.0;										// also used in lightsource, for scale
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	
 		// Light
 	float radiance = 1.0;									// emitted radiance Le
-	glm::vec3 positionLight = glm::vec3(0.0, 5.0, 0.0);
+	glm::vec3 positionLight = glm::vec3(1.0, 3.0, 5.0);
 	
 		// Cube
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);
@@ -44,11 +44,11 @@ int main(int argc, char *argv[])
 	Light* lightsource = new Light(positionLight, size, radiance); 
 	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(1.0, 0.2, 0.2));
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 1.0, 0.2) );
-	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 0), radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0) );
+	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 3.25), 0.5, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0) );
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
 
 	// Create camera
-	int raysPerPixel = 4;
+	int raysPerPixel = 16;
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
 	Object* objects[4];
 	objects[0] = sphereSpecular;
 	objects[1] = sphereSpecular2;
-	objects[2] = cubeSpecular;
-	objects[3] = room;
+	objects[2] = room;
+	objects[3] = cubeSpecular;
 
 	/*
 	// super-duper test

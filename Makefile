@@ -2,7 +2,7 @@ Sources=main.cpp classes.cpp Object.cpp Ray.cpp Pixel.cpp Sphere.cpp Rectangle.c
 Executable=CornellBox
 
 CFlags=-c -std=c++11 -g -Iinc -ffloat-store
-LDFlags=
+LDFlags=-Wl,--large-address-aware
 ObjectDir=CornellBox/obj/
 SourceDir=CornellBox/src/
 BinDir=CornellBox/bin/

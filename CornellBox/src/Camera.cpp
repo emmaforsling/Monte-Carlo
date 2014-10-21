@@ -31,7 +31,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	direction = glm::vec3(0.0, 0.0, -1.0);
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
 	
-	position = glm::vec3(5.0, 2.5, 15); //oppositeWallCenterPosition - direction * _eyeDistance;
+	position = glm::vec3(2.5, 2.5, 15); //oppositeWallCenterPosition - direction * _eyeDistance;
 	
 	viewPlaneSizeX = 1;
 	viewPlaneSizeY = 1;

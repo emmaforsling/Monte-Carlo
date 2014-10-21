@@ -6,5 +6,6 @@ Thumbs.db
 /CornellBox/bin/CornellBox
 /CornellBox/bin/CornellBox.exe
 image.ppm
+diff.txt
 /CornellBox/obj/*.o
 obj/*.o

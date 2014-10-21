@@ -203,7 +203,7 @@ glm::vec3 Wall::getIntersectedNormal()
 	return intersectedNormal;
 }
 
-void setIntersectedNormal(glm::vec3 _intersectedNormal)
+void Wall::setIntersectedNormal(glm::vec3 _intersectedNormal)
 {
 	intersectedNormal = _intersectedNormal;
 }

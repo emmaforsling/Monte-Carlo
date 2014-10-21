@@ -13,6 +13,7 @@ public:
 	~Sphere();
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
+	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
 	void setIntersectedNormal(glm::vec3 _intersectedNormal);
 

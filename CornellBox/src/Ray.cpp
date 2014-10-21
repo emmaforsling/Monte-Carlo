@@ -82,6 +82,11 @@ bool Ray::isInsideObject()
 	return insideObject;
 }
 
+float Ray::getImportance()
+{
+	return importance;
+}
+
 
 /* 	Computes Le(x,theta) for the point where a ray
 	intersects a surface

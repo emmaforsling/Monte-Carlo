@@ -19,7 +19,7 @@ public:
 												// position (glm::vec3)
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);			// either one intersection or none (ray leaving)
-
+	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
 	
 	Rectangle* walls[5];

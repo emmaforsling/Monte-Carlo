@@ -19,6 +19,7 @@ public:
 	glm::vec3 getStartingPoint();
 	glm::vec3 getDirection();
 	bool isInsideObject();
+	float getImportance();
 
 	Ray* childNodes;							// maybe just one
 

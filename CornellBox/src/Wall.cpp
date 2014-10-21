@@ -197,7 +197,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 	if(wall!=666)
 	{
 		intersectedNormal = walls[wall]->getNormal();
-		std::cout << "\n\nINTERSECTED NORMAL FOR THE WALL IS : " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << "\n\n";
+		std::cout << "Normal at intersection: " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << std::endl;
 	}
 
 	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
@@ -205,6 +205,11 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 
 
 	// return glm::vec3(0.0, 0.0, 0.0);
+}
+
+float Wall::getRefractiveIndex()				// this is weird...
+{
+	return 0.0;
 }
 
 glm::vec3 Wall::getIntersectedNormal()

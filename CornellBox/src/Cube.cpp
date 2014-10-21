@@ -241,7 +241,12 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 	
 	return finalIntersection;
-}				
+}
+
+float Cube::getRefractiveIndex()
+{
+	return refractiveIndex;
+}			
 
 void Cube::calculateChildRays(glm::vec3 _intersectionPoint)
 {

@@ -53,13 +53,12 @@ int main(int argc, char *argv[])
 	// Ray test
 	Ray* ray = new Ray(glm::vec3(2.5, 5.0, 2.5), glm::vec3(0.0, -1.0, 0.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 	//sphereSpecular->calculateIntersection(ray);
-	
 
 	Object* objects[4];
-	objects[0] = room;
-	objects[1] = sphereSpecular;
-	objects[2] = sphereSpecular2;
-	objects[3] = cubeSpecular;
+	objects[0] = sphereSpecular;
+	objects[1] = sphereSpecular2;
+	objects[2] = cubeSpecular;
+	objects[3] = room;
 
 	/*
 	// super-duper test

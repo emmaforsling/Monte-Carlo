@@ -148,6 +148,11 @@ void Sphere::calculateChildRays(glm::vec3 _intersectionPoint)
 	//TODO: Write code
 }
 
+float Sphere::getRefractiveIndex()
+{
+	return refractiveIndex;
+}
+
 glm::vec3 Sphere::getIntersectedNormal()
 {
 	return intersectedNormal;

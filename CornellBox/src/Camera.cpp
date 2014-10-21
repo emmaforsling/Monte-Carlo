@@ -120,7 +120,7 @@ void Camera::saveImage()
 	glm::vec3 colorOfPixel = glm::vec3(0.0, 0.0, 0.0);
 	FILE* _file = fopen("image.ppm","w");
 	fprintf(_file, "P3\n%d %d\n%d\n", resolutionX, resolutionY, 255);
-	for(int i = 0; i < resolutionX * resolutionY; i++)
+	for(int i = (resolutionX * resolutionY)-1; i >= 0; i--)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
 		std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;

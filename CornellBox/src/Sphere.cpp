@@ -142,3 +142,13 @@ void Sphere::calculateChildRays(glm::vec3 _intersectionPoint)
 	//Here we shall change the bool insideobject
 	//TODO: Write code
 }
+
+glm::vec3 Sphere::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+
+void Sphere::setIntersectedNormal(glm::vec3 _intersectedNormal)
+{
+	intersectedNormal = _intersectedNormal;
+}

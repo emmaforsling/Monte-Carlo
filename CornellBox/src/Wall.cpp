@@ -57,9 +57,9 @@ void Wall::initializeRectangles()
 	   0 -- 1
 	*/
 	glm::vec3 WHITE = glm::vec3(1.0,1.0,1.0);
-	glm::vec3 RED = glm::vec3(1.0,0.0,0.0);
-	glm::vec3 BLUE = glm::vec3(0.0,0.0,1.0);
-	glm::vec3 GREEN = glm::vec3(0.0,1.0,0.0);
+	glm::vec3 RED = glm::vec3(0.8,0.1,0.1);
+	glm::vec3 GREEN = glm::vec3(0.1,0.8,0.1);
+	glm::vec3 BLUE = glm::vec3(0.1,0.1,0.8);
 	glm::vec3 GRAY = glm::vec3(0.5, 0.5, 0.5);
 
 	walls[0] = new Rectangle();		//left

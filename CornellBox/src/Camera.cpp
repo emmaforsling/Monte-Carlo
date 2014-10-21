@@ -30,12 +30,13 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 {	
 	direction = glm::vec3(0.0, 0.0, -1.0);
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
-	position = glm::vec3(2.5, 2.5, 15); //oppositeWallCenterPosition - direction * _eyeDistance;
+	position = /*glm::vec3(2.5, 2.5, 15); //*/oppositeWallCenterPosition - direction * _eyeDistance;
 
 	viewPlaneSizeX = 1;
 	viewPlaneSizeY = 1;
 
-	viewPlaneDistance = 1.0; //_eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
+	viewPlaneDistance = 1.0; //*/_eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
+	std::cout << viewPlaneDistance << std::endl;
 	raysPerPixel = _raysPerPixel;
 
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -87,7 +88,10 @@ int nPixels = resolutionX * resolutionY;
 				
 			}
 		}*/
-		//std::cout << "Progress: " << (i/(double)nPixels) * 100 << "%" << std::endl;
+		if(i % 100 == 0)
+		{
+			std::cout << "Progress: " << (i/(double)nPixels) * 100 << "%" << std::endl;
+		}
 	}
 	// std::cout << "color of pixels:" << std::endl;
 	for(int i = 0; i < resolutionX * resolutionY; i++)

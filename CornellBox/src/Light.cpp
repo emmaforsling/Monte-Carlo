@@ -42,10 +42,10 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 	// lightSource->positionsOfCorners[2] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
 	// lightSource->positionsOfCorners[3] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
 
-	lightSource->positionsOfCorners[0] = glm::vec3(4.0, size, 5.0);
-	lightSource->positionsOfCorners[1] = glm::vec3(5.0, size, 5.0);
-	lightSource->positionsOfCorners[2] = glm::vec3(5.0, size, 6.0);
-	lightSource->positionsOfCorners[3] = glm::vec3(4.0, size, 6.0);
+	lightSource->positionsOfCorners[0] = glm::vec3(0.0, 4.0, 5.0);
+	lightSource->positionsOfCorners[1] = glm::vec3(1.0, 4.0, 5.0);
+	lightSource->positionsOfCorners[2] = glm::vec3(1.0, 4.0, 6.0);
+	lightSource->positionsOfCorners[3] = glm::vec3(0.0, 4.0, 6.0);
 
 	position = lightSource->positionsOfCorners[0];
 

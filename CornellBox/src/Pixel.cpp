@@ -79,7 +79,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
 		int numberOfObjects = 4;								// Temporary...
-		int numberOfIterations = 10;
+		int numberOfIterations = 5;
 		int iteration = 0;
 		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)
 		{

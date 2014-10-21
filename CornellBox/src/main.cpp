@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
 	glm::vec3 positionLight = glm::vec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);
-	float sizeForCubeSpecular = 2.0;
+	glm::vec3 positionCube = glm::vec3(3.5, 0.0, 3.0);
+	float sizeForCubeSpecular = 1.0;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	*/
 	Wall* room = new Wall(positionRoom, size, glm::vec3(1.0, 0.0, 0.5));
 	Light* lightsource = new Light(positionLight, size, radiance); 
-	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(1.0, 0.2, 0.2));
+	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(0.8, 0.0, 0.6));
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 1.0, 0.2) );
 	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 3.25), 0.5, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0) );
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));

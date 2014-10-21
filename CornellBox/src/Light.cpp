@@ -37,18 +37,23 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 		The x coord and z coord should then be divided by 6 to become the lightsource
 	*/
 	lightSource = new Rectangle();		// up
-	lightSource->positionsOfCorners[0] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 - size/6.0);
-	lightSource->positionsOfCorners[1] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 - size/6.0);
-	lightSource->positionsOfCorners[2] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
-	lightSource->positionsOfCorners[3] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
+	// lightSource->positionsOfCorners[0] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 - size/6.0);
+	// lightSource->positionsOfCorners[1] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 - size/6.0);
+	// lightSource->positionsOfCorners[2] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
+	// lightSource->positionsOfCorners[3] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
+
+	lightSource->positionsOfCorners[0] = glm::vec3(4.0, size, 5.0);
+	lightSource->positionsOfCorners[1] = glm::vec3(5.0, size, 5.0);
+	lightSource->positionsOfCorners[2] = glm::vec3(5.0, size, 6.0);
+	lightSource->positionsOfCorners[3] = glm::vec3(4.0, size, 6.0);
 
 	position = lightSource->positionsOfCorners[0];
 
 	/*
-	std::cout << "Nu har jag initialiserat lampan i taket. Kolla på dessa koordinater:" << std::endl;
+	// std::cout << "Nu har jag initialiserat lampan i taket. Kolla på dessa koordinater:" << std::endl;
 	for(int j=0; j<4; j++)
 	{
-		std::cout << lightSource->positionsOfCorners[j].x << " " << lightSource->positionsOfCorners[j].y << " " << lightSource->positionsOfCorners[j].z << std::endl;
+		// std::cout << lightSource->positionsOfCorners[j].x << " " << lightSource->positionsOfCorners[j].y << " " << lightSource->positionsOfCorners[j].z << std::endl;
 	}
 	*/
 }

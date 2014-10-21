@@ -16,6 +16,8 @@ public:
 	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
 	void setIntersectedNormal(glm::vec3 _intersectedNormal);
+	virtual glm::vec3 getColor();
+	virtual int getIntersectedSide();
 
 private:
 	float radius;				
@@ -23,6 +25,7 @@ private:
 	float refractiveIndex;		//glass = 1.5, air = 1.0
 
 	glm::vec3 intersectedNormal;
+	int intersectedSide;
 };
 
 #endif

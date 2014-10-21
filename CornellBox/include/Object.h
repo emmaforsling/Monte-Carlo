@@ -14,7 +14,10 @@ public:
 	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint) = 0;
 	virtual float getRefractiveIndex() = 0;
 	virtual glm::vec3 getIntersectedNormal() = 0;
-	glm::vec3 getColor();
+
+	virtual int getIntersectedSide() = 0;
+	
+	virtual glm::vec3 getColor() = 0;
 protected:
 	glm::vec3 position;
 	glm::vec3 color;

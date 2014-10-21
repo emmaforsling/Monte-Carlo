@@ -21,6 +21,8 @@ public:
 	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
 	
+	virtual int getIntersectedSide();
+	virtual glm::vec3 getColor();
 private:
 	Rectangle* sides[6];
 	float size;
@@ -28,6 +30,7 @@ private:
 	float refractiveIndex;
 
 	glm::vec3 intersectedNormal;
+	int intersectedSide;
 };
 
 #endif

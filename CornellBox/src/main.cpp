@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	/*
 		=== Creating Scene ===
 	*/
-	Wall* room = new Wall(positionRoom, size, glm::vec3(1.0, 1.0, 1.0));
+	Wall* room = new Wall(positionRoom, size, glm::vec3(1.0, 0.0, 0.5));
 	Light* lightsource = new Light(positionLight, size, radiance); 
 	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(1.0, 0.2, 0.2));
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 1.0, 0.2) );

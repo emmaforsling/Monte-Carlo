@@ -87,6 +87,8 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			{
 				// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
 				glm::vec3 normal = _objects[j]->getIntersectedNormal();
+				int intersectedSide = _objects[j]->getIntersectedSide(); //is used primarily for walls
+			
 				intersectionPoints[j] = _objects[j]->calculateIntersection(rays[i]);
 				if( glm::length(finalIntersection) == 0)			// first encountered object
 				{
@@ -139,8 +141,16 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 						}
 					}
 				}
-				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
-				// std::cout << "colorOfPixel += " << currentChildRay->getImportance()/2.0f << " * " << intersectionPointVisibleFromLightSource << " * (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;
+				if(_objects[2]) //walls
+				{
+					colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
+				}
+				else
+				{
+					colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
+					// std::cout << "colorOfPixel += " << currentChildRay->getImportance()/2.0f << " * " << intersectionPointVisibleFromLightSource << " * (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;	
+				}
+				
 				// calculating child rays
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			}

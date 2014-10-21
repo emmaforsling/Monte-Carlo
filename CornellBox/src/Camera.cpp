@@ -31,7 +31,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	direction = glm::vec3(0.0, 0.0, -1.0);
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
 	
-	position = glm::vec3(5.0, 2.5, 15); //oppositeWallCenterPosition - direction * _eyeDistance;
+	position = glm::vec3(7.5, 7.5, 25); //oppositeWallCenterPosition - direction * _eyeDistance;
 	
 	viewPlaneSizeX = 1;
 	viewPlaneSizeY = 1;
@@ -74,10 +74,10 @@ void Camera::renderImage(Object** _objects, Light* _light)
 
 int nPixels = resolutionX * resolutionY;
 
-	for(int i = 0; i < resolutionX * resolutionY; i++)
+	for(int i = 0; i < resolutionX * resolutionY ; i++)
 	{
 		// // std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
-		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, (i/(int)resolutionY) / (float)resolutionY + viewPlaneCorner0.y, viewPlanePosZ);
+		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, viewPlaneCorner3.y - (i/(int)resolutionY) / (float)resolutionY , viewPlanePosZ);
 		// // std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
 		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects, _light);
 
@@ -88,7 +88,7 @@ int nPixels = resolutionX * resolutionY;
 				
 			}
 		}*/
-		std::cout << "Progress: " << (i/(double)nPixels) * 100 << "%" << std::endl;
+		//std::cout << "Progress: " << (i/(double)nPixels) * 100 << "%" << std::endl;
 	}
 	// std::cout << "color of pixels:" << std::endl;
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -123,7 +123,7 @@ void Camera::saveImage()
 	glm::vec3 colorOfPixel = glm::vec3(0.0, 0.0, 0.0);
 	FILE* _file = fopen("image.ppm","w");
 	fprintf(_file, "P3\n%d %d\n%d\n", resolutionX, resolutionY, 255);
-	for(int i = (resolutionX * resolutionY)-1; i >= 0; i--)
+	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
 		// std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;

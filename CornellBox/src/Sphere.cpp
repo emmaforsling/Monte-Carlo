@@ -166,7 +166,18 @@ glm::vec3 Sphere::getIntersectedNormal()
 	return intersectedNormal;
 }
 
+int Sphere::getIntersectedSide()
+{
+	intersectedSide = 666;
+	return intersectedSide;
+}
+
 void Sphere::setIntersectedNormal(glm::vec3 _intersectedNormal)
 {
 	intersectedNormal = _intersectedNormal;
+}
+
+glm::vec3 Sphere::getColor()
+{
+	return color;
 }

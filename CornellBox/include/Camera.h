@@ -27,8 +27,8 @@ private:
 	float viewPlaneDistance;
 	int viewPlaneSizeX;
 	int viewPlaneSizeY;
-	static const int resolutionX = 1080;
-	static const int resolutionY = 1080;
+	static const int resolutionX = 500;
+	static const int resolutionY = 500;
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
 

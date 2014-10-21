@@ -21,12 +21,15 @@ public:
 	virtual glm::vec3 calculateIntersection(Ray* _ray);		// either one intersection or none (ray leaving)
 	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
+	virtual glm::vec3 getColor();
+	virtual int getIntersectedSide();
 	
 	Rectangle* walls[5];
 	float size;
 
 private:
 	glm::vec3 intersectedNormal;
+	int intersectedSide;
 };
 
 #endif

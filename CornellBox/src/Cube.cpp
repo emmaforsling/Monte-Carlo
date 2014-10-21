@@ -14,7 +14,7 @@
 
 /* Default Constructor */
 Cube::Cube()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0)) //position, color
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -206,6 +206,8 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 		//// std::cout << "The side for the final intersection point is " << side << std::endl;
 		//// std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
 		intersectedNormal = sides[side]->getNormal();
+		intersectedSide = side;
+
 	}
 		
 	
@@ -241,6 +243,15 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	// std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 	
 	return finalIntersection;
+}
+glm::vec3 Cube::getColor()
+{
+	return color;
+}
+
+int Cube::getIntersectedSide()
+{
+	return intersectedSide;
 }
 
 float Cube::getRefractiveIndex()

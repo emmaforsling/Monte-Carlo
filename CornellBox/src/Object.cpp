@@ -17,7 +17,7 @@ Object::~Object()
 	
 }
 
-glm::vec3 Object::getColor()
-{
-	return color;
-}
+// glm::vec3 Object::getColor()
+// {
+// 	return color;
+// }

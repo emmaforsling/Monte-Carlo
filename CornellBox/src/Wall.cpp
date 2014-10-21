@@ -34,6 +34,7 @@ Wall::Wall(glm::vec3 _position, float _size, glm::vec3 _color)
 	walls[3] = nullptr;
 	walls[4] = nullptr;
 
+	color = _color;
 	initializeRectangles();
 	
 }
@@ -57,8 +58,8 @@ void Wall::initializeRectangles()
 	*/
 	glm::vec3 WHITE = glm::vec3(1.0,1.0,1.0);
 	glm::vec3 RED = glm::vec3(1.0,0.0,0.0);
-	glm::vec3 BLUE = glm::vec3(0.0,1.0,0.0);
-	glm::vec3 GREEN = glm::vec3(0.0,0.0,1.0);
+	glm::vec3 BLUE = glm::vec3(0.0,0.0,1.0);
+	glm::vec3 GREEN = glm::vec3(0.0,1.0,0.0);
 	glm::vec3 GRAY = glm::vec3(0.5, 0.5, 0.5);
 
 	walls[0] = new Rectangle();		//left
@@ -66,46 +67,46 @@ void Wall::initializeRectangles()
 	walls[0]->positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0) + position;
 	walls[0]->positionsOfCorners[2] = glm::vec3(0.0, size, 0.0) + position;
 	walls[0]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
-	walls[0]->setColor(GREEN); 	//green
+	walls[0]->setColor(BLUE);
 
 	walls[1] = new Rectangle();		//up
 	walls[1]->positionsOfCorners[0] = glm::vec3(0.0, size, 0.0) + position;
 	walls[1]->positionsOfCorners[1] = glm::vec3(size, size, 0.0) + position;
 	walls[1]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
 	walls[1]->positionsOfCorners[3] = glm::vec3(0.0, size, size) + position;
-	walls[1]->setColor(WHITE); 	//white
+	walls[1]->setColor(WHITE);
 
 	walls[2] = new Rectangle();		//right
 	walls[2]->positionsOfCorners[0] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[2]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
 	walls[2]->positionsOfCorners[2] = glm::vec3(size, size, size) + position;
 	walls[2]->positionsOfCorners[3] = glm::vec3(size, size, 0.0) + position;
-	walls[2]->setColor(RED); 	//red
+	walls[2]->setColor(RED);
 
 	walls[3] = new Rectangle();		//down
 	walls[3]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, size) + position;
 	walls[3]->positionsOfCorners[1] = glm::vec3(size, 0.0, size) + position;
 	walls[3]->positionsOfCorners[2] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[3]->positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0) + position;
-	walls[3]->setColor(WHITE); 	//white
+	walls[3]->setColor(GREEN);
 
 	walls[4] = new Rectangle();		//back
 	walls[4]->positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[1] = glm::vec3(size, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[2] = glm::vec3(size, size, 0.0) + position;
 	walls[4]->positionsOfCorners[3] = glm::vec3(0.0, size, 0.0) + position;
-	walls[4]->setColor(GRAY); 	//white
-	/*
+	walls[4]->setColor(GRAY);
+	
 	// std::cout << "Nu har jag initialiserat alla sidor på rummet! Titta så fina:" << std::endl;
 	for(int i=0; i<5; i++)
 	{
+		std::cout << "Vägg " << i << std::endl;
 		for(int j=0; j<4; j++)
 		{
-			// std::cout << "Vägg " << j << std::endl;
-			// std::cout << walls[i]->positionsOfCorners[j].x << " " << walls[i]->positionsOfCorners[j].y << " " << walls[i]->positionsOfCorners[j].z << std::endl;
+			std::cout << walls[i]->positionsOfCorners[j].x << " " << walls[i]->positionsOfCorners[j].y << " " << walls[i]->positionsOfCorners[j].z << std::endl;
 		}
 	}
-	*/
+	
 }
 
 void Wall::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
@@ -205,6 +206,7 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 	if(wall!=666)
 	{
 		intersectedNormal = walls[wall]->getNormal();
+		intersectedSide = wall;
 		// std::cout << "Normal at intersection: " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << std::endl;
 	}
 
@@ -225,3 +227,12 @@ glm::vec3 Wall::getIntersectedNormal()
 	return intersectedNormal;
 }
 
+int Wall::getIntersectedSide()
+{
+	return intersectedSide;
+}
+
+glm::vec3 Wall::getColor()
+{
+	return walls[intersectedSide]->getColor();
+}

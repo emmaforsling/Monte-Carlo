@@ -197,3 +197,13 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 
 	// return glm::vec3(0.0, 0.0, 0.0);
 }
+
+glm::vec3 Wall::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+
+void setIntersectedNormal(glm::vec3 _intersectedNormal)
+{
+	intersectedNormal = _intersectedNormal;
+}

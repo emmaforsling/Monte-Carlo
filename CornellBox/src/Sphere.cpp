@@ -93,19 +93,22 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	delta = b*b - 4*a*c;
 	
 	// std::cout << "delta = " << delta << std::endl;
-	
+	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 	if(delta<0)	//no intersection
-	{
+	{	
 		std::cout << " - NO INTERSECTIONS - " << std::endl;
-		return glm::vec3(0.0,0.0,0.0); //no intersection
+		intersectedNormal = glm::vec3(0.0,0.0,0.0);
+		return finalIntersection; //no intersection
 	}
 	else if(delta == 0)	//single intersection
 	{
 		std::cout << " - ONE INTERSECTION - " << std::endl;
 		t = -b/(2*a);
+		finalIntersection = t * direction;
 		//std::cout << "t = " << t << std::endl;
 		//std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
-		return t * direction; //returns the point where it intersects
+		intersectedNormal = (finalIntersection - centerPoint)/radius;
+		return finalIntersection; //returns the point where it intersects
 	}
 	else //if(delta>0)	//two intersections
 	{
@@ -117,22 +120,24 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		//std::cout << "t2 = " << t2 << std::endl;
 		if(_ray->isInsideObject())			//if true
 		{
-			glm::vec3 tmp;
-			tmp.x = startingPoint.x + std::max(t1,t2) * direction.x;
-			tmp.y = startingPoint.y + std::max(t1,t2) * direction.y;
-			tmp.z = startingPoint.z + std::max(t1,t2) * direction.z;
-			//std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
-			return tmp;
+			
+			finalIntersection.x = startingPoint.x + std::max(t1,t2) * direction.x;
+			finalIntersection.y = startingPoint.y + std::max(t1,t2) * direction.y;
+			finalIntersection.z = startingPoint.z + std::max(t1,t2) * direction.z;
+			//std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
+			intersectedNormal = (finalIntersection - centerPoint)/radius;
+			return finalIntersection;
 		}	
 		else
 		{
-			glm::vec3 tmp;
-			tmp.x = startingPoint.x + std::min(t1,t2) * direction.x;
-			tmp.y = startingPoint.y + std::min(t1,t2) * direction.y;
-			tmp.z = startingPoint.z + std::min(t1,t2) * direction.z;
-			//std::cout << "Returning glm::vec3(" << tmp.x << ", " << tmp.y << ", " << tmp.z << ")"<< std::endl;
+			glm::vec3 finalIntersection;
+			finalIntersection.x = startingPoint.x + std::min(t1,t2) * direction.x;
+			finalIntersection.y = startingPoint.y + std::min(t1,t2) * direction.y;
+			finalIntersection.z = startingPoint.z + std::min(t1,t2) * direction.z;
+			//std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			//return startingPoint + std::min(t1,t2) * direction;
-			return tmp;
+			intersectedNormal = (finalIntersection - centerPoint)/radius;
+			return finalIntersection;
 		}			
 	}
 }
@@ -141,4 +146,14 @@ void Sphere::calculateChildRays(glm::vec3 _intersectionPoint)
 {
 	//Here we shall change the bool insideobject
 	//TODO: Write code
+}
+
+glm::vec3 Sphere::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+
+void Sphere::setIntersectedNormal(glm::vec3 _intersectedNormal)
+{
+	intersectedNormal = _intersectedNormal;
 }

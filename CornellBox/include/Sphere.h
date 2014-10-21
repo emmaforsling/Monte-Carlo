@@ -13,11 +13,15 @@ public:
 	~Sphere();
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
-	virtual glm::vec3 getIntersectedNormal(){return glm::vec3(0.0,0.0,0.0);};
+	virtual glm::vec3 getIntersectedNormal();
+	void setIntersectedNormal(glm::vec3 _intersectedNormal);
+
 private:
 	float radius;				
 	bool transparent;			//true = transparent, false = not transparent
 	float refractiveIndex;		//glass = 1.5, air = 1.0
+
+	glm::vec3 intersectedNormal;
 };
 
 #endif

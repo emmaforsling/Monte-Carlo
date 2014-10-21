@@ -74,7 +74,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		//std::cout << "ger riktning: (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
 
 		//
-		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, colorOfPixel, false);
+		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
 		glm::vec3 intersectionPoints[4];						// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
@@ -139,15 +139,20 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 						}
 					}
 				}
+				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
+				std::cout << "colorOfPixel += " << currentChildRay->getImportance()/2.0f << " * " << intersectionPointVisibleFromLightSource << " * (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;
 				// calculating child rays
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			}
 		}
 	}
+
 	// TODO: Write code
 	// 1. Generate Camera::raysPerPixel random directions, and launch a new Ray into these.
 	// 2. Append the new rays to Pixel::rays
 	// 3. colorOfPixel += rays[i]->calculateColor()
+
+	std::cout << "\n\n =-._.-=-._.-=  colorOfPixel = (" << colorOfPixel.x << ", " << colorOfPixel.y << ", " << colorOfPixel.z << ")" << std::endl << std::endl;
 }
 
 glm::vec3 Pixel::getColorOfPixel()

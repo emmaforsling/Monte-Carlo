@@ -10,7 +10,7 @@
 
 /* Default Constructor */
 Wall::Wall()
-: Object(glm::vec3(0.0, 0.0, 0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0))
 {
 	// position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0.0;
@@ -22,8 +22,8 @@ Wall::Wall()
 	walls[4] = nullptr;
 }
 
-Wall::Wall(glm::vec3 _position, float _size)
-: Object(_position)
+Wall::Wall(glm::vec3 _position, float _size, glm::vec3 _color)
+: Object(_position, _color)
 {
 	// position = _position;
 	size = _size;
@@ -115,25 +115,25 @@ void Wall::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMP
 	std::cout << "====== Reflection/refraction =====" << std::endl;
 	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
 	std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
-	
-	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
+
+	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }
 
-/* either one intersection or none (ray leaving) */				
+/* either one intersection or none (ray leaving) */
 glm::vec3 Wall::calculateIntersection(Ray* _ray)
 {
 	//TODO: Write code
 	/*
 		To calculate the intesection point for the Wall,
-		first calculate the intersection point for a plane, 
+		first calculate the intersection point for a plane,
 		then see if the intersection point on the plane is within the wall
 
-		The approach for determine the intersection point for a plane 
-		is the same that is used in Rectangle. 
+		The approach for determine the intersection point for a plane
+		is the same that is used in Rectangle.
 	*/
 	std::cout << "==== studying wall (" << position.x << ", " << position.y << ", " << position.z << "), size = " << size << " ==== \n";
 	glm::vec3 intersection;
-	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
+	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 	int wall = 666;
 	for(int i=0; i<5; i++)
 	{

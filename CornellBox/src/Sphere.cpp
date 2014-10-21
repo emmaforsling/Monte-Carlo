@@ -12,7 +12,7 @@
 
 /* Default Constructor */
 Sphere::Sphere()
-: Object(glm::vec3(0.0,0.0,0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0 ,0.0))
 {
 	radius = 0.0;
 	transparent = false;
@@ -20,8 +20,8 @@ Sphere::Sphere()
 }
 
 /* The real del constructor */
-Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex)
-: Object(_position)
+Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color)
+: Object(_position, _color)
 {
 	radius = _radius;
 	transparent = _transparent;
@@ -153,7 +153,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TE
 	glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
+	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }
 
 float Sphere::getRefractiveIndex()

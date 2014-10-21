@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	
 		// Cube
 	glm::vec3 positionCube = glm::vec3(0.0, 0.0, 0.0);
-	float sizeForCubeSpecular = 3.0;
+	float sizeForCubeSpecular = 2.0;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
@@ -40,15 +40,15 @@ int main(int argc, char *argv[])
 	/*
 		=== Creating Scene ===
 	*/
-	Wall* room = new Wall(positionRoom, size);
+	Wall* room = new Wall(positionRoom, size, glm::vec3(1.0, 1.0, 1.0));
 	Light* lightsource = new Light(positionLight, size, radiance); 
-	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular);
-	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular );
-	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 0), radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular );
-	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent);
+	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(1.0, 0.2, 0.2));
+	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 1.0, 0.2) );
+	Sphere* sphereSpecular2 = new Sphere(glm::vec3(2.5, 2.5, 0), radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0) );
+	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
 
 	// Create camera
-	int raysPerPixel = 1;
+	int raysPerPixel = 4;
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 	camera->renderImage(objects, lightsource);
 
 	// Write to file
-	//camera->saveImage();
+	camera->saveImage();
 
 	return 0;
 }

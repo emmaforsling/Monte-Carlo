@@ -8,14 +8,16 @@ class Object
 {
 public:
 	Object();
-	Object(glm::vec3 _position);
+	Object(glm::vec3 _position, glm::vec3 _color);
 	~Object();
 	virtual glm::vec3 calculateIntersection(Ray* _ray) = 0;
 	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint) = 0;
 	virtual float getRefractiveIndex() = 0;
 	virtual glm::vec3 getIntersectedNormal() = 0;
+	glm::vec3 getColor();
 protected:
 	glm::vec3 position;
+	glm::vec3 color;
 };
 
 #endif

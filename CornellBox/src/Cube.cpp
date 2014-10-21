@@ -14,7 +14,7 @@
 
 /* Default Constructor */
 Cube::Cube()
-: Object(glm::vec3(0.0, 0.0, 0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0))
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -29,8 +29,8 @@ Cube::Cube()
 	refractiveIndex = 0.0;
 }
 
-Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex)
-: Object(_position)
+Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color)
+: Object(_position, _color)
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -259,5 +259,5 @@ void Cube::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMP
 	glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
+	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }

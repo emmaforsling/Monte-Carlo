@@ -11,7 +11,7 @@ class Wall : public Object
 {
 public:
 	Wall();
-	Wall(glm::vec3 _position, float _size);
+	Wall(glm::vec3 _position, float _size, glm::vec3 _color);
 	~Wall();
 	void initializeRectangles();							// sets corners of rectangles to (0,0,0),
 															// (1,0,0), (0,1,0) etc. and multiplies

@@ -87,6 +87,10 @@ float Ray::getImportance()
 	return importance;
 }
 
+glm::vec3 Ray::getColor(){
+	return color;
+}
+
 
 /* 	Computes Le(x,theta) for the point where a ray
 	intersects a surface

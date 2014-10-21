@@ -10,7 +10,7 @@ class Cube : public Object
 {
 public:
 	Cube();
-	Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex);
+	Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color);
 	~Cube();
 	void initializeRectangles();				// sets corners of rectangles to (0,0,0),
 												// (1,0,0), (0,1,0) etc. and multiplies

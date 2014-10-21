@@ -9,7 +9,7 @@ class Sphere : public Object
 {
 public:
 	Sphere();
-	Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex);
+	Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color);
 	~Sphere();
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);

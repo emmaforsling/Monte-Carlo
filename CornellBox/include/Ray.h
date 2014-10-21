@@ -20,6 +20,7 @@ public:
 	glm::vec3 getDirection();
 	bool isInsideObject();
 	float getImportance();
+	glm::vec3 getColor();
 
 	Ray* childNodes;							// maybe just one
 

@@ -87,6 +87,11 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		}*/
 			
 	}
+	std::cout << "color of pixels:" << std::endl;
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		std::cout << "(" << pixels[i]->getColorOfPixel().x << ", " << pixels[i]->getColorOfPixel().y << ", " << pixels[i]->getColorOfPixel().z << ")" << std::endl;
+	}
 	// TODO: Write code
 	// "pixels[i]->calculateIntersections" 
 }
@@ -118,6 +123,7 @@ void Camera::saveImage()
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
-		fprintf(_file,"%d %d %d", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
+		std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
+ 		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
 	}
 }

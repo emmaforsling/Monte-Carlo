@@ -107,9 +107,16 @@ void Wall::initializeRectangles()
 	*/
 }
 
-void Wall::calculateChildRays(glm::vec3 _intersectionPoint)
+void Wall::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
 {
+	// Russian Roulette
+	std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
+	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
+	std::cout << "====== Reflection/refraction =====" << std::endl;
+	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
 	
+	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
 }
 
 /* either one intersection or none (ray leaving) */				

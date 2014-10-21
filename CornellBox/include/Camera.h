@@ -15,11 +15,11 @@ public:
 	Camera();
 	Camera(Wall* _room, float _eyeDistance, int _raysPerPixel);
 	~Camera();
-	void renderImage(Object** _objects, Light* _light);		// Loops over all pixels and computes
-												// their values.
-	void mappingFunction();						// Converts radiometric values into
-												// photometric ones.
-	void saveImage();							// Alternatively displayImage()
+	void renderImage(Object** _objects, Light* _light);		// - Loops over all pixels and computes
+															//   their values.
+	void mappingFunction();									// - Converts radiometric values into
+															//   photometric ones.
+	void saveImage();										// - Alternatively displayImage()
 
 private:
 	glm::vec3 position;

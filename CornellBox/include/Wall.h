@@ -13,12 +13,12 @@ public:
 	Wall();
 	Wall(glm::vec3 _position, float _size);
 	~Wall();
-	void initializeRectangles();				// sets corners of rectangles to (0,0,0),
-												// (1,0,0), (0,1,0) etc. and multiplies
-												// them by size (float) and adds the
-												// position (glm::vec3)
-	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
-	virtual glm::vec3 calculateIntersection(Ray* _ray);			// either one intersection or none (ray leaving)
+	void initializeRectangles();							// sets corners of rectangles to (0,0,0),
+															// (1,0,0), (0,1,0) etc. and multiplies
+															// them by size (float) and adds the
+															// position (glm::vec3)
+	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
+	virtual glm::vec3 calculateIntersection(Ray* _ray);		// either one intersection or none (ray leaving)
 	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();
 	

@@ -16,7 +16,7 @@ public:
 												// (1,0,0), (0,1,0) etc. and multiplies
 												// them by size (float) and adds the
 												// position (glm::vec3)
-	virtual void calculateChildRays(glm::vec3 _intersectionPoint);
+	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	virtual float getRefractiveIndex();
 	virtual glm::vec3 getIntersectedNormal();

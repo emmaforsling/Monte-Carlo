@@ -79,7 +79,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
 		int numberOfObjects = 4;								// Temporary...
-		int numberOfIterations = 10;
+		int numberOfIterations = 5;
 		int iteration = 0;
 		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)
 		{
@@ -120,39 +120,27 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 				Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 				// looping through all objects to check for occlusion
 				glm::vec3 shadowIntersection;
-				std::cout << "\n ====== Checking for occlusion ===== \n" << std::endl;
+				std::cout << "\n= Checking for occlusion. p = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << "), l = (" << randomPositionOnLightSource.x << ", " << randomPositionOnLightSource.y << ", " << randomPositionOnLightSource.z << ") =\n" << std::endl;
 				for(int j = 0; j < numberOfObjects; j++)
 				{
 					shadowIntersection = _objects[j]->calculateIntersection(shadowRay);
 					// std::cout << "objects[" << j << "]->calculateIntersection(shadowRay) returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
 					if( shadowIntersection != glm::vec3(0.0, 0.0, 0.0) )
 					{	
-						std::cout << "Found intersection along shadowRay direction!" << std::endl;
-						if( glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - finalIntersection) )
+						//std::cout << "Found intersection along shadowRay direction!" << std::endl;
+						if( glm::length(randomPositionOnLightSource - shadowIntersection) != 0 && glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - finalIntersection) )
 						{
 							intersectionPointVisibleFromLightSource = 0;
-							std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is closer to the light source than the surface point is - occlusion!" << std::endl;
+							std::cout << "Intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") closer to the light source - occlusion!" << std::endl;
 						}
 						else
 						{
-							std::cout << "This intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") is not closer to the light source than the surface point is - no occlusion!" << std::endl;
+							std::cout << "Intersection point " << "(" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ") not closer to the light source - no occlusion!" << std::endl;
 						}
 					}
 				}
-				// std::cout << "Calculating child rays for intersection point " << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << std::endl;
-				
-				// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
-				std::cout << "\n ====== Reflection/refraction ===== \n" << std::endl;
-				glm::vec3 reflectedRay = glm::reflect(currentChildRay->getDirection(), _objects[closestIntersectedObjectIndex]->getIntersectedNormal());
-				std::cout << "reflection = (" << reflectedRay.x << ", " << reflectedRay.y << ", " << reflectedRay.z << ")" << std::endl;
-
-				glm::vec3 refractedRay = glm::refract( currentChildRay->getDirection(), _objects[closestIntersectedObjectIndex]->getIntersectedNormal(), _objects[closestIntersectedObjectIndex]->getRefractiveIndex() );
-				std::cout << "refraction = (" << refractedRay.x << ", " << refractedRay.y << ", " << refractedRay.z << ")" << std::endl;
-
-				currentChildRay->childNodes = new Ray(finalIntersection, reflectedRay, currentChildRay->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
-
-				// _objects[closestIntersectedObjectIndex]->calculateChildRays(finalIntersection);
-
+				// calculating child rays
+				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			}
 		}
 	}

@@ -48,7 +48,8 @@ int main(int argc, char *argv[])
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent);
 
 	// Create camera
-	Camera* camera = new Camera(room, eyeDistance, 4);
+	int raysPerPixel = 1;
+	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
 	Ray* ray = new Ray(glm::vec3(2.5, 5.0, 2.5), glm::vec3(0.0, -1.0, 0.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);

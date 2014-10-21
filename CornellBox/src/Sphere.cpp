@@ -142,10 +142,18 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	}
 }
 
-void Sphere::calculateChildRays(glm::vec3 _intersectionPoint)
+void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
 {
-	//Here we shall change the bool insideobject
-	//TODO: Write code
+	std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
+	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
+	std::cout << "====== Reflection/refraction =====" << std::endl;
+	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
+
+	glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+	std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
+
+	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), glm::vec3(0.0, 0.0, 0.0), false);
 }
 
 float Sphere::getRefractiveIndex()

@@ -109,6 +109,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
 		}
 	}
+	std::cout << "Progress: 100%" << std::endl;
 	// // std::cout << "color of pixels:" << std::endl;
 	// for(int i = 0; i < numberOfPixels; i++)
 	// {

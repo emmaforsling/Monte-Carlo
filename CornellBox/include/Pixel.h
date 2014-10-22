@@ -21,7 +21,7 @@ public:
 	glm::vec3 getColorOfPixel();
 
 private:
-	static const int raysPerPixel = 16;
+	static const int raysPerPixel = 4;
 	Ray* rays[raysPerPixel];
 	glm::vec3 colorOfPixel;						// vec4 for alpha?
 	glm::vec3 position;

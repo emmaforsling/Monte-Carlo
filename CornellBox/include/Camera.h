@@ -9,6 +9,8 @@
 #include "Wall.h"
 #include "Light.h"
 
+#include <omp.h>
+
 class Camera
 {
 public:

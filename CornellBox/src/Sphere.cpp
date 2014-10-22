@@ -68,12 +68,12 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
 	glm::vec3 direction = _ray->getDirection();
-	// std::cout << "==== studying sphere (" << position.x << ", " << position.y << ", " << position.z << "), r = " << radius << " ==== "; //\n";
-	//// std::cout << "starting point of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
-	//// std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
+	// // std::cout << "==== studying sphere (" << position.x << ", " << position.y << ", " << position.z << "), r = " << radius << " ==== "; //\n";
+	//// // std::cout << "starting point of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
+	//// // std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;
-	//// std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
-	//// std::cout << ", radius of sphere: " << radius << std::endl;
+	//// // std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
+	//// // std::cout << ", radius of sphere: " << radius << std::endl;
 
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
@@ -88,31 +88,31 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		(startingPoint.z - centerPoint.z)*(startingPoint.z - centerPoint.z)
 		- radius*radius;
 
-	// // std::cout << "a = " << a << "\nb = " << b << "\nc = "<< c << std::endl;
+	// // // std::cout << "a = " << a << "\nb = " << b << "\nc = "<< c << std::endl;
 	// calculates delta
 	delta = b*b - 4*a*c;
 	
-	// // std::cout << "delta = " << delta << std::endl;
+	// // // std::cout << "delta = " << delta << std::endl;
 	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 	if(delta<0)	//no intersection
 	{	
-		// std::cout << " - NO INTERSECTIONS - " << std::endl;
+		// // std::cout << " - NO INTERSECTIONS - " << std::endl;
 		intersectedNormal = glm::vec3(0.0,0.0,0.0);
 		return finalIntersection; //no intersection
 	}
 	else if(delta == 0)	//single intersection
 	{
-		// std::cout << " - ONE INTERSECTION - " << std::endl;
+		// // std::cout << " - ONE INTERSECTION - " << std::endl;
 		t = -b/(2*a);
 		finalIntersection = t * direction;
-		//// std::cout << "t = " << t << std::endl;
-		//// std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
+		//// // std::cout << "t = " << t << std::endl;
+		//// // std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
 		intersectedNormal = (finalIntersection - centerPoint)/radius;
 		return finalIntersection; //returns the point where it intersects
 	}
 	else //if(delta>0)	//two intersections
 	{
-		// std::cout << " - TWO INTERSECTIONS - " << std::endl;
+		// // std::cout << " - TWO INTERSECTIONS - " << std::endl;
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
@@ -127,7 +127,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			finalIntersection.x = startingPoint.x + max_t * direction.x;
 			finalIntersection.y = startingPoint.y + max_t * direction.y;
 			finalIntersection.z = startingPoint.z + max_t * direction.z;
-			//// std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
+			//// // std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;
 			return finalIntersection;
 		}	
@@ -147,7 +147,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 				finalIntersection.z = startingPoint.z + max_t * direction.z;
 			}
 			
-			//// std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
+			//// // std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			//return startingPoint + std::min(t1,t2) * direction;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;
 			return finalIntersection;
@@ -157,14 +157,14 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
 {
-	// std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
+	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
-	// std::cout << "====== Reflection/refraction =====" << std::endl;
+	// // std::cout << "====== Reflection/refraction =====" << std::endl;
 	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
-	// std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
+	// // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
 
 	glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
-	// std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
+	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
 	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }

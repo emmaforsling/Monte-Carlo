@@ -47,7 +47,7 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 
 
 	viewPlaneDistance = /*2.0; //*/(_eyeDistance - _room->size) * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
-	//std::cout << viewPlaneDistance << std::endl;
+	//// std::cout << viewPlaneDistance << std::endl;
 	raysPerPixel = _raysPerPixel;
 
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -56,8 +56,8 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 		pixels[i] = new Pixel(raysPerPixel);
 	}
 	
-	// // std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
-	// // std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
+	// // // std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
+	// // // std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
 }
 
 /* Destructor */
@@ -86,31 +86,33 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	glm::vec3 viewPlaneCorner3 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
 	
 	float pixelSize = viewPlaneSizeX / (float)resolutionX;			// or viewPlaneSizeY / resolutionY
-	// // std::cout << "pixelSize = " << pixelSize << std::endl;
+	// // // std::cout << "pixelSize = " << pixelSize << std::endl;
 	glm::vec3 pixelPosition;
 
 	int numberOfPixels = resolutionX * resolutionY;
 
 	for(int i = 0; i < numberOfPixels ; i++)
 	{
-		std::cout << "PIXEL: " << i << "\n\n";
-		// // std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
+		/*
+		std::cout << "\n ====== pixel " << i << " ====== \n\n";
+		*/
+		// // // std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
 		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, viewPlaneCorner3.y - (i/(int)resolutionY) / (float)resolutionY , viewPlanePosZ);
-		// // std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
+		// // // std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
 		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects, _light);
 
 		/* 
 			Progress bar 
 		*/
-		// if(i % 100 == 0)
-		// {
-		// 	std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
-		// }
+		if(i % 100 == 0)
+		{
+			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
+		}
 	}
-	// std::cout << "color of pixels:" << std::endl;
+	// // std::cout << "color of pixels:" << std::endl;
 	// for(int i = 0; i < numberOfPixels; i++)
 	// {
-	// 	// std::cout << "(" << pixels[i]->getColorOfPixel().x << ", " << pixels[i]->getColorOfPixel().y << ", " << pixels[i]->getColorOfPixel().z << ")" << std::endl;
+	// 	// // std::cout << "(" << pixels[i]->getColorOfPixel().x << ", " << pixels[i]->getColorOfPixel().y << ", " << pixels[i]->getColorOfPixel().z << ")" << std::endl;
 	// }
 	// "pixels[i]->calculateIntersections" 
 }
@@ -142,7 +144,7 @@ void Camera::saveImage()
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
-		// std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
+		// // std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
  		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
 	}
 }

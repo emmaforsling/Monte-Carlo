@@ -48,10 +48,6 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 	srand(time(NULL));
 	for(int i = 0; i < _raysPerPixel; i++)
 	{
-		/*
-		std::cout << " - Ray " << i << " -" << std::endl;
-		*/
-
 		// Calculating random point on the pixel
 		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
 		randomPointY = _pixelPosition.y + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
@@ -65,22 +61,17 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 4;																		// temporary...
-		int numberOfIterations = 5;																		// number of children
+		int numberOfIterations = 10;																	// number of children
 		int iteration = 1;
+		
 		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)
 		{
 			// resetting finalIntersection for each iteration
 			finalIntersection = glm::vec3(0.0, 0.0, 0.0);		
-			/*
-			std::cout << "-Ray iteration " << iteration << "-" << std::endl;
-			*/
-			
+
 			// looping through objects to find intersections
 			for(int j = 0; j < numberOfObjects; j++)
-			{
-				/*
-				std::cout << "-Object " << j << "-" << std::endl;
-				*/				
+			{			
 				intersectionPoints[j] = _objects[j]->calculateIntersection(currentChildRay);
 				glm::vec3 normal = _objects[j]->getIntersectedNormal();
 				int intersectedSide = _objects[j]->getIntersectedSide(); 								// is used primarily for walls
@@ -88,29 +79,16 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 				// if an intersection has been found && no previous intersections have been stored (first encountered object)
 				if(glm::length(intersectionPoints[j]) != 0 && glm::length(finalIntersection) == 0)
 				{
-					/*
-					std::cout << "The first encountered object" << std::endl;
-					*/
 					finalIntersection = intersectionPoints[j];
 					currentChildRay->intersectionPoint = intersectionPoints[j];
 					closestIntersectedObjectIndex = j;
-					/*
-					std::cout << "Intersection at (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
-					*/
 				}
 				// if an intersection has been found + not the first encountered object && not the object with the starting point of the ray (encountered another object)
 				else if(glm::length(intersectionPoints[j]) != 0 && intersectionPoints[j] != currentChildRay->getStartingPoint())
 				{
-					/*
-					std::cout << "Encountered another object (not the ray starting point object)" << std::endl;
-					std::cout << "Intersection at (" << intersectionPoints[j].x << ", " << intersectionPoints[j].y << ", " << intersectionPoints[j].z << ")" << std::endl;
-					*/
 					// if new intersection point is closer to the ray origin than any found on previous objects
 					if( glm::length(intersectionPoints[j] - currentChildRay->getStartingPoint()) < glm::length(finalIntersection - currentChildRay->getStartingPoint()) )
 					{
-						/*
-						std::cout << "Intersection point closer to the ray origin than any found on previous objects." << std::endl;
-						*/
 						finalIntersection = intersectionPoints[j];	// object closest to ray origin
 						currentChildRay->intersectionPoint = intersectionPoints[j];
 						closestIntersectedObjectIndex = j;
@@ -118,9 +96,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 					// if new intersection point is farther from the ray origin than any found on previous objects
 					else
 					{
-						/*
-						std::cout << "Intersection farther from ray origin!" << std::endl;
-						*/
+
 					}		
 				}
 			}

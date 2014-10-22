@@ -117,7 +117,8 @@ void Wall::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMP
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
 	// // std::cout << "====== Reflection/refraction =====" << std::endl;
 	// std::cout << "\n\n\n CalculateChildRays .. IntersectionPOINT: " << intersectionPoint.x << ", " << intersectionPoint.y << ", "<< intersectionPoint.z << std::endl;
-	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	//glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	glm::vec3 reflectedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, getRefractiveIndex());
 	// // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
 
 	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, getColor(), false);

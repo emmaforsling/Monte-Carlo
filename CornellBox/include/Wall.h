@@ -27,6 +27,8 @@ public:
 	Rectangle* walls[5];
 	float size;
 
+	bool transparent;		//vet inte om vi ska ha denna för wall? 22/10 -14
+
 private:
 	glm::vec3 intersectedNormal;
 	int intersectedSide;

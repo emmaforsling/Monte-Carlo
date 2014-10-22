@@ -116,24 +116,37 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
-		//// std::cout << "t1 = " << t1 << std::endl;
-		//// std::cout << "t2 = " << t2 << std::endl;
+		float min_t = std::min(t1,t2);
+		float max_t = std::max(t1,t2);
+
 		if(_ray->isInsideObject())			//if true
 		{
-			
-			finalIntersection.x = startingPoint.x + std::max(t1,t2) * direction.x;
-			finalIntersection.y = startingPoint.y + std::max(t1,t2) * direction.y;
-			finalIntersection.z = startingPoint.z + std::max(t1,t2) * direction.z;
+			/*
+				Titta på det här någon annan gång gubbstrut/tant, exempelvis då t1 eller t2 är negativ!!!!
+			*/
+			finalIntersection.x = startingPoint.x + max_t * direction.x;
+			finalIntersection.y = startingPoint.y + max_t * direction.y;
+			finalIntersection.z = startingPoint.z + max_t * direction.z;
 			//// std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;
 			return finalIntersection;
 		}	
 		else
 		{
-			glm::vec3 finalIntersection;
-			finalIntersection.x = startingPoint.x + std::min(t1,t2) * direction.x;
-			finalIntersection.y = startingPoint.y + std::min(t1,t2) * direction.y;
-			finalIntersection.z = startingPoint.z + std::min(t1,t2) * direction.z;
+			
+			if(min_t != 0.0)
+			{
+				finalIntersection.x = startingPoint.x + min_t * direction.x;
+				finalIntersection.y = startingPoint.y + min_t * direction.y;
+				finalIntersection.z = startingPoint.z + min_t * direction.z;
+			}
+			else
+			{
+				finalIntersection.x = startingPoint.x + max_t * direction.x;
+				finalIntersection.y = startingPoint.y + max_t * direction.y;
+				finalIntersection.z = startingPoint.z + max_t * direction.z;
+			}
+			
 			//// std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			//return startingPoint + std::min(t1,t2) * direction;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;

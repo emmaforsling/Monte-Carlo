@@ -25,10 +25,13 @@ private:
 	glm::vec3 position;
 	glm::vec3 direction;
 	float viewPlaneDistance;
-	int viewPlaneSizeX;
-	int viewPlaneSizeY;
-	static const int resolutionX = 550;
-	static const int resolutionY = 550;
+	
+	const int viewPlaneSizeX = 1;
+	const int viewPlaneSizeY = 1;
+	
+	static const int resolutionX = 2;
+	static const int resolutionY = 2;
+	
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
 

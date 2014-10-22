@@ -28,15 +28,26 @@ Camera::Camera()
 
 Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 {	
+	//DO not change direction //
 	direction = glm::vec3(0.0, 0.0, -1.0);
+	
+
 	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
 	position = /*glm::vec3(2.5, 2.5, 15); //*/oppositeWallCenterPosition - direction * _eyeDistance;
+	
+	/*
+		z' - avståndet till scenen 		(eyedistance)
+		x' - storlek på scenen i x  	(room->size) 
+		y' - storlek på scenen i y 		(room->size)
 
-	viewPlaneSizeX = 1;
-	viewPlaneSizeY = 1;
+		x - storlek på viewplane i x 	(viewPlaneSizeX)
+		y - storlek på viewplane i y 	(viewPlaneSizeY)
+		z - avståndet till viewplane 	(viewPlaneDistance) --- denna är sökt
+	*/
 
-	viewPlaneDistance = 1.0; //*/_eyeDistance * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
-	std::cout << viewPlaneDistance << std::endl;
+
+	viewPlaneDistance = /*2.0; //*/(_eyeDistance - _room->size) * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
+	//std::cout << viewPlaneDistance << std::endl;
 	raysPerPixel = _raysPerPixel;
 
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -62,6 +73,12 @@ Camera::~Camera()
 /* Loops over all pixels and computes their values. */
 void Camera::renderImage(Object** _objects, Light* _light)
 {
+	/*
+		To render image:
+		* define the viewplane
+		* determine the pixel size
+		* the total amount of pixels
+	*/
 	float viewPlanePosZ = position.z - viewPlaneDistance;
 	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
 	glm::vec3 viewPlaneCorner1 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
@@ -72,33 +89,29 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	// // std::cout << "pixelSize = " << pixelSize << std::endl;
 	glm::vec3 pixelPosition;
 
-int nPixels = resolutionX * resolutionY;
+	int numberOfPixels = resolutionX * resolutionY;
 
-	for(int i = 0; i < resolutionX * resolutionY ; i++)
+	for(int i = 0; i < numberOfPixels ; i++)
 	{
+		std::cout << "PIXEL: " << i << "\n\n";
 		// // std::cout << i << " % " << resolutionX << " = " << i % resolutionX << std::endl;
 		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, viewPlaneCorner3.y - (i/(int)resolutionY) / (float)resolutionY , viewPlanePosZ);
 		// // std::cout << "pixelPosition = " << pixelPosition.x << ", " << pixelPosition.y << ", " << pixelPosition.z << std::endl;
 		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects, _light);
 
-		/*for( ray)
-		{
-			for(object)
-			{
-				
-			}
-		}*/
-		if(i % 100 == 0)
-		{
-			std::cout << "Progress: " << (i/(double)nPixels) * 100 << "%" << std::endl;
-		}
+		/* 
+			Progress bar 
+		*/
+		// if(i % 100 == 0)
+		// {
+		// 	std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
+		// }
 	}
 	// std::cout << "color of pixels:" << std::endl;
-	for(int i = 0; i < resolutionX * resolutionY; i++)
-	{
-		// std::cout << "(" << pixels[i]->getColorOfPixel().x << ", " << pixels[i]->getColorOfPixel().y << ", " << pixels[i]->getColorOfPixel().z << ")" << std::endl;
-	}
-	// TODO: Write code
+	// for(int i = 0; i < numberOfPixels; i++)
+	// {
+	// 	// std::cout << "(" << pixels[i]->getColorOfPixel().x << ", " << pixels[i]->getColorOfPixel().y << ", " << pixels[i]->getColorOfPixel().z << ")" << std::endl;
+	// }
 	// "pixels[i]->calculateIntersections" 
 }
 

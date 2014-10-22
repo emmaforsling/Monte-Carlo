@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
 
 	// Create camera
-	int raysPerPixel = 16;
+	int raysPerPixel = 1;
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
@@ -56,9 +56,9 @@ int main(int argc, char *argv[])
 	//sphereSpecular->calculateIntersection(ray);
 
 	Object* objects[4];
-	objects[0] = sphereSpecular;
-	objects[1] = sphereSpecular2;
-	objects[2] = room;
+	objects[1] = sphereSpecular;
+	objects[2] = sphereSpecular2;
+	objects[0] = room;
 	objects[3] = cubeSpecular;
 
 	/*

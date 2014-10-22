@@ -78,34 +78,56 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 intersectionPoints[4];						// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;
-		int numberOfObjects = 4;								// Temporary...
-		int numberOfIterations = 5;
-		int iteration = 0;
+		int numberOfObjects = 2;								// Temporary...
+		int numberOfIterations = 2;
+		int iteration = 1;
 		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)
 		{
+			std::cout << "STARTPUNKT I FOR LOOPEN FÖR CURRENTRAY " << currentChildRay->getStartingPoint().x << ", " << currentChildRay->getStartingPoint().y << "," << currentChildRay->getStartingPoint().z << std::endl;
+			std::cout << "iteration " << iteration << std::endl;
 			for(int j = 0; j < numberOfObjects; j++)				// loop through objects
 			{
 				// _objects[j]->calculateChildRays(_objects[j]->calculateIntersection(rays[i]));
+				
+				intersectionPoints[j] = _objects[j]->calculateIntersection(currentChildRay);
 				glm::vec3 normal = _objects[j]->getIntersectedNormal();
 				int intersectedSide = _objects[j]->getIntersectedSide(); //is used primarily for walls
 			
-				intersectionPoints[j] = _objects[j]->calculateIntersection(rays[i]);
+				
 				if( glm::length(finalIntersection) == 0)			// first encountered object
 				{
+					std::cout <<"Blubb 1 " << j << std::endl;
 					if(glm::length(intersectionPoints[j]) != 0)
 					{
 						//// std::cout << "(This was the first studied object)" << std::endl;
+						std::cout <<"NU JÄVLAR SÄTTER JAG EN NY första FINAL INTERSECTION!" << std::endl;
 						finalIntersection = intersectionPoints[j];
+						currentChildRay->intersectionPoint = intersectionPoints[j];
 						closestIntersectedObjectIndex = j;
 					}
 				}
+				else if(currentChildRay->getStartingPoint() != finalIntersection)
+				{
+					//do something
+				}
 				else												// not the first object
 				{
+					std::cout <<"Blubb2 " << j << std::endl;
+					//std::cout << "Length " << glm::length(intersectionPoints[j] - currentChildRay->getStartingPoint()) << std::endl;
+					std::cout << "glm::length(intersectionPoints[j] - currentChildRay->getStartingPoint()) < glm::length(finalIntersection - currentChildRay->getStartingPoint())" << std::endl;
+					std::cout << "glm::length((" << intersectionPoints[j].x << ", " << intersectionPoints[j].y << ", " << intersectionPoints[j].z << ") - ("
+						      << currentChildRay->getStartingPoint().x << ", " << currentChildRay->getStartingPoint().y << ", " << currentChildRay->getStartingPoint().z
+						      << ")) < glm::length((" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ") - ("
+						      << currentChildRay->getStartingPoint().x << ", " << currentChildRay->getStartingPoint().y << ", " << currentChildRay->getStartingPoint().z << ") ) = "
+							  << (glm::length(intersectionPoints[j] - currentChildRay->getStartingPoint()) < glm::length(finalIntersection - currentChildRay->getStartingPoint()) ) << std::endl;
+
 					//// std::cout << "(This was not the first studied object)" << std::endl;
-					if( glm::length(intersectionPoints[j] - rays[i]->getStartingPoint()) < glm::length(finalIntersection - rays[i]->getStartingPoint()) )
+					if( glm::length(intersectionPoints[j] - currentChildRay->getStartingPoint()) < glm::length(finalIntersection - currentChildRay->getStartingPoint()) )
 					{
 						//// std::cout << "Intersection closer to ray origin!" << std::endl;
+						std::cout <<"NU JÄVLAR SÄTTER JAG EN NY andra eller nåt FINAL INTERSECTION!" << std::endl;
 						finalIntersection = intersectionPoints[j];	// object closest to ray origin
+						currentChildRay->intersectionPoint = intersectionPoints[j];
 						closestIntersectedObjectIndex = j;
 					}
 					else
@@ -114,11 +136,13 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 					}
 				}
 			}
+
 			if(closestIntersectedObjectIndex != 666)
 			{
 				int intersectionPointVisibleFromLightSource = 1;			// 1 = visible, 0 = not visible
 				glm::vec3 randomPositionOnLightSource = _light->getRandomPosition();
 				// shadow ray defined as a ray from the light source to a surface, to be able to use Object::calculateIntersection();
+				std::cout << "shadowRay" << std::endl;
 				Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 				// looping through all objects to check for occlusion
 				glm::vec3 shadowIntersection;
@@ -141,16 +165,15 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 						}
 					}
 				}
-				if(_objects[2]) //walls
-				{
-					colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
-				}
-				else
-				{
-					colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
-					// std::cout << "colorOfPixel += " << currentChildRay->getImportance()/2.0f << " * " << intersectionPointVisibleFromLightSource << " * (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;	
-				}
+				std::cout << "/shadowRay" << std::endl;
 				
+				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();
+				//std::cout << "colorOfPixel += " << currentChildRay->getImportance()/2.0f << " * " << intersectionPointVisibleFromLightSource << " * (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;
+				std::cout << "surface position = (" << currentChildRay->intersectionPoint.x << ", " << currentChildRay->intersectionPoint.y << ", " << currentChildRay->intersectionPoint.z << ")" << std::endl;
+				std::cout << "color of object = (" << _objects[closestIntersectedObjectIndex]->getColor().x << ", " << _objects[closestIntersectedObjectIndex]->getColor().y << ", " << _objects[closestIntersectedObjectIndex]->getColor().z << ")" << std::endl;
+				std::cout << "visibility " << intersectionPointVisibleFromLightSource << std::endl;
+				std::cout << "colorOfPixel = " << colorOfPixel.x << "," << colorOfPixel.y <<  ", " << colorOfPixel.z << std::endl;
+
 				// calculating child rays
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			}

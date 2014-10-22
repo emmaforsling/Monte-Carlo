@@ -24,6 +24,8 @@ public:
 
 	Ray* childNodes;							// maybe just one
 
+	glm::vec3 intersectionPoint;
+
 private:
 	glm::vec3 startingPoint;
 	glm::vec3 direction;

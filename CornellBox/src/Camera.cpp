@@ -91,7 +91,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	glm::vec3 pixelPosition;
 
 	int numberOfPixels = resolutionX * resolutionY;
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for(int i = 0; i < numberOfPixels ; i++)
 	{
 		/*

@@ -21,14 +21,14 @@ int main(int argc, char *argv[])
 	glm::vec3 positionLight = glm::vec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::vec3 positionCube = glm::vec3(1.0, 0.0, 2.5);
-	float sizeForCubeSpecular = 1.0;
+	glm::vec3 positionCube = glm::vec3(4.25, 0.0, 4.25);
+	float sizeForCubeSpecular = 0.07;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
 	glm::vec3 positionSphereSpecular = glm::vec3(2.5, 2.5, 2.5);
-	float radiusForSphereSpecular = 1.0;
+	float radiusForSphereSpecular = 2.0;
 	bool transparencyForSphereSpecular = false;
 	float refractiveIndexForSphereSpecular = 1.5;			// glass
 

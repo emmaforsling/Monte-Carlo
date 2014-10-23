@@ -36,13 +36,6 @@ Ray::Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm:
 	childNodes = nullptr;
 }
 
-/* Destructor */
-Ray::~Ray()
-{
-	//std::cout << "hej!" << std::endl;
-	delete childNodes;
-}
-
 /* 	
 	Combines color contributions from childNodes and
 	a local lighting model (Phong's) to a single RGB vector 

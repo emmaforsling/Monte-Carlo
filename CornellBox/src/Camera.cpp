@@ -92,7 +92,6 @@ void Camera::renderImage(Object** _objects, Light* _light)
 
 	int numberOfPixels = resolutionX * resolutionY;
 	//#pragma omp parallel for
-
 	for(int i = 0; i < numberOfPixels; i++)
 	{
 		/*

@@ -46,7 +46,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 	glm::vec3 direction;
 	glm::vec3 color;
 	srand(time(NULL));
-	for(int i = 0; i < _raysPerPixel; i++)
+	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
 		// Calculating random point on the pixel
 		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
@@ -56,18 +56,20 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		// Determining the normalized direction from eye to generated position
 		direction = (randomPoint - _cameraPosition) / glm::length(randomPoint - _cameraPosition);
 
-		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
+		rays[i] = new Ray(randomPoint, direction, 1.0/Pixel::raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
 		glm::vec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 4;																		// temporary...
-		int numberOfIterations = 12;																	// number of children
-		int iteration = 1;
+		int numberOfIterations = 8;																	// number of children
+		int iteration = 1;		
+		Ray* currentChildRay = rays[i];
 		
-		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)
+		while(currentChildRay != nullptr && iteration <= numberOfIterations)
 		{
 			// resetting finalIntersection for each iteration
 			finalIntersection = glm::vec3(0.0, 0.0, 0.0);		
+			//closestIntersectedObjectIndex = 666;
 
 			// looping through objects to find intersections
 			for(int j = 0; j < numberOfObjects; j++)
@@ -131,6 +133,9 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 						}
 					}
 				}
+
+				// free up memory
+				delete shadowRay;
 				
 				// accumulating color for current pixel
 				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
@@ -138,8 +143,24 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 				// calculating next child ray (iteration)
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			}
+			currentChildRay = currentChildRay->childNodes;
+			iteration++;
 		}
 	}
+	
+	// free up memory
+	for(int i = 0; i < Pixel::raysPerPixel; i++)
+	{
+		//std::cout << i << std::endl;
+		Ray* currentNode = rays[i];
+		while(currentNode->childNodes != nullptr)
+		{
+			Ray* tempNode = currentNode->childNodes;
+			currentNode->childNodes = tempNode->childNodes;
+			delete tempNode;
+		}
+		//delete currentNode;
+	}	
 }
 
 glm::vec3 Pixel::getColorOfPixel()

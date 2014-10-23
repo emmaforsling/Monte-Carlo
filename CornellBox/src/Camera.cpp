@@ -91,8 +91,8 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	glm::vec3 pixelPosition;
 
 	int numberOfPixels = resolutionX * resolutionY;
-	#pragma omp parallel for
-	for(int i = 0; i < numberOfPixels ; i++)
+	//#pragma omp parallel for
+	for(int i = 0; i < numberOfPixels; i++)
 	{
 		/*
 		std::cout << "\n ====== pixel " << i << " ====== \n\n";
@@ -105,12 +105,12 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		/* 
 			Progress bar 
 		*/
-		//if(i % 100 == 0)
-		//{
-			//std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
-		//}
+		if(i % 100 == 0)
+		{
+			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
+		}
 	}
-	//std::cout << "Progress: 100%" << std::endl;
+	std::cout << "Progress: 100%" << std::endl;
 	// // std::cout << "color of pixels:" << std::endl;
 	// for(int i = 0; i < numberOfPixels; i++)
 	// {

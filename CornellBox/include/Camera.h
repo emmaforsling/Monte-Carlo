@@ -2,6 +2,7 @@
 #define CAMERA_H value
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h> 
 
 #include "glm/glm.hpp"
@@ -9,7 +10,7 @@
 #include "Wall.h"
 #include "Light.h"
 
-#include <omp.h>
+//#include <omp.h>
 
 class Camera
 {

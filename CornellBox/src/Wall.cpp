@@ -10,7 +10,7 @@
 
 /* Default Constructor */
 Wall::Wall()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0), false, false)
 {
 	// position = glm::vec3(0.0, 0.0, 0.0);
 	size = 0.0;
@@ -22,8 +22,8 @@ Wall::Wall()
 	walls[4] = nullptr;
 }
 
-Wall::Wall(glm::vec3 _position, float _size, glm::vec3 _color)
-: Object(_position, _color)
+Wall::Wall(glm::vec3 _position, float _size, glm::vec3 _color, bool _diffuse, bool _transparent)
+: Object(_position, _color, _diffuse, _transparent)
 {
 	// position = _position;
 	size = _size;

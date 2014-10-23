@@ -12,19 +12,17 @@
 
 /* Default Constructor */
 Sphere::Sphere()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0 ,0.0))
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0 ,0.0), false, false)
 {
 	radius = 0.0;
-	transparent = false;
 	refractiveIndex = 0.0;
 }
 
 /* The real del constructor */
-Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color)
-: Object(_position, _color)
+Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse)
+: Object(_position, _color, _diffuse, _transparent)
 {
 	radius = _radius;
-	transparent = _transparent;
 	refractiveIndex = _refractiveIndex;
 }
 

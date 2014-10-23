@@ -11,7 +11,7 @@ class Wall : public Object
 {
 public:
 	Wall();
-	Wall(glm::vec3 _position, float _size, glm::vec3 _color);
+	Wall(glm::vec3 _position, float _size, glm::vec3 _color, bool _diffuse, bool _transparent);
 	~Wall();
 	void initializeRectangles();							// sets corners of rectangles to (0,0,0),
 															// (1,0,0), (0,1,0) etc. and multiplies
@@ -26,8 +26,6 @@ public:
 	
 	Rectangle* walls[5];
 	float size;
-
-	bool transparent;		//vet inte om vi ska ha denna för wall? 22/10 -14
 
 private:
 	glm::vec3 intersectedNormal;

@@ -59,9 +59,10 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		rays[i] = new Ray(randomPoint, direction, 1.0/_raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
 		glm::vec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+		
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 4;																		// temporary...
-		int numberOfIterations = 12;																	// number of children
+		int numberOfIterations = 3;																	// number of children
 		int iteration = 1;
 		
 		for(Ray* currentChildRay = rays[i]; currentChildRay != nullptr && iteration <= numberOfIterations; currentChildRay = currentChildRay->childNodes, iteration++)

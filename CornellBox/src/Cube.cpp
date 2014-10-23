@@ -14,7 +14,7 @@
 
 /* Default Constructor */
 Cube::Cube()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0)) //position, color
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0), false, false) //position, color
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -29,8 +29,8 @@ Cube::Cube()
 	refractiveIndex = 0.0;
 }
 
-Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color)
-: Object(_position, _color)
+Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse)
+: Object(_position, _color, _diffuse, _transparent)
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -41,7 +41,6 @@ Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiv
 
 	// position = _position;
 	size = _size;
-	transparent = _transparent;
 	refractiveIndex = _refractiveIndex;
 
 	initializeRectangles();

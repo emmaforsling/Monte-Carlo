@@ -9,6 +9,8 @@
 #include "Wall.h"
 #include "Light.h"
 
+#include <omp.h>
+
 class Camera
 {
 public:
@@ -29,8 +31,8 @@ private:
 	const int viewPlaneSizeX = 1;
 	const int viewPlaneSizeY = 1;
 	
-	static const int resolutionX = 600;
-	static const int resolutionY = 600;
+	static const int resolutionX = 300;
+	static const int resolutionY = 300;
 	
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];

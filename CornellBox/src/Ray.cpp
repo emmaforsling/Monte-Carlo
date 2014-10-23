@@ -27,10 +27,6 @@ Ray::Ray()
 
 Ray::Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm::vec3 _color, bool _insideObject)
 {
-	//std:: cout << "skapar Ray, starting point = " << _startingPoint.x << ", " << _startingPoint.y << ", " << _startingPoint.z << ")" << std::endl;
-	//std:: cout << "rikting = (" << _direction.x << ", " << _direction.y << ", " << _direction.z << ")" << std::endl;
-	//std:: cout << "magnitude of direction = " << glm::length(_direction) << std::endl;
-	
 	startingPoint = _startingPoint;
 	direction = _direction;
 	importance = _importance;
@@ -66,7 +62,7 @@ glm::vec3 Ray::getStartingPoint()
 }
 
 /*
-	Returns the startingPoint
+	Returns the direction
 */
 glm::vec3 Ray::getDirection()
 {
@@ -78,7 +74,6 @@ glm::vec3 Ray::getDirection()
 */
 bool Ray::isInsideObject()
 {
-
 	return insideObject;
 }
 

@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	Light* lightsource = new Light(positionLight, size, radiance); 
 	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(0.8, 0.0, 0.6));
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 1.0, 0.2) );
-	Sphere* sphereSpecular2 = new Sphere(glm::vec3(0.5, 0.5, 3.25), 0.5, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0) );
+	Sphere* sphereSpecular2 = new Sphere(glm::vec3(0.5, 0.5, 3.25), 0.5, transparencyForSphereSpecular, 0, glm::vec3(0.2, 0.2, 1.0) );
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
 
 	// Create camera

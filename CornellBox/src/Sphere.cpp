@@ -144,9 +144,12 @@ void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TE
 	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }
 
-float Sphere::getRefractiveIndex()
+/*
+	Get functions
+*/
+glm::vec3 Sphere::getColor()
 {
-	return refractiveIndex;
+	return color;
 }
 
 glm::vec3 Sphere::getIntersectedNormal()
@@ -160,12 +163,17 @@ int Sphere::getIntersectedSide()
 	return intersectedSide;
 }
 
+float Sphere::getRefractiveIndex()
+{
+	return refractiveIndex;
+}
+
+/*
+	Set functions
+*/
 void Sphere::setIntersectedNormal(glm::vec3 _intersectedNormal)
 {
 	intersectedNormal = _intersectedNormal;
 }
 
-glm::vec3 Sphere::getColor()
-{
-	return color;
-}
+

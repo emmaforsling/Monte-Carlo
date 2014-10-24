@@ -17,19 +17,18 @@ public:
 	// Default destructor
 	~Sphere() = default;
 	
-	// Get functions
-	virtual float getRefractiveIndex();
-	virtual glm::vec3 getIntersectedNormal();
-	virtual glm::vec3 getColor();
-	virtual int getIntersectedSide();
-
-	// Set functions 
+	// Calculation functions
 	virtual glm::vec3 calculateIntersection(Ray* _ray);
 	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
-	
+
+	// Get functions
+	virtual glm::vec3 getColor();
+	virtual glm::vec3 getIntersectedNormal();
+	virtual int getIntersectedSide();
+	virtual float getRefractiveIndex();
+
+	// Set functions 
 	void setIntersectedNormal(glm::vec3 _intersectedNormal);
-	
-	
 
 private:
 	float radius;				

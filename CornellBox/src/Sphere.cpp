@@ -26,12 +26,6 @@ Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _ref
 	refractiveIndex = _refractiveIndex;
 }
 
-/* Destructor */
-Sphere::~Sphere()
-{
-	//TODO: Write code 
-}
-
 /*
 	This function should calculate the intersectionpoints between a ray 
 	and the surface of the Sphere.
@@ -43,7 +37,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			S: r^2 = x^2 + y^2 + z^2		
 			R = t*(x,y,z)
 			where 
-			t = direction.xyz
+			t = direction
 
 			The equation is then rewritten into this:
 
@@ -66,12 +60,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	//initialize the variables
 	glm::vec3 startingPoint = _ray->getStartingPoint();
 	glm::vec3 direction = _ray->getDirection();
-	// // std::cout << "==== studying sphere (" << position.x << ", " << position.y << ", " << position.z << "), r = " << radius << " ==== "; //\n";
-	//// // std::cout << "starting point of ray: " << startingPoint.x << ", " << startingPoint.y << ", " << startingPoint.z << std::endl;
-	//// // std::cout << "Direction of ray: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 	glm::vec3 centerPoint = position;
-	//// // std::cout << "CenterPoint of sphere: " << centerPoint.x << ", " << centerPoint.y << ", " << centerPoint.z;
-	//// // std::cout << ", radius of sphere: " << radius << std::endl;
 
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
@@ -86,31 +75,26 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		(startingPoint.z - centerPoint.z)*(startingPoint.z - centerPoint.z)
 		- radius*radius;
 
-	// // // std::cout << "a = " << a << "\nb = " << b << "\nc = "<< c << std::endl;
 	// calculates delta
 	delta = b*b - 4*a*c;
 	
 	// // // std::cout << "delta = " << delta << std::endl;
 	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
-	if(delta<0)	//no intersection
+	if(delta<0)										// No intersection
 	{	
-		// // std::cout << " - NO INTERSECTIONS - " << std::endl;
 		intersectedNormal = glm::vec3(0.0,0.0,0.0);
-		return finalIntersection; //no intersection
+		return finalIntersection;
 	}
-	else if(delta == 0)	//single intersection
+	else if(delta == 0)								// Single intersection
 	{
-		// // std::cout << " - ONE INTERSECTION - " << std::endl;
 		t = -b/(2*a);
 		finalIntersection = t * direction;
-		//// // std::cout << "t = " << t << std::endl;
-		//// // std::cout << "Returning glm::vec3(" << t*direction.x << ", " << t*direction.y << ", " << t*direction.z << ")"<< std::endl;
 		intersectedNormal = (finalIntersection - centerPoint)/radius;
 		return finalIntersection; //returns the point where it intersects
 	}
-	else //if(delta>0)	//two intersections
+	else //if(delta>0)								// Two intersections
 	{
-		// // std::cout << " - TWO INTERSECTIONS - " << std::endl;
+		
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
@@ -119,13 +103,9 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 
 		if(_ray->isInsideObject())			//if true
 		{
-			/*
-				Titta på det här någon annan gång gubbstrut/tant, exempelvis då t1 eller t2 är negativ!!!!
-			*/
 			finalIntersection.x = startingPoint.x + max_t * direction.x;
 			finalIntersection.y = startingPoint.y + max_t * direction.y;
 			finalIntersection.z = startingPoint.z + max_t * direction.z;
-			//// // std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;
 			return finalIntersection;
 		}	
@@ -144,9 +124,6 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 				finalIntersection.y = startingPoint.y + max_t * direction.y;
 				finalIntersection.z = startingPoint.z + max_t * direction.z;
 			}
-			
-			//// // std::cout << "Returning glm::vec3(" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")"<< std::endl;
-			//return startingPoint + std::min(t1,t2) * direction;
 			intersectedNormal = (finalIntersection - centerPoint)/radius;
 			return finalIntersection;
 		}			

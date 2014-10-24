@@ -37,11 +37,11 @@ Ray::Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm:
 }
 
 /* Destructor */
-// Ray::~Ray()
-// {
-// 	//std::cout << "hej!" << std::endl;
-// 	//delete childNodes;
-// }
+Ray::~Ray()
+{
+ 	//std::cout << "hej!" << std::endl;
+ 	delete childNodes;
+}
 
 /* 	
 	Combines color contributions from childNodes and

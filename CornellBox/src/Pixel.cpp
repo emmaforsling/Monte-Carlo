@@ -149,19 +149,24 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		}
 	}
 	
-	// free up memory
+	clearMemory();
+}
+
+void Pixel::clearMemory()
+{
+		// free up memory
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
-		//std::cout << i << std::endl;
 		Ray* currentNode = rays[i];
 		while(currentNode->childNodes != nullptr)
 		{
 			Ray* tempNode = currentNode->childNodes;
 			currentNode->childNodes = tempNode->childNodes;
+			tempNode->childNodes = nullptr;
 			delete tempNode;
 		}
-		//delete currentNode;
-	}	
+		delete currentNode;
+	}
 }
 
 glm::vec3 Pixel::getColorOfPixel()

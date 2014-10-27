@@ -9,7 +9,9 @@
 	- float size;
 */
 
-/* Default constructor */
+/* 
+	Default constructor
+*/
 Light::Light()
 {
 	lightSource = new Rectangle();
@@ -20,11 +22,6 @@ Light::Light()
 
 /*
 	Constructor
-	To construct a light source,
-	the position in the room should be passed to the constructor,
-	the which is passed to the constructor is the size of the wall, 
-	and in this constructor it should be 1/6 of the roof)
-
 */
 Light::Light(glm::vec3 _position, float _size, float _radiance)
 {
@@ -59,10 +56,20 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 }
 
 
-/* Destructor */
+/* 
+	Destructor 
+*/
 Light::~Light()
 {
 	delete lightSource;	
+}
+
+/*
+	Get functions
+*/
+glm::vec3 Light::getPosition()
+{
+	return position;
 }
 
 glm::vec3 Light::getRandomPosition()
@@ -77,7 +84,4 @@ glm::vec3 Light::getRandomPosition()
 	return randomPoint;
 }
 
-glm::vec3 Light::getPosition()
-{
-	return position;
-}
+

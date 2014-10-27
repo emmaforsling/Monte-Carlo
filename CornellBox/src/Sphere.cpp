@@ -10,7 +10,9 @@
 	- float refractiveIndex;
 */
 
-/* Default Constructor */
+/* 
+	Emtpy constructor
+*/
 Sphere::Sphere()
 : Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0 ,0.0), false, false)
 {
@@ -18,7 +20,9 @@ Sphere::Sphere()
 	refractiveIndex = 0.0;
 }
 
-/* The real del constructor */
+/*
+	Constructor
+*/
 Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse)
 : Object(_position, _color, _diffuse, _transparent)
 {
@@ -27,12 +31,15 @@ Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _ref
 }
 
 /*
-	This function should calculate the intersectionpoints between a ray 
-	and the surface of the Sphere.
+	Calculation functions
 */
 glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 {
 	/*
+
+	This function should calculate the intersectionpoints between a ray 
+	and the surface of the Sphere.
+
 		Using the equations:
 			S: r^2 = x^2 + y^2 + z^2		
 			R = t*(x,y,z)
@@ -57,15 +64,22 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 			if(delta>0) two intersection
 
 	*/
-	//initialize the variables
-	glm::vec3 startingPoint = _ray->getStartingPoint();
-	glm::vec3 direction = _ray->getDirection();
-	glm::vec3 centerPoint = position;
 
+	// Initializing the variables
 	float a = 0.0, b = 0.0, c = 0.0;
 	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
+	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 
-	//calculates a, b and c
+	// Get the startingPoint for the ray
+	glm::vec3 startingPoint = _ray->getStartingPoint();
+
+	// Get the direction for the ray
+	glm::vec3 direction = _ray->getDirection();
+	
+	// Set the centerPoint for the sphere to the position given as an argument to the constructor
+	glm::vec3 centerPoint = position;
+	
+	// Calculate a, b and c
 	a = (direction.x)*(direction.x) + (direction.y)*(direction.y) + (direction.z)*(direction.z);
 	b = 2*( (direction.x)*(startingPoint.x - centerPoint.x) + 
 			(direction.y)*(startingPoint.y - centerPoint.y) +
@@ -75,11 +89,9 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		(startingPoint.z - centerPoint.z)*(startingPoint.z - centerPoint.z)
 		- radius*radius;
 
-	// calculates delta
+	// Calculate delta
 	delta = b*b - 4*a*c;
-	
-	// // // std::cout << "delta = " << delta << std::endl;
-	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+		
 	if(delta<0)										// No intersection
 	{	
 		intersectedNormal = glm::vec3(0.0,0.0,0.0);

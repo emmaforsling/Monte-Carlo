@@ -10,7 +10,7 @@
 */
 
 /* 
-	Default constructor
+	Emtpy constructor
 */
 Light::Light()
 {

@@ -45,7 +45,7 @@ private:
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
 
-	// private functions
+	// private functions, used when to save the image
 	float clamp(float _x);
 	int toInt(float _x);
 };

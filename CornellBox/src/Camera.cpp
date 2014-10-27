@@ -66,7 +66,9 @@ Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
 	// // // std::cout << "Viewplane distance: " << viewPlaneDistance << std::endl;
 }
 
-/* Destructor */
+/* 
+	Destructor
+*/
 Camera::~Camera()
 {
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -75,10 +77,14 @@ Camera::~Camera()
 	}
 }
 
-/* Loops over all pixels and computes their values. */
+/*
+	Image functions
+*/	
 void Camera::renderImage(Object** _objects, Light* _light)
 {
 	/*
+		Loops over all pixels and computes their values.
+
 		To render image:
 		* define the viewplane
 		* determine the pixel size
@@ -128,25 +134,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	// }
 	// "pixels[i]->calculateIntersections" 
 }
-
-/* Converts radiometric values into photometric ones. */
-void Camera::mappingFunction()
-{
-	//TODO: Write code
-}
-
-
-float Camera::clamp(float _x)
-{
-	return _x<0 ? 0 : _x>1 ? 1 : _x;
-}
-
-int Camera::toInt(float _x)
-{
-	return int(pow(clamp(_x),1/2.2)*255+.5);
-}
-
-/* Alternatively displayImage() */						 
+				 
 void Camera::saveImage()
 {
 	/* This code, for saving the image into ppm-format, is taken from http://www.kevinbeason.com/smallpt/ */ 
@@ -160,3 +148,25 @@ void Camera::saveImage()
  		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
 	}
 }
+
+
+void Camera::mappingFunction()
+{
+	/* Converts radiometric values into photometric ones. */
+	//TODO: Write code
+}
+
+/*
+	Private functions
+*/
+float Camera::clamp(float _x)
+{
+	return _x<0 ? 0 : _x>1 ? 1 : _x;
+}
+
+int Camera::toInt(float _x)
+{
+	return int(pow(clamp(_x),1/2.2)*255+.5);
+}
+
+

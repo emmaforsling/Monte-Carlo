@@ -4,11 +4,17 @@
 	Class Wall  
 	
 	private members:
+	- glm::vec3 intersectedNormal
+	- int intersectedSide
+
+	public variables:
 	- glm::vec3 position;
 	- float size;
 */
 
-/* Default Constructor */
+/* 
+	Empty constructor
+*/
 Wall::Wall()
 : Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0), false, false)
 {
@@ -22,6 +28,9 @@ Wall::Wall()
 	walls[4] = nullptr;
 }
 
+/*
+	Constructor
+*/
 Wall::Wall(glm::vec3 _position, float _size, glm::vec3 _color, bool _diffuse, bool _transparent)
 : Object(_position, _color, _diffuse, _transparent)
 {
@@ -46,10 +55,9 @@ Wall::~Wall()
 	// std::cout << "Hello me" << std::endl;
 }
 
-/* Sets corners of the Rectangle to (0,0,0), (1,0,0), (0,1,0) etc. 
-	and multiplies them by size (float) and adds the position 
-	(glm::vec3) */
-	
+/*
+	Initialze functions
+*/	
 void Wall::initializeRectangles()
 {
 	/*
@@ -110,6 +118,9 @@ void Wall::initializeRectangles()
 	
 }
 
+/*
+	Calculation functions
+*/
 void Wall::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
 {
 	// Russian Roulette
@@ -227,9 +238,12 @@ glm::vec3 Wall::calculateIntersection(Ray* _ray)
 	// return glm::vec3(0.0, 0.0, 0.0);
 }
 
-float Wall::getRefractiveIndex()				// this is weird...
+/*
+	Get functions
+*/
+glm::vec3 Wall::getColor()
 {
-	return 0.0;
+	return walls[intersectedSide]->getColor();
 }
 
 glm::vec3 Wall::getIntersectedNormal()
@@ -242,7 +256,8 @@ int Wall::getIntersectedSide()
 	return intersectedSide;
 }
 
-glm::vec3 Wall::getColor()
+float Wall::getRefractiveIndex()				// this is weird...
 {
-	return walls[intersectedSide]->getColor();
+	return 0.0;
 }
+

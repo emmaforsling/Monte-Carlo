@@ -10,20 +10,32 @@
 class Wall : public Object
 {
 public:
+	// Empty constructor
 	Wall();
+
+	// Constructor
 	Wall(glm::vec3 _position, float _size, glm::vec3 _color, bool _diffuse, bool _transparent);
+	
+	// Destructor
 	~Wall();
+
+	// Intialize functions called by the constructor
 	void initializeRectangles();							// sets corners of rectangles to (0,0,0),
 															// (1,0,0), (0,1,0) etc. and multiplies
 															// them by size (float) and adds the
 															// position (glm::vec3)
+	
+	// Calculation functions
 	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
 	virtual glm::vec3 calculateIntersection(Ray* _ray);		// either one intersection or none (ray leaving)
-	virtual float getRefractiveIndex();
-	virtual glm::vec3 getIntersectedNormal();
-	virtual glm::vec3 getColor();
-	virtual int getIntersectedSide();
 	
+	// Get functions
+	virtual glm::vec3 getColor();
+	virtual glm::vec3 getIntersectedNormal();
+	virtual int getIntersectedSide();
+	virtual float getRefractiveIndex();
+	
+	// Public variables
 	Rectangle* walls[5];
 	float size;
 

@@ -25,10 +25,11 @@ all: $(CSources) $(CExecutable)
 run: $(CExecutable) 
 	./$(addprefix $(BinDir),$(Executable))
 
-sense: room1 clean all room2 test run
+sense: room1 clean all room2 sound run
 
-test:
+sound:
 	@say ”Nu du Martin har du allt skitit i det blå skåpet”
+
 room:
 	@echo ""
 	@echo ""

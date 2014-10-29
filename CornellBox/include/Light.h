@@ -10,13 +10,20 @@
 class Light
 {
 public:
+	// Empty constructor
 	Light();
+
+	// Constructor
 	Light(glm::vec3 _position, float _size, float _radiance);
+	
+	// Destructor
 	~Light();
 
+	// Get functions
+	glm::vec3 getPosition();
 	glm::vec3 getRandomPosition();			// returns a random position on the
 											// light source rectangle
-	glm::vec3 getPosition();
+	
 	
 private:
 	Rectangle* lightSource;

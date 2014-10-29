@@ -4,8 +4,8 @@ Executable=CornellBox
 CFlags=-c -std=c++11 -g -Iinc -ffloat-store #-fopenmp
 #If mac remove the LDFlags, since in this makefile the LDFlags are
 #written to make the program runnable on Windows…
-LDFlags=-Wl,--large-address-aware #-fopenmp
-#LDFlags= #-fopenmp
+#LDFlags=-Wl,--large-address-aware #-fopenmp
+LDFlags= #-fopenmp
 ObjectDir=CornellBox/obj/
 SourceDir=CornellBox/src/
 BinDir=CornellBox/bin/
@@ -25,7 +25,10 @@ all: $(CSources) $(CExecutable)
 run: $(CExecutable) 
 	./$(addprefix $(BinDir),$(Executable))
 
-sense: room1 clean all room2 run
+sense: room1 clean all room2 sound run
+
+sound:
+	@say ”Nu du Martin har du allt skitit i det blå skåpet”
 
 room:
 	@echo ""

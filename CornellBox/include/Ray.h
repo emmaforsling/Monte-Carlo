@@ -23,7 +23,8 @@ public:
 	void calculateLocalLightingContribution();	// computes Le(x,theta) for the
 												// point where a ray intersects
 												// a surface.
-	
+
+
 	// Get functions
 	glm::vec3 getColor();
 	glm::vec3 getDirection();

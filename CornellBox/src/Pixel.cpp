@@ -5,11 +5,15 @@
 	Class Pixel  
 	
 	private members:
-	- Ray* rays;
-	- glm::vec3 colorOfPixel;
+	- glm::vec3 colorOfPixel;						// vec4 for alpha?
+	- glm::vec3 position;
+	- static const int raysPerPixel = 32;
+	- Ray* rays[raysPerPixel];
 */
 
-/* Default Constructor */
+/* 
+	Empty constructor
+*/
 Pixel::Pixel()
 {
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
@@ -20,6 +24,9 @@ Pixel::Pixel()
 	position = glm::vec3(0.0, 0.0, 0.0);
 }
 
+/*
+	Constructor
+*/
 Pixel::Pixel(int _raysPerPixel)
 {
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
@@ -29,7 +36,9 @@ Pixel::Pixel(int _raysPerPixel)
 	colorOfPixel = glm::vec3(0.0, 0.0, 0.0);															// black to begin with
 }
 
-/* Destructor */
+/*
+	Destructor
+*/
 Pixel::~Pixel()
 {
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
@@ -38,6 +47,9 @@ Pixel::~Pixel()
 	}
 }
 
+/*
+	Shoot rays function
+*/
 void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects, Light* _light)
 {
 	float randomPointX;
@@ -59,12 +71,13 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		rays[i] = new Ray(randomPoint, direction, 1.0/Pixel::raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
 		glm::vec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+		
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 4;																		// temporary...
 		int numberOfIterations = 8;																	// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
-		
+
 		while(currentChildRay != nullptr && iteration <= numberOfIterations)
 		{
 			// resetting finalIntersection for each iteration
@@ -148,21 +161,31 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		}
 	}
 	
-	// free up memory
+	clearMemory();
+}
+
+/*
+	Free up memory function
+*/
+void Pixel::clearMemory()
+{
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
-		//std::cout << i << std::endl;
 		Ray* currentNode = rays[i];
 		while(currentNode->childNodes != nullptr)
 		{
 			Ray* tempNode = currentNode->childNodes;
 			currentNode->childNodes = tempNode->childNodes;
+			tempNode->childNodes = nullptr;
 			delete tempNode;
 		}
-		//delete currentNode;
-	}	
+		delete currentNode;
+	}
 }
 
+/*
+	Get functions
+*/
 glm::vec3 Pixel::getColorOfPixel()
 {
 	return colorOfPixel;

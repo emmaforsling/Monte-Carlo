@@ -1,23 +1,26 @@
 #include "../include/Object.h"
 #include <iostream>
 
-Object::Object()
-{
-	
-}
-
-Object::Object(glm::vec3 _position, glm::vec3 _color)
+/*
+	Constructor
+*/
+Object::Object(glm::vec3 _position, glm::vec3 _color, bool _diffuse, bool _transparent)
 {
 	position = _position;
 	color = _color;
+	diffuse = _diffuse;
+	transparent = _transparent;
 }
 
-Object::~Object()
+/*
+	Bool functions
+*/
+bool Object::isDiffuse()
 {
-	
+	return diffuse;
 }
 
-// glm::vec3 Object::getColor()
-// {
-// 	return color;
-// }
+bool Object::isTransparent()
+{
+	return transparent;
+}

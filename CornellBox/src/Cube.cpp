@@ -12,9 +12,11 @@
 	- float refractiveIndex;
 */
 
-/* Default Constructor */
+/* 
+	Default Constructor 
+*/
 Cube::Cube()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0)) //position, color
+: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0, 0.0), false, false) //position, color
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -29,8 +31,11 @@ Cube::Cube()
 	refractiveIndex = 0.0;
 }
 
-Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color)
-: Object(_position, _color)
+/*
+	Constructor
+*/
+Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse)
+: Object(_position, _color, _diffuse, _transparent)
 {
 	sides[0] = nullptr;
 	sides[1] = nullptr;
@@ -41,17 +46,9 @@ Cube::Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiv
 
 	// position = _position;
 	size = _size;
-	transparent = _transparent;
 	refractiveIndex = _refractiveIndex;
 
 	initializeRectangles();
-}
-
-/* Destructor */
-Cube::~Cube()
-{
-	
-	//TODO: Write code 
 }
 
 /*
@@ -113,23 +110,14 @@ void Cube::initializeRectangles()
 	}
 	*/
 }
-glm::vec3 Cube::getIntersectedNormal()
-{
-	return intersectedNormal;
-}
 
-
+/*
+	Calculation functions
+*/
 glm::vec3 Cube::calculateIntersection(Ray* _ray) 
 {
-	// // std::cout << "==== studying cube (" << position.x << ", " << position.y << ", " << position.z << "), size = " << size << " ==== \n";
-
 	glm::vec3 intersection;
 	glm::vec3 finalIntersection = glm::vec3(0.0,0.0,0.0);
-
-	//// // std::cout << "startingPoint of ray: " << _ray->getStartingPoint().x << ", " << _ray->getStartingPoint().y << ", " << _ray->getStartingPoint().z << std::endl;
-	//// // std::cout << "Direction of ray: " << _ray->getDirection().x << ", " << _ray->getDirection().y << ", " << _ray->getDirection().z << std::endl;
-	//// // std::cout << "Position of cube: " << position.x << ", " << position.y << ", " << position.z;
-	//// // std::cout << ", size of cube: " << size << std::endl;
 
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
@@ -137,10 +125,7 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	int side = 666;
 	for(int i=0; i<6; i++)
 	{
-		// // std::cout << " - studying rectangle " << i << " - "; // << std::endl;
 		intersection = sides[i]->calculateIntersection(_ray);
-
-		//// // std::cout << "sides[" << i << "]->calculateIntersection(_ray) returned: (" << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 
 		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 		if( intersection == glm::vec3(0.0, 0.0, 0.0) )
@@ -244,20 +229,6 @@ glm::vec3 Cube::calculateIntersection(Ray* _ray)
 	
 	return finalIntersection;
 }
-glm::vec3 Cube::getColor()
-{
-	return color;
-}
-
-int Cube::getIntersectedSide()
-{
-	return intersectedSide;
-}
-
-float Cube::getRefractiveIndex()
-{
-	return refractiveIndex;
-}			
 
 void Cube::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
 {
@@ -272,3 +243,30 @@ void Cube::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMP
 
 	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
 }
+
+/*
+	Get functions
+*/
+glm::vec3 Cube::getColor()
+{
+	return color;
+}
+
+glm::vec3 Cube::getIntersectedNormal()
+{
+	return intersectedNormal;
+}
+
+int Cube::getIntersectedSide()
+{
+	return intersectedSide;
+}
+
+float Cube::getRefractiveIndex()
+{
+	return refractiveIndex;
+}			
+
+
+
+

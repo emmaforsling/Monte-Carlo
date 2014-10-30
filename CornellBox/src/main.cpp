@@ -1,6 +1,14 @@
 #include <iostream>
 #include "../include/classes.h"
 
+/* TODO \
+- Diffuse objects (+ handling of light)
+- Local lighting model (Phong's if surface point is visible from light source)
+- Transparent/intransparent objects (2 perfect/PDF)
+- Russian Roulette
+*/
+
+
 int main(int argc, char *argv[])
 {
 	// char* argument1 = argv[0];
@@ -21,14 +29,14 @@ int main(int argc, char *argv[])
 	glm::vec3 positionLight = glm::vec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::vec3 positionCube = glm::vec3(4.25, 0.0, 4.25);
-	float sizeForCubeSpecular = 0.07;
+	glm::vec3 positionCube = glm::vec3(1.25, 0.0, 0.5);
+	float sizeForCubeSpecular = 1.5;
 	bool transparencyForCubeSpecular = false;
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::vec3 positionSphereSpecular = glm::vec3(2.5, 2.5, 2.0);
-	float radiusForSphereSpecular = 3.0;
+	glm::vec3 positionSphereSpecular = glm::vec3(3.75, 1.0, 3.0);
+	float radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
 	float refractiveIndexForSphereSpecular = 1.5;			// glass
 
@@ -45,7 +53,7 @@ int main(int argc, char *argv[])
 	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(0.8, 0.0, 0.6), false);
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(1.0, 1.0, 1.0), false );
 
-	Sphere* sphereSpecular2 = new Sphere(glm::vec3(0.5, 0.5, 4.1), 0.5, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0), false );
+	Sphere* sphereSpecular2 = new Sphere(glm::vec3(1.0, 0.65, 3.5), 0.65, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.2, 0.2, 1.0), false );
 
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
 
@@ -54,7 +62,7 @@ int main(int argc, char *argv[])
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::vec3(2.5, 5.0, 2.5), glm::vec3(0.0, -1.0, 0.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+	Ray* ray = new Ray(glm::vec3(0.1, 0.1, 5.1), glm::vec3(0.0, 0.0, -1.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 	//sphereSpecular->calculateIntersection(ray);
 
 	Object* objects[4];
@@ -65,33 +73,34 @@ int main(int argc, char *argv[])
 
 	/*
 	// super-duper test
-	glm::vec3 intersectionPoint = cubeSpecular->calculateIntersection(ray);
+	glm::vec3 intersectionPoint = room->calculateIntersection(ray);
 	srand(time(NULL));
 	glm::vec3 randomPositionOnLightSource = lightsource->getRandomPosition();
 	Ray* shadowRay = new Ray(randomPositionOnLightSource, (intersectionPoint - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
 	// looping through all objects to check for occlusion
 	glm::vec3 shadowIntersection;
-	int numberOfObjects = 3;
+	int numberOfObjects = 4;
 	int intersectionPointVisibleFromLightSource = 1;
-	// // std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
+	std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
 	for(int j = 0; j < numberOfObjects; j++)
 	{
 		shadowIntersection = objects[j]->calculateIntersection(shadowRay);
-		// // std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
+		std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
 		if( shadowIntersection  != glm::vec3(0.0, 0.0, 0.0) )
 		{	
-			// // std::cout << "Found intersection along shadowRay direction!" << std::endl;
-			if(glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - intersectionPoint) )
+			std::cout << "Found intersection along shadowRay direction!" << std::endl;
+			if(glm::length(randomPositionOnLightSource - shadowIntersection) != 0 && glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - intersectionPoint) )
 			{
 				intersectionPointVisibleFromLightSource = 0;
-				// // std::cout << "This intersection point is closer to the light source than the shadow ray origin - occlusion!" << std::endl;
+				std::cout << "This intersection point is closer to the light source than the shadow ray origin - occlusion!" << std::endl;
 			}
 			else
 			{
-				// // std::cout << "This intersection point is not closer to the light source than the shadow ray origin - no occlusion!" << std::endl;
+				std::cout << "This intersection point is not closer to the light source than the shadow ray origin - no occlusion!" << std::endl;
 			}
 		}
 	}
+	
 	*/
 
 	//next

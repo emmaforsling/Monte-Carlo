@@ -84,7 +84,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	// Set the intersectionPoint to 
 	glm::vec3 intersectionPoint = glm::vec3(0.0, 0.0, 0.0);
 
-	//determine two vectors
+	// determine two vectors
 	v1 = positionsOfCorners[1] - positionsOfCorners[0];
 	v2 = positionsOfCorners[3] - positionsOfCorners[0];
 	
@@ -101,8 +101,15 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 
 		t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) ) /
 			 ( (A * direction.x)     + (B * direction.y)     + (C * direction.z) );
+
+		// std::cout << "t = " << t << std::endl;
 		
-		//Determine intersectionPoint
+		if(t <= 0)
+		{
+			return glm::vec3(0.0, 0.0, 0.0);
+		}
+
+		// Determine intersectionPoint
 		intersectionPoint.x = startingPoint.x + (t * direction.x);
 		intersectionPoint.y = startingPoint.y + (t * direction.y);
 		intersectionPoint.z = startingPoint.z + (t * direction.z);

@@ -158,6 +158,11 @@ void Camera::mappingFunction()
 
 /*
 	Private functions
+	
+	"The output of the radiance function is a set of unbounded
+	colors.  This has to be converted to be between 0 and 255 for 
+	display purposes.  The following functions do this.  The toInt 
+	function applies a gamma correction of 2.2."
 */
 float Camera::clamp(float _x)
 {

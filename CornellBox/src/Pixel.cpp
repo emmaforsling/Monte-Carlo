@@ -147,7 +147,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 					}
 				}				
 				// accumulating color for current pixel
-				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
+				colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
 				
 				// calculating next child ray (iteration)
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);

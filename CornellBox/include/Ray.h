@@ -2,7 +2,7 @@
 #define RAY_H value
 
 #include "glm/glm.hpp"
-
+class Object;
 class Ray
 {
 public:
@@ -20,7 +20,7 @@ public:
 												// childNodes and a local lighting
 												// model (Phong's?) to a single RGB
 	 											// vector
-	void calculateLocalLightingContribution();	// computes Le(x,theta) for the
+	glm::vec3 calculateLocalLightingContribution(Object* _object, Ray* _shadowRay);	// computes Le(x,theta) for the
 												// point where a ray intersects
 												// a surface.
 

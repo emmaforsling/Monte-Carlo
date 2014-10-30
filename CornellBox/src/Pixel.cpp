@@ -73,7 +73,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
 		
 		int closestIntersectedObjectIndex = 666;														// temporary
-		int numberOfObjects = 4;																		// temporary...
+		int numberOfObjects = 3;																		// temporary...
 		int numberOfIterations = 8;																	// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
@@ -146,9 +146,16 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 						}
 					}
 				}				
-				// accumulating color for current pixel
-				colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
+				// calling mr dj, calling mr wrong, to find out diffuse/transp/intransp. object
+				glm::vec3 something = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], shadowRay);
+				//std::cout << something.x << something.y << something.z << std::endl;
 				
+				// accumulating color for current pixel
+				colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * something;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
+
+				// accumulating color for current pixel
+				//colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
+
 				// calculating next child ray (iteration)
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			

@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	float refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::vec3 positionSphereSpecular = glm::vec3(3.75, 1.0, 3.0);
+	glm::vec3 positionSphereSpecular = glm::vec3(2.5, 1.0, 2.5);
 	float radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
 	float refractiveIndexForSphereSpecular = 1.5;			// glass

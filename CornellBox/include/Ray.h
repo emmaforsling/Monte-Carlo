@@ -38,8 +38,9 @@ public:
 	Ray* childNodes;							// maybe just one
 	glm::vec3 intersectionPoint;
 
+	void setIsInsideObject(bool _insideObject);
+
 private:
-	
 	glm::vec3 color;							// vec4 for alpha?
 	glm::vec3 direction;
 	bool insideObject;

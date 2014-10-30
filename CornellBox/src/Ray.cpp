@@ -158,3 +158,9 @@ bool Ray::isInsideObject()
 	return insideObject;
 }
 
+void Ray::setIsInsideObject(bool _insideObject)
+{
+	//std::cout << "setting isInsideObject to " << _insideObject << std::endl;
+	insideObject = _insideObject;
+}
+

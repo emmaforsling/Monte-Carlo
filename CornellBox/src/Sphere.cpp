@@ -113,8 +113,9 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		float min_t = std::min(t1,t2);
 		float max_t = std::max(t1,t2);
 
-		if(_ray->isInsideObject())			//if true
+		if(_ray->isInsideObject())
 		{
+			//std::cout << "Ray inside object!" << std::endl;
 			finalIntersection.x = startingPoint.x + max_t * direction.x;
 			finalIntersection.y = startingPoint.y + max_t * direction.y;
 			finalIntersection.z = startingPoint.z + max_t * direction.z;
@@ -154,16 +155,24 @@ void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TE
 	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
 	glm::vec3 newRayDirection;
+	glm::vec3 reflectedRayDirection;
+	glm::vec3 refractedRayDirection;
 	if(transparent)
 	{
-		newRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+		reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+		refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+	
+		bool refractedRayIsInside;
+		_ray->isInsideObject() ? refractedRayIsInside = false : refractedRayIsInside = true;
+
+		//_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
+		_ray->childNodes = new Ray(intersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
 	}
 	else
 	{
-		newRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+		reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+		_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
 	}
-
-	_ray->childNodes = new Ray(intersectionPoint, newRayDirection, _ray->getImportance(), color, false);
 }
 
 /*

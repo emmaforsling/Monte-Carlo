@@ -158,3 +158,14 @@ bool Ray::isInsideObject()
 	return insideObject;
 }
 
+bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
+{
+	//colorForTheReflectedRay - kanske skicka med en Ray* till den reflected rayen och kalla på funktionen getColor, eller color
+	/*
+		
+	*/
+	// double p = MAX(colorForTheReflectedRay[0], MAX(colorForTheReflectedRay[1],colorForTheReflectedRay[2]));
+	// // får inte ekvationen att gå ihop
+	return false;
+}
+

@@ -4,9 +4,9 @@
 /* Class Light
 	private:
 	- Rectangle* sumthin;
-	- float radiance;
-	- glm::vec3 position;
-	- float size;
+	- double radiance;
+	- glm::dvec3 position;
+	- double size;
 */
 
 /* 
@@ -16,14 +16,14 @@ Light::Light()
 {
 	lightSource = new Rectangle();
 	radiance = 0.0;
-	position = glm::vec3(0.0, 0.0, 0.0);
+	position = glm::dvec3(0.0, 0.0, 0.0);
 	size = 0;
 }
 
 /*
 	Constructor
 */
-Light::Light(glm::vec3 _position, float _size, float _radiance)
+Light::Light(glm::dvec3 _position, double _size, double _radiance)
 {
 	radiance = _radiance;
 	//position = _position;
@@ -34,15 +34,15 @@ Light::Light(glm::vec3 _position, float _size, float _radiance)
 		The x coord and z coord should then be divided by 6 to become the lightsource
 	*/
 	lightSource = new Rectangle();		// up
-	// lightSource->positionsOfCorners[0] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 - size/6.0);
-	// lightSource->positionsOfCorners[1] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 - size/6.0);
-	// lightSource->positionsOfCorners[2] = glm::vec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
-	// lightSource->positionsOfCorners[3] = glm::vec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
+	// lightSource->positionsOfCorners[0] = glm::dvec3(size/2.0 - size/6.0, size, size/2.0 - size/6.0);
+	// lightSource->positionsOfCorners[1] = glm::dvec3(size/2.0 + size/6.0, size, size/2.0 - size/6.0);
+	// lightSource->positionsOfCorners[2] = glm::dvec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
+	// lightSource->positionsOfCorners[3] = glm::dvec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
 
-	lightSource->positionsOfCorners[0] = glm::vec3(2.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[1] = glm::vec3(3.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[2] = glm::vec3(3.0, 4.5, 3.0);
-	lightSource->positionsOfCorners[3] = glm::vec3(2.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 2.0);
+	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 2.0);
+	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 3.0);
 
 	position = lightSource->positionsOfCorners[0];
 
@@ -67,19 +67,19 @@ Light::~Light()
 /*
 	Get functions
 */
-glm::vec3 Light::getPosition()
+glm::dvec3 Light::getPosition()
 {
 	return position;
 }
 
-glm::vec3 Light::getRandomPosition()
+glm::dvec3 Light::getRandomPosition()
 {
 	//srand(time(NULL));					// Only Chronos is the master of time!
-	float randomPointX = lightSource->positionsOfCorners[0].x + ((size/6.0) * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
-	float randomPointZ = lightSource->positionsOfCorners[0].z + ((size/6.0) * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
+	double randomPointX = lightSource->positionsOfCorners[0].x + ((size/6.0) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
+	double randomPointZ = lightSource->positionsOfCorners[0].z + ((size/6.0) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
 
 	// The random point on the area light source
-	glm::vec3 randomPoint = glm::vec3(randomPointX, lightSource->positionsOfCorners[0].y, randomPointZ);
+	glm::dvec3 randomPoint = glm::dvec3(randomPointX, lightSource->positionsOfCorners[0].y, randomPointZ);
 	//std:: cout << "returning random point on light source: (" << randomPoint.x << ", " << randomPoint.y << ", " << randomPoint.z << ")" << std::endl;
 	return randomPoint;
 }

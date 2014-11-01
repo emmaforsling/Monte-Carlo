@@ -5,9 +5,9 @@
 	Class Camera  
 	
 	private members:
-	- glm::vec3 position;
-	- glm::vec3 direction;
-	- float viewPlaneDistance;
+	- glm::dvec3 position;
+	- glm::dvec3 direction;
+	- double viewPlaneDistance;
 	- int resolutionX;
 	- int resolutionY;
 	- int raysPerPixel;
@@ -19,8 +19,8 @@
 */
 Camera::Camera()
 {	
-	position = glm::vec3(0.0,0.0,0.0);
-	direction = glm::vec3(0.0,0.0,0.0);
+	position = glm::dvec3(0.0,0.0,0.0);
+	direction = glm::dvec3(0.0,0.0,0.0);
 	viewPlaneDistance = 0.0;
 	raysPerPixel = 0;
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -32,13 +32,13 @@ Camera::Camera()
 /*
 	Constructor
 */
-Camera::Camera(Wall* _room, float _eyeDistance, int _raysPerPixel)
+Camera::Camera(Wall* _room, double _eyeDistance, int _raysPerPixel)
 {	
 	//DO not change direction //
-	direction = glm::vec3(0.0, 0.0, -1.0);
+	direction = glm::dvec3(0.0, 0.0, -1.0);
 	
-	glm::vec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0f;
-	position = /*glm::vec3(2.5, 2.5, 15); //*/oppositeWallCenterPosition - direction * _eyeDistance;
+	glm::dvec3 oppositeWallCenterPosition = (_room->walls[4]->positionsOfCorners[0] + _room->walls[4]->positionsOfCorners[2])/2.0;
+	position = /*glm::dvec3(2.5, 2.5, 15); //*/oppositeWallCenterPosition - direction * _eyeDistance;
 	
 	/*
 		z' - avståndet till scenen 		(eyedistance)
@@ -92,27 +92,27 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	*/
 
 	// Defining the viewplane
-	float viewPlanePosZ = position.z - viewPlaneDistance;
-	glm::vec3 viewPlaneCorner0 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
-	glm::vec3 viewPlaneCorner1 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
-	glm::vec3 viewPlaneCorner2 = glm::vec3(position.x + viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
-	glm::vec3 viewPlaneCorner3 = glm::vec3(position.x - viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
+	double viewPlanePosZ = position.z - viewPlaneDistance;
+	glm::dvec3 viewPlaneCorner0 = glm::dvec3(position.x - viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::dvec3 viewPlaneCorner1 = glm::dvec3(position.x + viewPlaneSizeX/2.0, position.y - viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::dvec3 viewPlaneCorner2 = glm::dvec3(position.x + viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
+	glm::dvec3 viewPlaneCorner3 = glm::dvec3(position.x - viewPlaneSizeX/2.0, position.y + viewPlaneSizeY/2.0, viewPlanePosZ);
 	
 	// Determining the pixelsize
-	float pixelSize = viewPlaneSizeX / (float)resolutionX;			// or viewPlaneSizeY / resolutionY
+	double pixelSize = viewPlaneSizeX / (double)resolutionX;			// or viewPlaneSizeY / resolutionY
 	
 	// Initializing variables
-	glm::vec3 pixelPosition;
+	glm::dvec3 pixelPosition;
 	int numberOfPixels = resolutionX * resolutionY;
-	
+	//srand(time(NULL));
 	//#pragma omp parallel for
 	for(int i = 0; i < numberOfPixels; i++)					//Loop through all the pixels
 	{
 		// To determine the pixelPosition
-		//   pixelPosition.x: i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x
-		//   pixelPosition.y: viewPlaneCorner3.y - (i/(int)resolutionY) / (float)resolutionY 
+		//   pixelPosition.x: i % resolutionX) / (double)resolutionX + viewPlaneCorner0.x
+		//   pixelPosition.y: viewPlaneCorner3.y - (i/(int)resolutionY) / (double)resolutionY 
 		//   pixelPosition.z: viewPlanePosZ
-		pixelPosition = glm::vec3((i % resolutionX) / (float)resolutionX + viewPlaneCorner0.x, viewPlaneCorner3.y - (i/(int)resolutionY) / (float)resolutionY , viewPlanePosZ);
+		pixelPosition = glm::dvec3((i % resolutionX) / (double)resolutionX + viewPlaneCorner0.x, viewPlaneCorner3.y - (i/(int)resolutionY) / (double)resolutionY , viewPlanePosZ);
 		
 		// Take the current pixel, call the function shootRays 
 		//  that shoots, the given amount of rays, though that pixel
@@ -125,6 +125,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		{
 			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
 		}
+		
 	}
 	std::cout << "Progress: 100%" << std::endl;
 	// // std::cout << "color of pixels:" << std::endl;
@@ -138,7 +139,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 void Camera::saveImage()
 {
 	/* This code, for saving the image into ppm-format, is taken from http://www.kevinbeason.com/smallpt/ */ 
-	glm::vec3 colorOfPixel = glm::vec3(0.0, 0.0, 0.0);
+	glm::dvec3 colorOfPixel = glm::dvec3(0.0, 0.0, 0.0);
 	FILE* _file = fopen("image.ppm","w");
 	fprintf(_file, "P3\n%d %d\n%d\n", resolutionX, resolutionY, 255);
 	for(int i = 0; i < resolutionX * resolutionY; i++)
@@ -164,12 +165,12 @@ void Camera::mappingFunction()
 	display purposes.  The following functions do this.  The toInt 
 	function applies a gamma correction of 2.2."
 */
-float Camera::clamp(float _x)
+double Camera::clamp(double _x)
 {
 	return _x<0 ? 0 : _x>1 ? 1 : _x;
 }
 
-int Camera::toInt(float _x)
+int Camera::toInt(double _x)
 {
 	return int(pow(clamp(_x),1/2.2)*255+.5);
 }

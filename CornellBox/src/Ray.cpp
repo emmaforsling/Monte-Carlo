@@ -6,16 +6,16 @@
 /* 	Class Ray  
 	
 	private members:
-	- glm::vec3 color;							// vec4 for alpha?
-	- glm::vec3 direction;
+	- glm::dvec3 color;							// vec4 for alpha?
+	- glm::dvec3 direction;
 	- bool insideObject;
 	- bool finalNode;
-	- float importance;
-	- glm::vec3 startingPoint;
+	- double importance;
+	- glm::dvec3 startingPoint;
 
 	public variables:
 	- Ray* childNodes;
-	- glm::vec3 intersectionPoint
+	- glm::dvec3 intersectionPoint
 */
 
 /* 
@@ -23,10 +23,10 @@
 */
 Ray::Ray()
 {
-	startingPoint = glm::vec3(0.0, 0.0, 0.0);
-	direction = glm::vec3(0.0, 0.0, 0.0);
+	startingPoint = glm::dvec3(0.0, 0.0, 0.0);
+	direction = glm::dvec3(0.0, 0.0, 0.0);
 	importance = 0;
-	color = glm::vec3(0.0, 0.0, 0.0);
+	color = glm::dvec3(0.0, 0.0, 0.0);
 	finalNode = false;
 	childNodes = nullptr;
 	insideObject = false;
@@ -35,7 +35,7 @@ Ray::Ray()
 /*
 	Constructor
 */
-Ray::Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm::vec3 _color, bool _insideObject)
+Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, glm::dvec3 _color, bool _insideObject)
 {
 	startingPoint = _startingPoint;
 	direction = _direction/glm::length(_direction);
@@ -57,7 +57,7 @@ Ray::~Ray()
 /*
 	Calculation functions
 */
-glm::vec3 Ray::calculateColor()
+glm::dvec3 Ray::calculateColor()
 {
 	/* 	
 	Combines color contributions from childNodes and
@@ -66,11 +66,11 @@ glm::vec3 Ray::calculateColor()
 	
 	// TODO: Write Code
 	// Track ray through its children and blend final color.
-	return glm::vec3(0.0, 0.0, 0.0);
+	return glm::dvec3(0.0, 0.0, 0.0);
 }
 
 
-glm::vec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay)
+glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay)
 {
 	/*
 		First - diffuse, transparent or intransparent
@@ -79,19 +79,19 @@ glm::vec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowR
 	bool transparent = _object->isTransparent();
 	bool diffuse = _object->isDiffuse();
 	
-	glm::vec3 normal_surface = _object->getIntersectedNormal();
-	glm::vec3 color_surface = _object->getColor();
+	glm::dvec3 normal_surface = _object->getIntersectedNormal();
+	glm::dvec3 color_surface = _object->getColor();
 	
-	glm::vec3 rayToLightSource = - _shadowRay->getDirection();
+	glm::dvec3 rayToLightSource = - _shadowRay->getDirection();
 	//std::cout << "shadowRay direction = " << rayToLightSource.x << ", " << rayToLightSource.y << ", " << rayToLightSource.z << std::endl;
 	//std::cout << "magnitude = " << glm::length(rayToLightSource) << std::endl;
-	glm::vec3 color_ray = glm::vec3(1.0,1.0,1.0); 		//temporary
+	glm::dvec3 color_ray = glm::dvec3(1.0,1.0,1.0); 		//temporary
 
 	// if(diffuse)					// If diffuse surface
 	// {
 		// Using phong Id * kd * (L ° N)
-		float dotproduct = glm::dot(normal_surface, rayToLightSource);
-		glm::vec3 returningthing = glm::vec3(0.0, 0.0, 0.0);
+		double dotproduct = glm::dot(normal_surface, rayToLightSource);
+		glm::dvec3 returningthing = glm::dvec3(0.0, 0.0, 0.0);
 		//std::cout << "dot = " << dotproduct << std::endl;
 		if(dotproduct <= 0)
 		{
@@ -102,22 +102,22 @@ glm::vec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowR
 			returningthing = color_ray * color_surface * dotproduct;
 			return returningthing;
 		}
-		return glm::vec3(0.0,0.0,0.0);
+		return glm::dvec3(0.0,0.0,0.0);
 
 	// }
 	// else if(transparent)		// If the surface is transparent
 	// {	
-	// 	return glm::vec3(0.0,0.0,0.0);
+	// 	return glm::dvec3(0.0,0.0,0.0);
 
 	// }
 	// else if(!transparent)		// If the surface is intransparent
 	// {
-	// 	return glm::vec3(0.0,0.0,0.0);
+	// 	return glm::dvec3(0.0,0.0,0.0);
 	// }
 	// else
 	// {
 	// 	std::cout << "This message should not be displayed, and is only here for debugging" << std::endl;
-	// 	return glm::vec3(0.0,0.0,0.0);
+	// 	return glm::dvec3(0.0,0.0,0.0);
 	// }
 	/* 
 		Computes Le(x,theta) for the point where a ray
@@ -130,22 +130,22 @@ glm::vec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowR
 /*
 	Get functions
 */
-glm::vec3 Ray::getColor()
+glm::dvec3 Ray::getColor()
 {
 	return color;
 }
 
-glm::vec3 Ray::getDirection()
+glm::dvec3 Ray::getDirection()
 {
 	return direction;
 }
 
-float Ray::getImportance()
+double Ray::getImportance()
 {
 	return importance;
 }
 
-glm::vec3 Ray::getStartingPoint()
+glm::dvec3 Ray::getStartingPoint()
 {
 	return startingPoint;
 }

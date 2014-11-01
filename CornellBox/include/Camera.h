@@ -10,7 +10,7 @@
 #include "Wall.h"
 #include "Light.h"
 
-//#include <omp.h>
+#include <omp.h>
 
 class Camera
 {
@@ -19,7 +19,7 @@ public:
 	Camera();
 
 	// Constructor
-	Camera(Wall* _room, float _eyeDistance, int _raysPerPixel);
+	Camera(Wall* _room, double _eyeDistance, int _raysPerPixel);
 	
 	// Destructor
 	~Camera();
@@ -31,23 +31,23 @@ public:
 	void mappingFunction();									// - Converts radiometric values into
 															//   photometric ones.
 private:
-	glm::vec3 direction;
-	glm::vec3 position;
+	glm::dvec3 direction;
+	glm::dvec3 position;
 	
-	float viewPlaneDistance;
+	double viewPlaneDistance;
 	
 	const int viewPlaneSizeX = 1;
 	const int viewPlaneSizeY = 1;
 	
-	static const int resolutionX = 300;
-	static const int resolutionY = 300;
+	static const int resolutionX = 600;
+	static const int resolutionY = 600;
 	
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
 
 	// private functions, used when to save the image
-	float clamp(float _x);
-	int toInt(float _x);
+	double clamp(double _x);
+	int toInt(double _x);
 };
 
 #endif

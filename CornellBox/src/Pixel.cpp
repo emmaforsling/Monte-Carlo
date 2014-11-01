@@ -5,8 +5,8 @@
 	Class Pixel  
 	
 	private members:
-	- glm::vec3 colorOfPixel;						// vec4 for alpha?
-	- glm::vec3 position;
+	- glm::dvec3 colorOfPixel;						// vec4 for alpha?
+	- glm::dvec3 position;
 	- static const int raysPerPixel = 32;
 	- Ray* rays[raysPerPixel];
 */
@@ -20,8 +20,8 @@ Pixel::Pixel()
 	{
 		rays[i] = nullptr;
 	}
-	colorOfPixel = glm::vec3(0.0, 0.0, 0.0);															// black to begin with
-	position = glm::vec3(0.0, 0.0, 0.0);
+	colorOfPixel = glm::dvec3(0.0, 0.0, 0.0);															// black to begin with
+	position = glm::dvec3(0.0, 0.0, 0.0);
 }
 
 /*
@@ -33,7 +33,7 @@ Pixel::Pixel(int _raysPerPixel)
 	{
 		rays[i] = nullptr;
 	}
-	colorOfPixel = glm::vec3(0.0, 0.0, 0.0);															// black to begin with
+	colorOfPixel = glm::dvec3(0.0, 0.0, 0.0);															// black to begin with
 }
 
 /*
@@ -50,45 +50,45 @@ Pixel::~Pixel()
 /*
 	Shoot rays function
 */
-void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _pixelPosition, float _pixelSize, Object** _objects, Light* _light)
+void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 _pixelPosition, double _pixelSize, Object** _objects, Light* _light)
 {
-	float randomPointX;
-	float randomPointY;
-	glm::vec3 randomPoint;
-	glm::vec3 direction;
-	glm::vec3 color;
+	double randomPointX;
+	double randomPointY;
+	glm::dvec3 randomPoint;
+	glm::dvec3 direction;
+	glm::dvec3 color;
 	srand(time(NULL));
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
 		// Calculating random point on the pixel
-		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
-		randomPointY = _pixelPosition.y + (_pixelSize * static_cast <float>(rand()) ) / static_cast<float>(RAND_MAX);
-		randomPoint = glm::vec3(randomPointX, randomPointY, _pixelPosition.z);
+		randomPointX = _pixelPosition.x + (_pixelSize * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
+		randomPointY = _pixelPosition.y + (_pixelSize * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
+		randomPoint = glm::dvec3(randomPointX, randomPointY, _pixelPosition.z);
 
 		// Determining the normalized direction from eye to generated position
 		direction = (randomPoint - _cameraPosition) / glm::length(randomPoint - _cameraPosition);
 
-		rays[i] = new Ray(randomPoint, direction, 1.0/Pixel::raysPerPixel, glm::vec3(0.0, 0.0, 0.0), false);
-		glm::vec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
-		glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+		rays[i] = new Ray(randomPoint, direction, 1.0/Pixel::raysPerPixel, glm::dvec3(0.0, 0.0, 0.0), false);
+		glm::dvec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
+		glm::dvec3 finalIntersection = glm::dvec3(0.0, 0.0, 0.0);
 		
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 3;																		// temporary...
-		int numberOfIterations = 8;																		// number of children
+		int numberOfIterations = 4;																		// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
 
 		while(currentChildRay != nullptr && iteration <= numberOfIterations)
 		{
 			// resetting finalIntersection for each iteration
-			finalIntersection = glm::vec3(0.0, 0.0, 0.0);		
+			finalIntersection = glm::dvec3(0.0, 0.0, 0.0);		
 			//closestIntersectedObjectIndex = 666;
 
 			// looping through objects to find intersections
 			for(int j = 0; j < numberOfObjects; j++)
 			{			
 				intersectionPoints[j] = _objects[j]->calculateIntersection(currentChildRay);
-				glm::vec3 normal = _objects[j]->getIntersectedNormal();
+				glm::dvec3 normal = _objects[j]->getIntersectedNormal();
 				int intersectedSide = _objects[j]->getIntersectedSide(); 								// is used primarily for walls
 				
 				// if an intersection has been found && no previous intersections have been stored (first encountered object)
@@ -119,11 +119,11 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 			if(closestIntersectedObjectIndex != 666)
 			{
 				int intersectionPointVisibleFromLightSource = 1;										// 1 = visible, 0 = not visible
-				glm::vec3 randomPositionOnLightSource = _light->getRandomPosition();			
+				glm::dvec3 randomPositionOnLightSource = _light->getRandomPosition();			
 
 				// calculating shadow ray - defined as a ray from the light source to a surface, to be able to use Object::calculateIntersection();
-				Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
-				glm::vec3 shadowIntersection;
+				Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
+				glm::dvec3 shadowIntersection;
 				
 				// looping through all objects to check for occlusion
 				for(int j = 0; j < numberOfObjects; j++)
@@ -131,7 +131,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 					// calculating intersection between shadow ray and object
 					shadowIntersection = _objects[j]->calculateIntersection(shadowRay);
 					// if intersection
-					if( shadowIntersection != glm::vec3(0.0, 0.0, 0.0) )
+					if( shadowIntersection != glm::dvec3(0.0, 0.0, 0.0) )
 					{	
 						// occlusion if returned point is closer to the light source
 						if( glm::length(randomPositionOnLightSource - shadowIntersection) != 0 && glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - finalIntersection) )
@@ -148,7 +148,7 @@ void Pixel::shootRays(glm::vec3 _cameraPosition, int _raysPerPixel, glm::vec3 _p
 				}
 
 				// calling mr dj, calling mr wrong, to find out diffuse/transp/intransp. object
-				glm::vec3 something = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], shadowRay);
+				glm::dvec3 something = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], shadowRay);
 				//std::cout << something.x << something.y << something.z << std::endl;
 				
 				// accumulating color for current pixel
@@ -193,7 +193,7 @@ void Pixel::clearMemory()
 /*
 	Get functions
 */
-glm::vec3 Pixel::getColorOfPixel()
+glm::dvec3 Pixel::getColorOfPixel()
 {
 	return colorOfPixel;
 }

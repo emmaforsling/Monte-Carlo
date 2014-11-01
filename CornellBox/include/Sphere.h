@@ -12,29 +12,29 @@ public:
 	Sphere();
 
 	// Constructor 
-	Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse);
+	Sphere(glm::dvec3 _position, double _radius, bool _transparent, double _refractiveIndex, glm::dvec3 _color, bool _diffuse);
 	
 	// Default destructor
 	~Sphere() = default;
 	
 	// Calculation functions
-	virtual glm::vec3 calculateIntersection(Ray* _ray);
-	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
+	virtual glm::dvec3 calculateIntersection(Ray* _ray);
+	virtual void calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint);
 
 	// Get functions
-	virtual glm::vec3 getColor();
-	virtual glm::vec3 getIntersectedNormal();
+	virtual glm::dvec3 getColor();
+	virtual glm::dvec3 getIntersectedNormal();
 	virtual int getIntersectedSide();
-	virtual float getRefractiveIndex();
+	virtual double getRefractiveIndex();
 
 	// Set functions 
-	void setIntersectedNormal(glm::vec3 _intersectedNormal);
+	void setIntersectedNormal(glm::dvec3 _intersectedNormal);
 
 private:
-	float radius;				
-	float refractiveIndex;		//glass = 1.5, air = 1.0
+	double radius;				
+	double refractiveIndex;		//glass = 1.5, air = 1.0
 
-	glm::vec3 intersectedNormal;
+	glm::dvec3 intersectedNormal;
 	int intersectedSide;
 };
 

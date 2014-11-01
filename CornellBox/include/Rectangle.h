@@ -16,23 +16,23 @@ public:
 
 	// Calculation functions
 	void calculateChildRays();					// only called on cube
-	glm::vec3 calculateIntersection(Ray* ray);
+	glm::dvec3 calculateIntersection(Ray* ray);
 	
 	// Get functions
-	glm::vec3 getColor();
-	glm::vec3 getNormal();
+	glm::dvec3 getColor();
+	glm::dvec3 getNormal();
 
 	// Set functions
-	void setColor(glm::vec3 _color);
+	void setColor(glm::dvec3 _color);
 	
 	// Public variables
-	glm::vec3 positionsOfCorners[4];
+	glm::dvec3 positionsOfCorners[4];
 
 
 private:
-	float A, B, C, D;
-	glm::vec3 color;
-	glm::vec3 normal;
+	double A, B, C, D;
+	glm::dvec3 color;
+	glm::dvec3 normal;
 
 };
 

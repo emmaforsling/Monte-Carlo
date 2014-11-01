@@ -4,7 +4,7 @@
 /*
 	Constructor
 */
-Object::Object(glm::vec3 _position, glm::vec3 _color, bool _diffuse, bool _transparent)
+Object::Object(glm::dvec3 _position, glm::dvec3 _color, bool _diffuse, bool _transparent)
 {
 	position = _position;
 	color = _color;

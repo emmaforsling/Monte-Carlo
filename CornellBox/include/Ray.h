@@ -10,43 +10,43 @@ public:
 	Ray();
 
 	// Constructor
-	Ray(glm::vec3 _startingPoint, glm::vec3 _direction, float _importance, glm::vec3 _color, bool _insideObject);
+	Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, glm::dvec3 _color, bool _insideObject);
 	
 	// Destructor
 	~Ray();
 
 	// Calculation functions
-	glm::vec3 calculateColor();					// combines color contributions from
+	glm::dvec3 calculateColor();					// combines color contributions from
 												// childNodes and a local lighting
 												// model (Phong's?) to a single RGB
 	 											// vector
-	glm::vec3 calculateLocalLightingContribution(Object* _object, Ray* _shadowRay);	// computes Le(x,theta) for the
+	glm::dvec3 calculateLocalLightingContribution(Object* _object, Ray* _shadowRay);	// computes Le(x,theta) for the
 												// point where a ray intersects
 												// a surface.
 
 
 	// Get functions
-	glm::vec3 getColor();
-	glm::vec3 getDirection();
-	float getImportance();
-	glm::vec3 getStartingPoint();
+	glm::dvec3 getColor();
+	glm::dvec3 getDirection();
+	double getImportance();
+	glm::dvec3 getStartingPoint();
 	
 	// Bool functions
 	bool isInsideObject();
 	
 	// Public variables
 	Ray* childNodes;							// maybe just one
-	glm::vec3 intersectionPoint;
+	glm::dvec3 intersectionPoint;
 
 	void setIsInsideObject(bool _insideObject);
 
 private:
-	glm::vec3 color;							// vec4 for alpha?
-	glm::vec3 direction;
+	glm::dvec3 color;							// vec4 for alpha?
+	glm::dvec3 direction;
 	bool insideObject;
 	bool finalNode;
-	float importance;
-	glm::vec3 startingPoint;
+	double importance;
+	glm::dvec3 startingPoint;
 
 };
 

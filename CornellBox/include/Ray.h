@@ -33,7 +33,8 @@ public:
 	
 	// Bool functions
 	bool isInsideObject();
-	
+	bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds);
+
 	// Public variables
 	Ray* childNodes;							// maybe just one
 	glm::dvec3 intersectionPoint;

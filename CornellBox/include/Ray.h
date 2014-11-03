@@ -35,6 +35,10 @@ public:
 	bool isInsideObject();
 	bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds);
 
+	// Reflect and refract
+	glm::vec3 reflectRay(glm::vec3 _direction, glm::vec3 _intersectedNormal);
+	glm::vec3 refractRay();
+
 	// Public variables
 	Ray* childNodes;							// maybe just one
 	glm::vec3 intersectionPoint;

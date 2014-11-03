@@ -158,7 +158,7 @@ bool Ray::isInsideObject()
 	return insideObject;
 }
 
-bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
+bool Ray::russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
 {
 	//colorForTheReflectedRay - kanske skicka med en Ray* till den reflected rayen och kalla på funktionen getColor, eller color
 	/*
@@ -169,3 +169,42 @@ bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
 	return false;
 }
 
+/*
+	Reflect and refract
+*/
+glm::vec3 Ray::reflectRay(glm::vec3 _direction, glm::vec3 _intersectedNormal)
+{
+	/*
+	   I  N  R
+	   ^  ^  ^
+		\ | /
+		 \|/
+
+		perfect reflection
+		R = I - 2(dot(N,I)N)
+	*/
+
+	glm::vec3 normal_surface = _intersectedNormal;
+	glm::vec3 ray_from_lightsourve = - _direction;
+	
+	float dotN_I = glm::dot(normal_surface, ray_from_lightsourve);
+	//std::cout << "Normal: " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << std::endl;
+	//std::cout << "Ray from lightsource: " << ray_from_lightsourve.x << ", " << ray_from_lightsourve.y << ", " << ray_from_lightsourve.z << std::endl;
+	//std::cout << "dotN_I " << dotN_I << std::endl;
+	
+	// FUlkod, då fel uppstår vid * operatorn for glm
+	glm::vec3 temp;
+	temp.x = 2.0 * dotN_I * normal_surface.x;
+	temp.y = 2.0 * dotN_I * normal_surface.y;
+	temp.z = 2.0 * dotN_I * normal_surface.z;
+	
+	glm::vec3 _R = ray_from_lightsourve - temp;
+	//std::cout << "Reflected ray = " << _R.x << ", " << _R.y << ", " << _R.z << std::endl;
+	
+	return _R;
+}
+
+glm::vec3 Ray::refractRay()
+{
+
+}

@@ -148,12 +148,16 @@ void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TE
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
 	// // std::cout << "====== Reflection/refraction =====" << std::endl;
 	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	//std::cout << "glm::reflect: " << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << std::endl;
+	
 	// // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
-
+	glm::vec3 test = _ray->reflectRay(_ray->getDirection(), intersectedNormal);
+	//std::cout << "test_reflection: " << test.x << ", " << test.y << ", " << test.z << std::endl;
+	
 	// glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
+	_ray->childNodes = new Ray(intersectionPoint, /*reflectedRayDirection*/test, _ray->getImportance(), color, false);
 }
 
 /*

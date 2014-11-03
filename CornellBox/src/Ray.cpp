@@ -151,6 +151,15 @@ glm::dvec3 Ray::getStartingPoint()
 }
 
 /*
+	Set functions
+*/
+void Ray::setIsInsideObject(bool _insideObject)
+{
+	//std::cout << "setting isInsideObject to " << _insideObject << std::endl;
+	insideObject = _insideObject;
+}
+
+/*
 	Bool functions
 */
 bool Ray::isInsideObject()
@@ -158,13 +167,8 @@ bool Ray::isInsideObject()
 	return insideObject;
 }
 
-void Ray::setIsInsideObject(bool _insideObject)
-{
-	//std::cout << "setting isInsideObject to " << _insideObject << std::endl;
-	insideObject = _insideObject;
-}
 
-bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
+bool Ray::russianRoulette(glm::dvec3 colorForTheReflectedRay, double survivalOds)
 {
 	//colorForTheReflectedRay - kanske skicka med en Ray* till den reflected rayen och kalla på funktionen getColor, eller color
 	/*
@@ -172,6 +176,47 @@ bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds)
 	*/
 	// double p = MAX(colorForTheReflectedRay[0], MAX(colorForTheReflectedRay[1],colorForTheReflectedRay[2]));
 	// // får inte ekvationen att gå ihop
+	
+	// TODO
 	return false;
+}
+
+/*
+	Reflect and refract
+*/
+glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
+{
+	/*
+	   I  N  R
+	   ^  ^  ^
+		\ | /
+		 \|/
+
+		perfect reflection
+		R = I - 2(dot(N,I)N)
+	*/
+
+	glm::dvec3 normal_surface = _intersectedNormal;
+	glm::dvec3 ray_from_lightsourve =  _direction;
+	
+	double dotN_I = glm::dot(normal_surface, ray_from_lightsourve);
+	//std::cout << "Normal: " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << std::endl;
+	//std::cout << "Ray from lightsource: " << ray_from_lightsourve.x << ", " << ray_from_lightsourve.y << ", " << ray_from_lightsourve.z << std::endl;
+	//std::cout << "dotN_I " << dotN_I << std::endl;
+	
+	// FUlkod, då fel uppstår vid * operatorn for glm
+	glm::dvec3 temp;
+	temp.x = 2.0 * dotN_I * normal_surface.x;
+	temp.y = 2.0 * dotN_I * normal_surface.y;
+	temp.z = 2.0 * dotN_I * normal_surface.z;
+	
+	glm::dvec3 _R = ray_from_lightsourve - temp;
+	//std::cout << "Reflected ray = " << _R.x << ", " << _R.y << ", " << _R.z << std::endl;
+	
+	return _R;
+}
+
+glm::dvec3 Ray::refractRay()
+{
 
 }

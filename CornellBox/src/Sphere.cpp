@@ -181,7 +181,8 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 	else
 	{
 		reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
-		_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
+		glm::dvec3 test = _ray->reflectRay(_ray->getDirection(), intersectedNormal);	// Kallar på den egna funktionen
+		_ray->childNodes = new Ray(intersectionPoint, test/*reflectedRayDirection*/, _ray->getImportance(), color, false);
 	}
 }
 

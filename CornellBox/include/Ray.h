@@ -31,15 +31,20 @@ public:
 	double getImportance();
 	glm::dvec3 getStartingPoint();
 	
+	// Set functions
+	void setIsInsideObject(bool _insideObject);
+
 	// Bool functions
 	bool isInsideObject();
-	bool russianRoulette(glm::vec3 colorForTheReflectedRay, double survivalOds);
+	bool russianRoulette(glm::dvec3 colorForTheReflectedRay, double survivalOds);
+
+	// Reflect and refract
+	glm::dvec3 reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal);
+	glm::dvec3 refractRay();
 
 	// Public variables
 	Ray* childNodes;							// maybe just one
 	glm::dvec3 intersectionPoint;
-
-	void setIsInsideObject(bool _insideObject);
 
 private:
 	glm::dvec3 color;							// vec4 for alpha?

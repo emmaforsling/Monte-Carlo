@@ -4,17 +4,17 @@
 	Class Sphere  
 	
 	private members:
-	- glm::vec3 position;
-	- float radius;
-	- float transparency;
-	- float refractiveIndex;
+	- glm::dvec3 position;
+	- double radius;
+	- double transparency;
+	- double refractiveIndex;
 */
 
 /* 
 	Emtpy constructor
 */
 Sphere::Sphere()
-: Object(glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 0.0 ,0.0), false, false)
+: Object(glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0 ,0.0), false, false)
 {
 	radius = 0.0;
 	refractiveIndex = 0.0;
@@ -23,7 +23,7 @@ Sphere::Sphere()
 /*
 	Constructor
 */
-Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse)
+Sphere::Sphere(glm::dvec3 _position, double _radius, bool _transparent, double _refractiveIndex, glm::dvec3 _color, bool _diffuse)
 : Object(_position, _color, _diffuse, _transparent)
 {
 	radius = _radius;
@@ -33,7 +33,7 @@ Sphere::Sphere(glm::vec3 _position, float _radius, bool _transparent, float _ref
 /*
 	Calculation functions
 */
-glm::vec3 Sphere::calculateIntersection(Ray* _ray)
+glm::dvec3 Sphere::calculateIntersection(Ray* _ray)
 {
 	/*
 
@@ -66,18 +66,18 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	*/
 
 	// Initializing the variables
-	float a = 0.0, b = 0.0, c = 0.0;
-	float delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
-	glm::vec3 finalIntersection = glm::vec3(0.0, 0.0, 0.0);
+	double a = 0.0, b = 0.0, c = 0.0;
+	double delta = 0.0, t = 0.0, t1 = 0.0, t2 = 0.0;
+	glm::dvec3 finalIntersection = glm::dvec3(0.0, 0.0, 0.0);
 
 	// Get the startingPoint for the ray
-	glm::vec3 startingPoint = _ray->getStartingPoint();
+	glm::dvec3 startingPoint = _ray->getStartingPoint();
 
 	// Get the direction for the ray
-	glm::vec3 direction = _ray->getDirection();
+	glm::dvec3 direction = _ray->getDirection();
 	
 	// Set the centerPoint for the sphere to the position given as an argument to the constructor
-	glm::vec3 centerPoint = position;
+	glm::dvec3 centerPoint = position;
 	
 	// Calculate a, b and c
 	a = (direction.x)*(direction.x) + (direction.y)*(direction.y) + (direction.z)*(direction.z);
@@ -94,7 +94,7 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		
 	if(delta<0)										// No intersection
 	{	
-		intersectedNormal = glm::vec3(0.0,0.0,0.0);
+		intersectedNormal = glm::dvec3(0.0,0.0,0.0);
 		return finalIntersection;
 	}
 	else if(delta == 0)								// Single intersection
@@ -110,11 +110,12 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 		t1 = (-b - sqrt(delta))/(2*a);
 		t2 = (-b + sqrt(delta))/(2*a);
 
-		float min_t = std::min(t1,t2);
-		float max_t = std::max(t1,t2);
+		double min_t = std::min(t1,t2);
+		double max_t = std::max(t1,t2);
 
-		if(_ray->isInsideObject())			//if true
+		if(_ray->isInsideObject())
 		{
+			//std::cout << "Ray inside object!" << std::endl;
 			finalIntersection.x = startingPoint.x + max_t * direction.x;
 			finalIntersection.y = startingPoint.y + max_t * direction.y;
 			finalIntersection.z = startingPoint.z + max_t * direction.z;
@@ -142,33 +143,58 @@ glm::vec3 Sphere::calculateIntersection(Ray* _ray)
 	}
 }
 
-void Sphere::calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint)				// TEMPORARY
+void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
 	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
 	// // std::cout << "====== Reflection/refraction =====" << std::endl;
-	glm::vec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
-	//std::cout << "glm::reflect: " << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << std::endl;
-	
+	// glm::dvec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
 	// // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
-	glm::vec3 test = _ray->reflectRay(_ray->getDirection(), intersectedNormal);
-	//std::cout << "test_reflection: " << test.x << ", " << test.y << ", " << test.z << std::endl;
-	
-	// glm::vec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+
+	// glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->childNodes = new Ray(intersectionPoint, /*reflectedRayDirection*/test, _ray->getImportance(), color, false);
+	glm::dvec3 newRayDirection;
+	glm::dvec3 reflectedRayDirection;
+	glm::dvec3 refractedRayDirection;
+	bool refractedRayIsInside;
+	if(transparent)
+	{
+		if(_ray->isInsideObject())
+		{
+			//reflectedRayDirection = glm::reflect(_ray->getDirection(), -intersectedNormal);
+			refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, 1.0/refractiveIndex);
+			refractedRayIsInside = false;
+		}
+		else
+		{
+			//reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+			refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+			refractedRayIsInside = true;
+		}
+		
+		//_ray->isInsideObject() ? refractedRayIsInside = false : refractedRayIsInside = true;
+
+		//_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
+		_ray->childNodes = new Ray(intersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
+	}
+	else
+	{
+		reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+		glm::dvec3 test = _ray->reflectRay(_ray->getDirection(), intersectedNormal);
+		_ray->childNodes = new Ray(intersectionPoint, /*reflectedRayDirection*/test, _ray->getImportance(), color, false);
+	}
 }
 
 /*
 	Get functions
 */
-glm::vec3 Sphere::getColor()
+glm::dvec3 Sphere::getColor()
 {
 	return color;
 }
 
-glm::vec3 Sphere::getIntersectedNormal()
+glm::dvec3 Sphere::getIntersectedNormal()
 {
 	return intersectedNormal;
 }
@@ -179,7 +205,7 @@ int Sphere::getIntersectedSide()
 	return intersectedSide;
 }
 
-float Sphere::getRefractiveIndex()
+double Sphere::getRefractiveIndex()
 {
 	return refractiveIndex;
 }
@@ -187,7 +213,7 @@ float Sphere::getRefractiveIndex()
 /*
 	Set functions
 */
-void Sphere::setIntersectedNormal(glm::vec3 _intersectedNormal)
+void Sphere::setIntersectedNormal(glm::dvec3 _intersectedNormal)
 {
 	intersectedNormal = _intersectedNormal;
 }

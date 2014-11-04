@@ -4,12 +4,12 @@
 	Class Rectangle  
 
 	private members:
-	- float A,B,C,D
-	- glm::vec3 color
+	- double A,B,C,D
+	- glm::dvec3 color
 	- glm::vec2 normal
 	
 	public variables
-	- glm::vec3 positionsOfCorners[4]
+	- glm::dvec3 positionsOfCorners[4]
 */
 
 /* 
@@ -17,10 +17,10 @@
 */
 Rectangle::Rectangle()
 {
-	positionsOfCorners[0] = glm::vec3(0.0, 0.0, 0.0);
-	positionsOfCorners[1] = glm::vec3(0.0, 0.0, 0.0);
-	positionsOfCorners[2] = glm::vec3(0.0, 0.0, 0.0);
-	positionsOfCorners[3] = glm::vec3(0.0, 0.0, 0.0);
+	positionsOfCorners[0] = glm::dvec3(0.0, 0.0, 0.0);
+	positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0);
+	positionsOfCorners[2] = glm::dvec3(0.0, 0.0, 0.0);
+	positionsOfCorners[3] = glm::dvec3(0.0, 0.0, 0.0);
 }
 
 /* 
@@ -35,7 +35,7 @@ Rectangle::~Rectangle()
 	Calculations functions
 */
 
-glm::vec3 Rectangle::calculateIntersection(Ray* ray)
+glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 {
 	/*
 		Plane: Ax + By + Cz + D = 0
@@ -49,7 +49,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 			v1 = positionsOfCorners[1] - positionsOfCorners[0];
 			v2 = positionsOfCorners[3] - positionsOfCorners[0];
 
-			glm::vec3 normal = glm::cross(v1,v2);
+			glm::dvec3 normal = glm::cross(v1,v2);
 			
 			where 
 			A = normal.x
@@ -57,12 +57,12 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 			C = normal.z
 			
 			To get D, derive the plane equation by:
-			glm::vec3 D = glm::dot(positionsOfCorners[0], normal;
+			glm::dvec3 D = glm::dot(positionsOfCorners[0], normal;
 
 		When A, B, C and D is derived, combine the equation for the Plane and the Line
 		to determine t (direction.xyz)
 		
-			float t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )/
+			double t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) )/
 			( (A * direction.x) + (B * direction.y) +  (C * direction.z) )
 
 		When t is derived, the intersectionPoint.xyz can be calculated!
@@ -70,10 +70,10 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	*/
 
 	// Initializing the variables
-	float A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
-	glm::vec3 v1 = glm::vec3(0.0, 0.0, 0.0), v2 = glm::vec3(0.0, 0.0, 0.0);
-	glm::vec3 startingPoint = glm::vec3(0.0, 0.0, 0.0);
-	glm::vec3 direction = glm::vec3(0.0, 0.0, 0.0);
+	double A = 0.0, B = 0.0, C = 0.0, D = 0.0, t = 0.0;
+	glm::dvec3 v1 = glm::dvec3(0.0, 0.0, 0.0), v2 = glm::dvec3(0.0, 0.0, 0.0);
+	glm::dvec3 startingPoint = glm::dvec3(0.0, 0.0, 0.0);
+	glm::dvec3 direction = glm::dvec3(0.0, 0.0, 0.0);
 
 	// Get the startingPoint for the ray
 	startingPoint = ray->getStartingPoint();
@@ -82,7 +82,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 	direction = ray->getDirection();
 
 	// Set the intersectionPoint to 
-	glm::vec3 intersectionPoint = glm::vec3(0.0, 0.0, 0.0);
+	glm::dvec3 intersectionPoint = glm::dvec3(0.0, 0.0, 0.0);
 
 	// determine two vectors
 	v1 = positionsOfCorners[1] - positionsOfCorners[0];
@@ -106,7 +106,7 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 		
 		if(t <= 0)
 		{
-			return glm::vec3(0.0, 0.0, 0.0);
+			return glm::dvec3(0.0, 0.0, 0.0);
 		}
 
 		// Determine intersectionPoint
@@ -116,12 +116,12 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 
 		// Checking if intersection point is contained within rectangle bounds
 		// Rectangle bounds (min(), max() needed due to orientation of rectangles)
-		float xPosMin = std::min(positionsOfCorners[0].x, positionsOfCorners[2].x);
-		float xPosMax = std::max(positionsOfCorners[0].x, positionsOfCorners[2].x);
-		float yPosMin = std::min(positionsOfCorners[0].y, positionsOfCorners[2].y);
-		float yPosMax = std::max(positionsOfCorners[0].y, positionsOfCorners[2].y);
-		float zPosMin = std::min(positionsOfCorners[0].z, positionsOfCorners[2].z);
-		float zPosMax = std::max(positionsOfCorners[0].z, positionsOfCorners[2].z);
+		double xPosMin = std::min(positionsOfCorners[0].x, positionsOfCorners[2].x);
+		double xPosMax = std::max(positionsOfCorners[0].x, positionsOfCorners[2].x);
+		double yPosMin = std::min(positionsOfCorners[0].y, positionsOfCorners[2].y);
+		double yPosMax = std::max(positionsOfCorners[0].y, positionsOfCorners[2].y);
+		double zPosMin = std::min(positionsOfCorners[0].z, positionsOfCorners[2].z);
+		double zPosMax = std::max(positionsOfCorners[0].z, positionsOfCorners[2].z);
 
 		if( intersectionPoint.x >= xPosMin && intersectionPoint.x <= xPosMax &&
 			intersectionPoint.y >= yPosMin && intersectionPoint.y <= yPosMax &&
@@ -131,12 +131,12 @@ glm::vec3 Rectangle::calculateIntersection(Ray* ray)
 		}
 		else
 		{
-			return glm::vec3(0.0, 0.0, 0.0);		// intersection point not on the rectangle
+			return glm::dvec3(0.0, 0.0, 0.0);		// intersection point not on the rectangle
 		}	
 	}
 	else
 	{
-		return glm::vec3(0.0, 0.0, 0.0); 			// no intersection
+		return glm::dvec3(0.0, 0.0, 0.0); 			// no intersection
 	}
 }
 
@@ -149,12 +149,12 @@ void calculateChildRays()
 /*
 	Get functions
 */
-glm::vec3 Rectangle::getColor()
+glm::dvec3 Rectangle::getColor()
 {
 	return color;
 }
 
-glm::vec3 Rectangle::getNormal()
+glm::dvec3 Rectangle::getNormal()
 {
 	return normal;
 }
@@ -162,7 +162,7 @@ glm::vec3 Rectangle::getNormal()
 /*
 	Set functions
 */
-void Rectangle::setColor(glm::vec3 _color)
+void Rectangle::setColor(glm::dvec3 _color)
 {
 	color = _color;
 }

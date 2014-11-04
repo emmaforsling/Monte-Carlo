@@ -14,23 +14,23 @@ public:
 	Light();
 
 	// Constructor
-	Light(glm::vec3 _position, float _size, float _radiance);
+	Light(glm::dvec3 _position, double _size, double _radiance);
 	
 	// Destructor
 	~Light();
 
 	// Get functions
-	glm::vec3 getPosition();
-	glm::vec3 getRandomPosition();			// returns a random position on the
+	glm::dvec3 getPosition();
+	glm::dvec3 getRandomPosition();			// returns a random position on the
 											// light source rectangle
 	
 	
 private:
 	Rectangle* lightSource;
-	float radiance;							//Le - emitted radiance
+	double radiance;							//Le - emitted radiance
 											//where the lightsource should be a diffuse emitter
-	glm::vec3 position;
-	float size;
+	glm::dvec3 position;
+	double size;
 };
 
 #endif

@@ -18,51 +18,51 @@ int main(int argc, char *argv[])
 		=== Initializing variables ===
 	*/
 		// Eye
-	float eyeDistance = 10.0;
+	double eyeDistance = 10.0;
 	
 		// Room
-	float size = 5.0;										// also used in lightsource, for scale
-	glm::vec3 positionRoom = glm::vec3(0.0, 0.0, 0.0);
+	double size = 5.0;										// also used in lightsource, for scale
+	glm::dvec3 positionRoom = glm::dvec3(0.0, 0.0, 0.0);
 	
 		// Light
-	float radiance = 1.0;									// emitted radiance Le
-	glm::vec3 positionLight = glm::vec3(1.0, 3.0, 5.0);
+	double radiance = 1.0;									// emitted radiance Le
+	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::vec3 positionCube = glm::vec3(1.25, 0.0, 0.5);
-	float sizeForCubeSpecular = 1.5;
+	glm::dvec3 positionCube = glm::dvec3(1.25, 0.0, 0.5);
+	double sizeForCubeSpecular = 1.5;
 	bool transparencyForCubeSpecular = false;
-	float refractiveIndexForCubeSpecular = 1.5;				// glass
+	double refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::vec3 positionSphereSpecular = glm::vec3(3.5, 1.0, 1.0);
-	float radiusForSphereSpecular = 1.0;
+	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 1.0, 1.0);
+	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
-	float refractiveIndexForSphereSpecular = 1.5;			// glass
+	double refractiveIndexForSphereSpecular = 1.5;			// glass
 
-	// glm::vec3 positionSphereTransparent = glm::vec3(0.0, 0.0, 0.0);
-	// float radiusForSphereTransparent = 1.0;
+	// glm::dvec3 positionSphereTransparent = glm::dvec3(0.0, 0.0, 0.0);
+	// double radiusForSphereTransparent = 1.0;
 	// bool transparencyForSphereTransparent = true;
-	// float refractiveIndexForSphereTransparent = 1.5;		// glass
+	// double refractiveIndexForSphereTransparent = 1.5;		// glass
 	
 	/*
 		=== Creating Scene ===
 	*/
-	Wall* room = new Wall(positionRoom, size, glm::vec3(1.0, 0.0, 0.5), true, false);
-	Light* lightsource = new Light(positionLight, size, radiance); 
-	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::vec3(0.8, 0.0, 0.6), false);
-	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.0, 0.0, 0.0), false );
+	Wall* room = new Wall(positionRoom, size, glm::dvec3(1.0, 0.0, 0.5), true, false);
+	Light* lightsource = new Light(positionLight, size, radiance);
+	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::dvec3(0.8, 0.0, 0.6), false);
+	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
 
-	Sphere* sphereSpecular2 = new Sphere(glm::vec3(1.0, 0.65, 3.5), 0.65, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::vec3(0.0, 0.0, 0.0), false );
+	Sphere* sphereSpecular2 = new Sphere(glm::dvec3(1.0, 2.5, 2.5), 0.5, true, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
 
-	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::vec3(1.0, 0.0, 0.0));
+	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::dvec3(1.0, 0.0, 0.0));
 
 	// Create camera
 	int raysPerPixel = 32;
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::vec3(0.1, 0.1, 5.1), glm::vec3(0.0, 0.0, -1.0), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+	Ray* ray = new Ray(glm::dvec3(0.1, 0.1, 5.1), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
 	//sphereSpecular->calculateIntersection(ray);
 
 	Object* objects[4];
@@ -73,12 +73,12 @@ int main(int argc, char *argv[])
 
 	/*
 	// super-duper test
-	glm::vec3 intersectionPoint = room->calculateIntersection(ray);
+	glm::dvec3 intersectionPoint = room->calculateIntersection(ray);
 	srand(time(NULL));
-	glm::vec3 randomPositionOnLightSource = lightsource->getRandomPosition();
-	Ray* shadowRay = new Ray(randomPositionOnLightSource, (intersectionPoint - randomPositionOnLightSource), 1.0, glm::vec3(0.0, 0.0, 0.0), false);
+	glm::dvec3 randomPositionOnLightSource = lightsource->getRandomPosition();
+	Ray* shadowRay = new Ray(randomPositionOnLightSource, (intersectionPoint - randomPositionOnLightSource), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
 	// looping through all objects to check for occlusion
-	glm::vec3 shadowIntersection;
+	glm::dvec3 shadowIntersection;
 	int numberOfObjects = 4;
 	int intersectionPointVisibleFromLightSource = 1;
 	std::cout << "\n ====== Checking for occlusion ====== \n" << std::endl;
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	{
 		shadowIntersection = objects[j]->calculateIntersection(shadowRay);
 		std::cout << "objects[" << j << "] calculateIntersection() returned: (" << shadowIntersection.x << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
-		if( shadowIntersection  != glm::vec3(0.0, 0.0, 0.0) )
+		if( shadowIntersection  != glm::dvec3(0.0, 0.0, 0.0) )
 		{	
 			std::cout << "Found intersection along shadowRay direction!" << std::endl;
 			if(glm::length(randomPositionOnLightSource - shadowIntersection) != 0 && glm::length(randomPositionOnLightSource - shadowIntersection) < glm::length(randomPositionOnLightSource - intersectionPoint) )

@@ -13,35 +13,35 @@ public:
 	Cube();
 
 	// Constructor
-	Cube(glm::vec3 _position, float _size, bool _transparent, float _refractiveIndex, glm::vec3 _color, bool _diffuse);
+	Cube(glm::dvec3 _position, double _size, bool _transparent, double _refractiveIndex, glm::dvec3 _color, bool _diffuse);
 	
 	// Default destructor
 	~Cube() = default;
 
 	void initializeRectangles();				// sets corners of rectangles to (0,0,0),
 												// (1,0,0), (0,1,0) etc. and multiplies
-												// them by size (float) and adds the
-												// position (glm::vec3)
+												// them by size (double) and adds the
+												// position (glm::dvec3)
 	
 	// Calculation functions
-	virtual void calculateChildRays(Ray* _ray, glm::vec3 intersectionPoint);
-	virtual glm::vec3 calculateIntersection(Ray* _ray);
+	virtual void calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint);
+	virtual glm::dvec3 calculateIntersection(Ray* _ray);
 
 	// Get functions
-	virtual glm::vec3 getColor();
-	virtual glm::vec3 getIntersectedNormal();
+	virtual glm::dvec3 getColor();
+	virtual glm::dvec3 getIntersectedNormal();
 	virtual int getIntersectedSide();
-	virtual float getRefractiveIndex();
+	virtual double getRefractiveIndex();
 
 
 
 
 private:
 	Rectangle* sides[6];
-	float size;
-	float refractiveIndex;
+	double size;
+	double refractiveIndex;
 
-	glm::vec3 intersectedNormal;
+	glm::dvec3 intersectedNormal;
 	int intersectedSide;
 };
 

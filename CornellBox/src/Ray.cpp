@@ -72,7 +72,7 @@ glm::dvec3 Ray::calculateColor()
 }
 
 
-glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay)
+glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay, double _radiance)
 {	
 	glm::dvec3 normal_surface = _object->getIntersectedNormal();
 	glm::dvec3 color_surface = _object->getColor();
@@ -93,7 +93,7 @@ glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadow
 	}	
 	if(cosineOfAngle > 0 && cosineOfAngle <= 1)
 	{
-		lightingContribution = color_ray * color_surface * cosineOfAngle;
+		lightingContribution = color_ray * color_surface * cosineOfAngle * _radiance;
 		return lightingContribution;
 	}
 	return glm::dvec3(0.0,0.0,0.0);

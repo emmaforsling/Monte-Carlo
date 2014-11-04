@@ -22,7 +22,7 @@ public:
 	// Get functions
 	glm::dvec3 getPosition();
 	glm::dvec3 getRandomPosition();			// returns a random position on the
-											// light source rectangle
+	double getRadiance();										// light source rectangle
 	
 	
 private:

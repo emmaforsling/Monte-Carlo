@@ -21,6 +21,7 @@ Rectangle::Rectangle()
 	positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0);
 	positionsOfCorners[2] = glm::dvec3(0.0, 0.0, 0.0);
 	positionsOfCorners[3] = glm::dvec3(0.0, 0.0, 0.0);
+	normal = glm::dvec3(0.0, 0.0, 0.0);
 }
 
 /* 

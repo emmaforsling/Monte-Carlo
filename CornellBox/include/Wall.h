@@ -27,7 +27,7 @@ public:
 	
 	// Calculation functions
 	virtual void calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint);
-	virtual glm::dvec3 calculateIntersection(Ray* _ray);		// either one intersection or none (ray leaving)
+	virtual glm::dvec3 calculateIntersection(Ray* _ray, bool _isShadowRay);		// either one intersection or none (ray leaving)
 	
 	// Get functions
 	virtual glm::dvec3 getColor();

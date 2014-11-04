@@ -25,11 +25,12 @@ Ray::Ray()
 {
 	startingPoint = glm::dvec3(0.0, 0.0, 0.0);
 	direction = glm::dvec3(0.0, 0.0, 0.0);
-	importance = 0;
+	importance = 0.0;
 	color = glm::dvec3(0.0, 0.0, 0.0);
 	finalNode = false;
 	childNodes = nullptr;
 	insideObject = false;
+	//std::cout << "\n\n HELLLO MEEE THIS IS WORLD\n" << std::endl;
 }
 
 /*
@@ -37,6 +38,7 @@ Ray::Ray()
 */
 Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, glm::dvec3 _color, bool _insideObject)
 {
+
 	startingPoint = _startingPoint;
 	direction = _direction/glm::length(_direction);
 	importance = _importance;
@@ -71,54 +73,31 @@ glm::dvec3 Ray::calculateColor()
 
 
 glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay)
-{
-	/*
-		First - diffuse, transparent or intransparent
-	*/
-	// Initializing variables for the surface
-	bool transparent = _object->isTransparent();
-	bool diffuse = _object->isDiffuse();
-	
+{	
 	glm::dvec3 normal_surface = _object->getIntersectedNormal();
 	glm::dvec3 color_surface = _object->getColor();
-	
 	glm::dvec3 rayToLightSource = - _shadowRay->getDirection();
+
 	//std::cout << "shadowRay direction = " << rayToLightSource.x << ", " << rayToLightSource.y << ", " << rayToLightSource.z << std::endl;
 	//std::cout << "magnitude = " << glm::length(rayToLightSource) << std::endl;
 	glm::dvec3 color_ray = glm::dvec3(1.0,1.0,1.0); 		//temporary
 
-	// if(diffuse)					// If diffuse surface
-	// {
-		// Using phong Id * kd * (L ° N)
-		double dotproduct = glm::dot(normal_surface, rayToLightSource);
-		glm::dvec3 returningthing = glm::dvec3(0.0, 0.0, 0.0);
-		//std::cout << "dot = " << dotproduct << std::endl;
-		if(dotproduct <= 0)
-		{
-			return returningthing;
-		}	
-		if(dotproduct > 0 && dotproduct <= 1)
-		{
-			returningthing = color_ray * color_surface * dotproduct;
-			return returningthing;
-		}
-		return glm::dvec3(0.0,0.0,0.0);
+	// Using Lambertian surfaces: Id * kd * (L ° N)
+	double cosineOfAngle = glm::dot(normal_surface, rayToLightSource);
+	glm::dvec3 lightingContribution = glm::dvec3(0.0, 0.0, 0.0);
+	//std::cout << "dot = " << cosineOfAngle << std::endl;
+	
+	if(cosineOfAngle <= 0)
+	{
+		return lightingContribution;
+	}	
+	if(cosineOfAngle > 0 && cosineOfAngle <= 1)
+	{
+		lightingContribution = color_ray * color_surface * cosineOfAngle;
+		return lightingContribution;
+	}
+	return glm::dvec3(0.0,0.0,0.0);
 
-	// }
-	// else if(transparent)		// If the surface is transparent
-	// {	
-	// 	return glm::dvec3(0.0,0.0,0.0);
-
-	// }
-	// else if(!transparent)		// If the surface is intransparent
-	// {
-	// 	return glm::dvec3(0.0,0.0,0.0);
-	// }
-	// else
-	// {
-	// 	std::cout << "This message should not be displayed, and is only here for debugging" << std::endl;
-	// 	return glm::dvec3(0.0,0.0,0.0);
-	// }
 	/* 
 		Computes Le(x,theta) for the point where a ray
 		intersects a surface
@@ -196,24 +175,55 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 		R = I - 2(dot(N,I)N)
 	*/
 
-	glm::dvec3 normal_surface = _intersectedNormal;
-	glm::dvec3 ray_from_lightsourve =  _direction;
+	glm::dvec3 normal_surface = glm::normalize(_intersectedNormal);
+	glm::dvec3 direction = - glm::normalize(_direction);
 	
-	double dotN_I = glm::dot(normal_surface, ray_from_lightsourve);
-	//std::cout << "Normal: " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << std::endl;
-	//std::cout << "Ray from lightsource: " << ray_from_lightsourve.x << ", " << ray_from_lightsourve.y << ", " << ray_from_lightsourve.z << std::endl;
-	//std::cout << "dotN_I " << dotN_I << std::endl;
+	double cosineOfAngle = glm::dot(normal_surface, direction);
+	std::cout << "normal_surface = (" << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
+	std::cout << "ray_direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
+	std::cout << "cosineOfAngle = " << cosineOfAngle << std::endl;
+/*
+	if(cosineOfAngle < 0)
+	{
+		std::cout << "SOMETHING IN reflectRay is terribly wrong" << std::endl;
+		glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
+		glm::dvec3 _R = test - direction;
+		return glm::normalize(_R); //glm::dvec3(0.0,0.0,0.0); 		///OBSERVERA DETTA
+	}
+	else */ if(cosineOfAngle == 0)
+	{
+		return _direction;
+	}
+	/*	
+	else if(cosineOfAngle > 0 && cosineOfAngle <= 1)
+	{
+		// std::cout << "cosineOfAngle: " << cosineOfAngle << std::endl;
+		//std::cout << "Normal: " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << std::endl;
+		//std::cout << "Ray from lightsource: " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
+		//std::cout << "cosineOfAngle " << cosineOfAngle << std::endl;
+		glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
+		//std::cout << "Här kommer rännstensungarna: " << test.x << ", " << test.y << ", " << test.z << std::endl;
+		// FUlkod, då fel uppstår vid * operatorn for glm
+		
+		// glm::dvec3 temp;
+		// temp.x = 2.0 * cosineOfAngle * normal_surface.x;
+		// temp.y = 2.0 * cosineOfAngle * normal_surface.y;
+		// temp.z = 2.0 * cosineOfAngle * normal_surface.z;
+		// std::cout << "Här kommer rännstensungarna: " << temp.x << ", " << temp.y << ", " << temp.z << std::endl;;
+
+		glm::dvec3 _R = test - direction;
+		//std::cout << "Reflected ray = " << _R.x << ", " << _R.y << ", " << _R.z << std::endl;
+		
+		return glm::normalize(_R);
+	}
+	*/
+	glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
+	glm::dvec3 _R = test - direction;
+	std::cout << "MORE IS WRONG IN reflectRay" << std::endl;
+	//return glm::normalize(_R);
+	return glm::normalize(_R);
+
 	
-	// FUlkod, då fel uppstår vid * operatorn for glm
-	glm::dvec3 temp;
-	temp.x = 2.0 * dotN_I * normal_surface.x;
-	temp.y = 2.0 * dotN_I * normal_surface.y;
-	temp.z = 2.0 * dotN_I * normal_surface.z;
-	
-	glm::dvec3 _R = ray_from_lightsourve - temp;
-	//std::cout << "Reflected ray = " << _R.x << ", " << _R.y << ", " << _R.z << std::endl;
-	
-	return _R;
 }
 
 glm::dvec3 Ray::refractRay()

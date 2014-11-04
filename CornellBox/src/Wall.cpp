@@ -135,7 +135,7 @@ void Wall::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 }
 
 /* either one intersection or none (ray leaving) */
-glm::dvec3 Wall::calculateIntersection(Ray* _ray)
+glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 {
 	//TODO: Write code
 	/*

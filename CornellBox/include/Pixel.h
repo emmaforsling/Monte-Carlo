@@ -33,7 +33,7 @@ public:
 private:
 	glm::dvec3 colorOfPixel;						// vec4 for alpha?
 	glm::dvec3 position;
-	static const int raysPerPixel = 32;
+	static const int raysPerPixel = 4;
 	Ray* rays[raysPerPixel];
 
 };

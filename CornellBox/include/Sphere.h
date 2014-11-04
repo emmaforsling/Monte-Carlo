@@ -18,7 +18,7 @@ public:
 	~Sphere() = default;
 	
 	// Calculation functions
-	virtual glm::dvec3 calculateIntersection(Ray* _ray);
+	virtual glm::dvec3 calculateIntersection(Ray* _ray, bool _isShadowRay);
 	virtual void calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint);
 
 	// Get functions

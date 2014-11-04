@@ -70,24 +70,26 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 
 
 		rays[i] = new Ray(randomPoint, direction, 1.0/Pixel::raysPerPixel, glm::dvec3(0.0, 0.0, 0.0), false);
 		glm::dvec3 intersectionPoints[4];																// e.g. sphere, sphere, cube, wall
-		glm::dvec3 finalIntersection = glm::dvec3(0.0, 0.0, 0.0);
+		glm::dvec3 finalIntersection;
 		
-		int closestIntersectedObjectIndex = 666;														// temporary
-		int numberOfObjects = 3;																		// temporary...
-		int numberOfIterations = 4;																		// number of children
+		int closestIntersectedObjectIndex;														// temporary
+		int numberOfObjects = 2;																		// temporary...
+		int numberOfIterations = 2;																		// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
 
 		while(currentChildRay != nullptr && iteration <= numberOfIterations)
 		{
+			//std::cout << "direction in iteration " << iteration << " (" << currentChildRay->getDirection().x << ", " << currentChildRay->getDirection().y << ", " << currentChildRay->getDirection().z << ")" << std::endl;
 			// resetting finalIntersection for each iteration
+			closestIntersectedObjectIndex = 666;
 			finalIntersection = glm::dvec3(0.0, 0.0, 0.0);		
 			//closestIntersectedObjectIndex = 666;
 
 			// looping through objects to find intersections
 			for(int j = 0; j < numberOfObjects; j++)
 			{			
-				intersectionPoints[j] = _objects[j]->calculateIntersection(currentChildRay);
+				intersectionPoints[j] = _objects[j]->calculateIntersection(currentChildRay, false);
 				glm::dvec3 normal = _objects[j]->getIntersectedNormal();
 				int intersectedSide = _objects[j]->getIntersectedSide(); 								// is used primarily for walls
 				
@@ -124,12 +126,15 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 
 				// calculating shadow ray - defined as a ray from the light source to a surface, to be able to use Object::calculateIntersection();
 				Ray* shadowRay = new Ray(randomPositionOnLightSource, (finalIntersection - randomPositionOnLightSource), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
 				glm::dvec3 shadowIntersection;
+
+				//std::cout << "Shadow ray:" << std::endl;
 				
 				// looping through all objects to check for occlusion
 				for(int j = 0; j < numberOfObjects; j++)
 				{
 					// calculating intersection between shadow ray and object
-					shadowIntersection = _objects[j]->calculateIntersection(shadowRay);
+					shadowIntersection = _objects[j]->calculateIntersection(shadowRay, true);
+					//std::cout << "ShadowIntersection = (" << shadowIntersection.x  << ", " << shadowIntersection.y << ", " << shadowIntersection.z << ")" << std::endl;
 					// if intersection
 					if( shadowIntersection != glm::dvec3(0.0, 0.0, 0.0) )
 					{	
@@ -147,17 +152,20 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 
 					}
 				}
 
+				//std::cout << "/Shadow ray" << std::endl;
+
 				// calling mr dj, calling mr wrong, to find out diffuse/transp/intransp. object
-				glm::dvec3 something = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], shadowRay);
-				//std::cout << something.x << something.y << something.z << std::endl;
+				glm::dvec3 localLightingContribution = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], shadowRay);
+				//std::cout << localLightingContribution.x << localLightingContribution.y << localLightingContribution.z << std::endl;
 				
 				// accumulating color for current pixel
-				colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * something;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
+				colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * localLightingContribution;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
 
 				// accumulating color for current pixel
 				//colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				
 
 				// calculating next child ray (iteration)
+				//std::cout << "closest object = " << closestIntersectedObjectIndex << std::endl;
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 			
 				// free up memory

@@ -29,6 +29,7 @@ Cube::Cube()
 	size = 0.0;
 	transparent = false;
 	refractiveIndex = 0.0;
+	intersectedNormal = glm::dvec3(0.0,0.0,0.0);
 }
 
 /*
@@ -114,7 +115,7 @@ void Cube::initializeRectangles()
 /*
 	Calculation functions
 */
-glm::dvec3 Cube::calculateIntersection(Ray* _ray) 
+glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay) 
 {
 	glm::dvec3 intersection;
 	glm::dvec3 finalIntersection = glm::dvec3(0.0,0.0,0.0);

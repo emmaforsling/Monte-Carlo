@@ -10,7 +10,7 @@
 #include "Wall.h"
 #include "Light.h"
 
-#include <omp.h>
+//#include <omp.h>
 
 class Camera
 {

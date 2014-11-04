@@ -74,7 +74,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 
 		
 		int closestIntersectedObjectIndex = 666;														// temporary
 		int numberOfObjects = 3;																		// temporary...
-		int numberOfIterations = 4;																		// number of children
+		int numberOfIterations = 2;																		// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
 

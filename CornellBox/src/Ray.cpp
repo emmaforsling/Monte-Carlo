@@ -196,7 +196,7 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 	*/
 
 	glm::dvec3 normal_surface = _intersectedNormal;
-	glm::dvec3 ray_from_lightsourve = - _direction;
+	glm::dvec3 ray_from_lightsourve = _direction;
 	
 	double dotN_I = glm::dot(normal_surface, ray_from_lightsourve);
 	//std::cout << "Normal: " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << std::endl;

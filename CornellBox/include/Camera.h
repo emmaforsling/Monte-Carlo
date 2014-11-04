@@ -35,11 +35,11 @@ private:
 	glm::dvec3 position;
 	
 	double viewPlaneDistance;
-	
+
 	const int viewPlaneSizeX = 1;
 	const int viewPlaneSizeY = 1;
-	static const int resolutionX = 300;
-	static const int resolutionY = 300;
+	static const int resolutionX = 600;
+	static const int resolutionY = 600;
 	
 	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];

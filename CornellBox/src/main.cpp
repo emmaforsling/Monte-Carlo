@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	glm::dvec3 positionRoom = glm::dvec3(0.0, 0.0, 0.0);
 	
 		// Light
-	double radiance = 3.0;		//calculateLightConttribution			// emitted radiance Le
+	double radiance = 1.0;		//calculateLightConttribution			// emitted radiance Le
 	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	double refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::dvec3 positionSphereSpecular = glm::dvec3(2.5, 1.0, 1.5);
+	glm::dvec3 positionSphereSpecular = glm::dvec3(1.5, 1.0, 1.5);
 	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
 	double refractiveIndexForSphereSpecular = 1.5;			// glass

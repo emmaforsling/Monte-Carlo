@@ -1,7 +1,7 @@
 Sources=main.cpp classes.cpp Object.cpp Ray.cpp Pixel.cpp Sphere.cpp Rectangle.cpp Cube.cpp Camera.cpp Light.cpp Wall.cpp
 Executable=CornellBox
 
-CFlags=-c -std=c++11 -g #-Iinc -ffloat-store -fopenmp
+CFlags=-c -std=c++11 -g -Iinc -ffloat-store # -fopenmp
 #If mac remove the LDFlags, since in this makefile the LDFlags are
 #written to make the program runnable on Windows…
 #LDFlags=-Wl,--large-address-aware #-fopenmp

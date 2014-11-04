@@ -192,7 +192,7 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 	}
 	else if(cosineOfAngle == 0)
 	{
-		return _direction;
+		return direction;
 	}
 	else if(cosineOfAngle > 0 && cosineOfAngle <= 1)
 	{
@@ -210,6 +210,7 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 		// temp.z = 2.0 * cosineOfAngle * normal_surface.z;
 		// std::cout << "Här kommer rännstensungarna: " << temp.x << ", " << temp.y << ", " << temp.z << std::endl;;
 
+		//std::cout << "ray_direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
 		glm::dvec3 _R = test - direction;
 		//std::cout << "Reflected ray = " << _R.x << ", " << _R.y << ", " << _R.z << std::endl;
 		

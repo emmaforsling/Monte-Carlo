@@ -20,7 +20,7 @@ public:
 												// childNodes and a local lighting
 												// model (Phong's?) to a single RGB
 	 											// vector
-	glm::dvec3 calculateLocalLightingContribution(Object* _object, Ray* _shadowRay);	// computes Le(x,theta) for the
+	glm::dvec3 calculateLocalLightingContribution(Object* _object, Ray* _shadowRay, double _radiance);	// computes Le(x,theta) for the
 												// point where a ray intersects
 												// a surface.
 

@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	glm::dvec3 positionRoom = glm::dvec3(0.0, 0.0, 0.0);
 	
 		// Light
-	double radiance = 1.0;									// emitted radiance Le
+	double radiance = 3.0;		//calculateLightConttribution			// emitted radiance Le
 	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube

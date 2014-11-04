@@ -176,13 +176,13 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 	*/
 
 	glm::dvec3 normal_surface = glm::normalize(_intersectedNormal);
-	glm::dvec3 direction = - glm::normalize(_direction);
+	glm::dvec3 direction = -glm::normalize(_direction);
 	
 	double cosineOfAngle = glm::dot(normal_surface, direction);
-	std::cout << "normal_surface = (" << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
-	std::cout << "ray_direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
-	std::cout << "cosineOfAngle = " << cosineOfAngle << std::endl;
-/*
+	//std::cout << "normal_surface = (" << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
+	//std::cout << "ray_direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
+	//std::cout << "cosineOfAngle = " << cosineOfAngle << std::endl;
+
 	if(cosineOfAngle < 0)
 	{
 		std::cout << "SOMETHING IN reflectRay is terribly wrong" << std::endl;
@@ -190,11 +190,10 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 		glm::dvec3 _R = test - direction;
 		return glm::normalize(_R); //glm::dvec3(0.0,0.0,0.0); 		///OBSERVERA DETTA
 	}
-	else */ if(cosineOfAngle == 0)
+	else if(cosineOfAngle == 0)
 	{
 		return _direction;
 	}
-	/*	
 	else if(cosineOfAngle > 0 && cosineOfAngle <= 1)
 	{
 		// std::cout << "cosineOfAngle: " << cosineOfAngle << std::endl;
@@ -216,7 +215,6 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 		
 		return glm::normalize(_R);
 	}
-	*/
 	glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
 	glm::dvec3 _R = test - direction;
 	std::cout << "MORE IS WRONG IN reflectRay" << std::endl;

@@ -84,4 +84,8 @@ glm::dvec3 Light::getRandomPosition()
 	return randomPoint;
 }
 
+double Light::getRadiance()
+{
+	return radiance;
+}
 

@@ -135,7 +135,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 				intersectedNormal = (finalIntersection - centerPoint)/radius;
 			}
 			//std::cout << "finalIntersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ") (delta > 0 + inside)" << std::endl;
-			std::cout << "I'm inside!" << std::endl;
+			//std::cout << "I'm inside!" << std::endl;
 			return finalIntersection;
 		}	
 		else
@@ -157,7 +157,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			{
 				intersectedNormal = (finalIntersection - centerPoint)/radius;
 			}
-			std::cout << "finalIntersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ") (delta > 0 + outside)" << std::endl;
+			//std::cout << "finalIntersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ") (delta > 0 + outside)" << std::endl;
 			return finalIntersection;
 		}			
 	}
@@ -208,7 +208,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 	{
 		//reflectedRayDirection = glm::reflect(direction, intersectedNormal);
 		//std::cout << "interseted onormal: (" << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << ")" << std::endl;
-		std::cout << "IntersectionPoint = (" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ")" << std::endl;
+		//std::cout << "IntersectionPoint = (" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ")" << std::endl;
 		glm::dvec3 test = _ray->reflectRay(direction, intersectedNormal);	// Kallar på den egna funktionen
 		//std::cout << "ray direction in calculateChildRays: (" << test.x << ", " << test.y << ", " << test.z << ")" << std::endl;
 		//std::cout << "reflected ray direction ray direction in calculateChildRays = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;

@@ -159,7 +159,20 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, int _raysPerPixel, glm::dvec3 
 				//std::cout << localLightingContribution.x << localLightingContribution.y << localLightingContribution.z << std::endl;
 				
 				// accumulating color for current pixel
-				colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * localLightingContribution;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
+				if(_light->isOnLightSource(finalIntersection))
+				{
+					colorOfPixel = glm::dvec3(1.0,1.0,1.0);
+				}
+				else
+				{
+					colorOfPixel += currentChildRay->getImportance() * 1 /*intersectionPointVisibleFromLightSource*/ * localLightingContribution;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
+				}
+
+				//if(colorOfPixel == glm::dvec3(0.0,0.0,0.0))
+				//{
+					//std::cout << "closestIntersectedObjectIndex: " << closestIntersectedObjectIndex << std::endl; 
+
+				//}
 				//std::cout << "colorOfPixel = (" << colorOfPixel.x << ", " << colorOfPixel.y << ", " << colorOfPixel.z << ")" << std::endl;
 				// accumulating color for current pixel
 				//colorOfPixel += currentChildRay->getImportance()/2.0f * intersectionPointVisibleFromLightSource * _objects[closestIntersectedObjectIndex]->getColor();// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();				

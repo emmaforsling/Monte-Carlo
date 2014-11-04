@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	double refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::dvec3 positionSphereSpecular = glm::dvec3(1.5, 1.0, 1.5);
+	glm::dvec3 positionSphereSpecular = glm::dvec3(1.0, 1.0, 2.0);
 	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
 	double refractiveIndexForSphereSpecular = 1.5;			// glass
@@ -62,8 +62,13 @@ int main(int argc, char *argv[])
 	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
 	
 	// Ray test
-	Ray* ray = new Ray(glm::dvec3(1.5, 2.5, 10.0), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
-	sphereSpecular2->calculateChildRays(ray, sphereSpecular2->calculateIntersection(ray, false));
+	// Ray* ray = new Ray(glm::dvec3(3.0, 3.55, 10.0), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
+	// std::cout << "\nCalculating intersection for ray: " << std::endl;
+	// sphereSpecular->calculateChildRays(ray, sphereSpecular->calculateIntersection(ray, false));
+	// std::cout << "\nCalculating intersection for child ray: " << std::endl;
+	// room->calculateIntersection(ray->childNodes, false);
+
+
 
 	Object* objects[4];
 	objects[1] = sphereSpecular;

@@ -22,8 +22,10 @@ public:
 	// Get functions
 	glm::dvec3 getPosition();
 	glm::dvec3 getRandomPosition();			// returns a random position on the
+	
 	double getRadiance();										// light source rectangle
 	
+	bool isOnLightSource(glm::dvec3 _point);
 	
 private:
 	Rectangle* lightSource;

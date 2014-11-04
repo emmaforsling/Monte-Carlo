@@ -77,7 +77,10 @@ glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadow
 	glm::dvec3 normal_surface = _object->getIntersectedNormal();
 	glm::dvec3 color_surface = _object->getColor();
 	glm::dvec3 rayToLightSource = - _shadowRay->getDirection();
-
+	
+	std::cout << "color at surface: = " << color_surface.x << ", " << color_surface.y << ", " << color_surface.z << ")" << std::endl;
+	std::cout << "normal at surface: = " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
+	
 	//std::cout << "shadowRay direction = " << rayToLightSource.x << ", " << rayToLightSource.y << ", " << rayToLightSource.z << std::endl;
 	//std::cout << "magnitude = " << glm::length(rayToLightSource) << std::endl;
 	glm::dvec3 color_ray = glm::dvec3(1.0,1.0,1.0); 		//temporary
@@ -227,5 +230,5 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 
 glm::dvec3 Ray::refractRay()
 {
-
+	return glm::dvec3(0.0, 0.0, 0.0); 
 }

@@ -138,7 +138,7 @@ void Wall::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 {
 	glm::dvec3 direction2 = _ray->getDirection();
-	std::cout << "\nWall::calculateIntersection(), incoming ray direction" << direction2.x << ", " << direction2.y << ", " << direction2.z << std::endl;
+	//std::cout << "\nWall::calculateIntersection(), incoming ray direction" << direction2.x << ", " << direction2.y << ", " << direction2.z << std::endl;
 	//TODO: Write code
 	/*
 		To calculate the intesection point for the Wall,
@@ -177,7 +177,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 					// // std::cout << "Detected first intersection (";
 					finalIntersection = intersection;
 					wall = i;
-					std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+					//std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 
 				}
 				// second detected intersection
@@ -200,7 +200,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 							//// // std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
 							wall = i;
 							finalIntersection = intersection;
-							std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+							//std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 						}
 						else
 						{
@@ -216,7 +216,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 							// std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
 							wall = i;
 							finalIntersection = intersection;
-							std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+							//std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 						}
 						else
 						{
@@ -235,7 +235,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		// // std::cout << "Normal at intersection: " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << std::endl;
 	}
 
-	std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+	//std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 	return finalIntersection;
 
 

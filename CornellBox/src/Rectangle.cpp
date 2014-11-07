@@ -91,7 +91,7 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 	
 	// determine the normal
 	normal = glm::normalize(glm::cross(v1,v2));				// denna stämmer, det har vi fyrtrippelcheckat!
-	
+	// ßstd::cout << "Rectangle::Normal = (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
 	// If the normal is orthogonal to the direction, then there are no intersections.	
 	if(glm::dot(normal, direction) != 0.0)		// if not orthogonal
 	{

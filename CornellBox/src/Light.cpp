@@ -39,10 +39,10 @@ Light::Light(glm::dvec3 _position, double _size, double _radiance)
 	// lightSource->positionsOfCorners[2] = glm::dvec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
 	// lightSource->positionsOfCorners[3] = glm::dvec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
 
-	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 3.0);
-	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 4.0);
+	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 4.0);
 
 	position = lightSource->positionsOfCorners[0];
 

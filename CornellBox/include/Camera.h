@@ -19,7 +19,7 @@ public:
 	Camera();
 
 	// Constructor
-	Camera(Wall* _room, double _eyeDistance, int _raysPerPixel);
+	Camera(Wall* _room, double _eyeDistance);
 	
 	// Destructor
 	~Camera();
@@ -39,10 +39,9 @@ private:
 	const int viewPlaneSizeX = 1;
 	const int viewPlaneSizeY = 1;
 	
-	static const int resolutionX = 2;
-	static const int resolutionY = 2;
+	static const int resolutionX = 500;
+	static const int resolutionY = 500;
 	
-	int raysPerPixel;
 	Pixel* pixels[resolutionX * resolutionY];
 
 	// private functions, used when to save the image

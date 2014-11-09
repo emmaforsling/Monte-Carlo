@@ -91,13 +91,13 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 	
 	// determine the normal
 	normal = glm::normalize(glm::cross(v1,v2));				// denna stämmer, det har vi fyrtrippelcheckat!
-	// ßstd::cout << "Rectangle::Normal = (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
+	// std::cout << "Rectangle::Normal = (" << normal.x << ", " << normal.y << ", " << normal.z << ")" << std::endl;
 	// If the normal is orthogonal to the direction, then there are no intersections.	
-	if(glm::dot(normal, direction) != 0.0)		// if not orthogonal
+	if(glm::dot(normal, direction) != 0.0)					// if not orthogonal
 	{
 		A = -normal.x;
 		B = -normal.y;
-		C = -normal.z;							// this is weird, we don't get it, but it works =/
+		C = -normal.z;										// this is weird, we don't get it, but it works =/
 		D = glm::dot(positionsOfCorners[0], normal);
 
 		t = -( (A * startingPoint.x) + (B * startingPoint.y) + (C * startingPoint.z + D) ) /
@@ -105,9 +105,15 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 
 		// std::cout << "t = " << t << std::endl;
 		
-		if(t <= 0)
+		if(t == 0)
 		{
+			//std::cout << "1. are we here?" << std::endl;
 			return glm::dvec3(0.0, 0.0, 0.0);
+		}
+		if(t < 0)
+		{
+			//std::cout << "2. are we here jet?" << std::endl;
+			return glm::dvec3(0.0, 0.0, 0.0); //668
 		}
 
 		// Determine intersectionPoint
@@ -124,23 +130,25 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		double zPosMin = std::min(positionsOfCorners[0].z, positionsOfCorners[2].z);
 		double zPosMax = std::max(positionsOfCorners[0].z, positionsOfCorners[2].z);
 
-		if( intersectionPoint.x >= xPosMin && intersectionPoint.x <= xPosMax &&
-			intersectionPoint.y >= yPosMin && intersectionPoint.y <= yPosMax &&
-			intersectionPoint.z >= zPosMin && intersectionPoint.z <= zPosMax )
+		if( std::round(intersectionPoint.x * 100)/100 >= std::round(xPosMin * 100)/100 && std::round(intersectionPoint.x * 100)/100 <= std::round(xPosMax * 100)/100 &&
+			std::round(intersectionPoint.y * 100)/100 >= std::round(yPosMin * 100)/100 && std::round(intersectionPoint.y * 100)/100 <= std::round(yPosMax * 100)/100 &&
+			std::round(intersectionPoint.z * 100)/100 >= std::round(zPosMin * 100)/100 && std::round(intersectionPoint.z * 100)/100 <= std::round(zPosMax * 100)/100 )
 		{
 			return intersectionPoint;				// intersection point on the rectangle
 		}
 		else
 		{
+			//std::cout << "3. or here?" << std::endl; //667
+			//std::cout << "IntersectionPoint = (" << std::round(intersectionPoint.x * 10)/10 << ", " << std::round(intersectionPoint.y * 10)/10 << ", " << std::round(intersectionPoint.z * 10)/10 << ")" << std::endl;
 			return glm::dvec3(0.0, 0.0, 0.0);		// intersection point not on the rectangle
 		}	
 	}
 	else
 	{
+		std::cout << "4. maybe here?" << std::endl;
 		return glm::dvec3(0.0, 0.0, 0.0); 			// no intersection
 	}
 }
-
 
 void calculateChildRays()
 {
@@ -167,6 +175,3 @@ void Rectangle::setColor(glm::dvec3 _color)
 {
 	color = _color;
 }
-
-
-		

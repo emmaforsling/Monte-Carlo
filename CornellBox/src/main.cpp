@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	double eyeDistance = 10.0;
 	
 		// Room
-	double size = 5.0;										// also used in lightsource, for scale
+	double size = 5.0;													// also used in lightsource, for scale
 	glm::dvec3 positionRoom = glm::dvec3(0.0, 0.0, 0.0);
 	
 		// Light
@@ -29,21 +29,21 @@ int main(int argc, char *argv[])
 	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::dvec3 positionCube = glm::dvec3(1.25, 0.0, 0.5);
-	double sizeForCubeSpecular = 1.5;
+	glm::dvec3 positionCube = glm::dvec3(1.25, 0.0, 3.5);
+	double sizeForCubeSpecular = 0.5;
 	bool transparencyForCubeSpecular = false;
-	double refractiveIndexForCubeSpecular = 1.5;				// glass
+	double refractiveIndexForCubeSpecular = 1.5;						// glass
 	
 		// Sphere
-	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 3.5, 2.5);
+	glm::dvec3 positionSphereSpecular = glm::dvec3(2.5, 2.5, 2.5);
 	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
-	double refractiveIndexForSphereSpecular = 1.5;			// glass
+	double refractiveIndexForSphereSpecular = 1.5;						// glass
 
 	// glm::dvec3 positionSphereTransparent = glm::dvec3(0.0, 0.0, 0.0);
 	// double radiusForSphereTransparent = 1.0;
 	// bool transparencyForSphereTransparent = true;
-	// double refractiveIndexForSphereTransparent = 1.5;		// glass
+	// double refractiveIndexForSphereTransparent = 1.5;				// glass
 	
 	/*
 		=== Creating Scene ===
@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
 
 	// Object array
 	Object* objects[4];
-	objects[1] = sphereSpecular;
-	objects[2] = sphereSpecular2;
 	objects[0] = room;
-	objects[3] = cubeSpecular;
+	objects[1] = sphereSpecular;
+	objects[2] = cubeSpecular;
+	objects[3] = sphereSpecular2;
 	
 	// TESTING TESTING
 	Pixel* pixel = new Pixel();

@@ -39,10 +39,10 @@ Light::Light(glm::dvec3 _position, double _size, double _radiance)
 	// lightSource->positionsOfCorners[2] = glm::dvec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
 	// lightSource->positionsOfCorners[3] = glm::dvec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
 
-	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 3.0);
-	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 3.0);
-	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 4.0);
-	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 4.0);
+	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 2.0);
+	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 2.0);
+	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 3.0);
 
 	position = lightSource->positionsOfCorners[0];
 
@@ -75,8 +75,8 @@ glm::dvec3 Light::getPosition()
 glm::dvec3 Light::getRandomPosition()
 {
 	//srand(time(NULL));					// Only Chronos is the master of time!
-	double randomPointX = lightSource->positionsOfCorners[0].x + ((size/6.0) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
-	double randomPointZ = lightSource->positionsOfCorners[0].z + ((size/6.0) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
+	double randomPointX = lightSource->positionsOfCorners[0].x + ( (lightSource->positionsOfCorners[1].x - lightSource->positionsOfCorners[0].x) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
+	double randomPointZ = lightSource->positionsOfCorners[0].z + ( (lightSource->positionsOfCorners[3].z - lightSource->positionsOfCorners[0].z) * static_cast <double>(rand()) ) / static_cast<double>(RAND_MAX);
 
 	// The random point on the area light source
 	glm::dvec3 randomPoint = glm::dvec3(randomPointX, lightSource->positionsOfCorners[0].y, randomPointZ);

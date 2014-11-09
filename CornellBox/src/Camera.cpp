@@ -143,6 +143,10 @@ void Camera::saveImage()
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
+		//if(glm::length(colorOfPixel) == 0)
+		//{
+		//	std::cout << "colorOfPixel = (0, 0, 0)..." << std::endl;
+		//}
 		// // std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
  		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
 	}

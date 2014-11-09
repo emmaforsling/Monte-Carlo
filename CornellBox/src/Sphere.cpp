@@ -170,7 +170,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
-	std::cout << "HEEEEELLLLOOOOO???!?!?" << std::endl;
+	//std::cout << "HEEEEELLLLOOOOO???!?!?" << std::endl;
 	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
 	// // std::cout << "====== Reflection/refraction =====" << std::endl;
@@ -188,7 +188,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 
 	if(transparent)
 	{
-		std::cout << "CALCULATING REFRACTION" << std::endl;
+		//std::cout << "CALCULATING REFRACTION" << std::endl;
 		if(_ray->isInsideObject())
 		{
 			//reflectedRayDirection = glm::reflect(_ray->getDirection(), -intersectedNormal);
@@ -213,7 +213,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 	}
 	else
 	{
-		std::cout << "CALCULATING REFLECTION" << std::endl;
+		//std::cout << "CALCULATING REFLECTION" << std::endl;
 		reflectedRayDirection = glm::reflect(glm::normalize(direction), glm::normalize(intersectedNormal));
 		//std::cout << "interseted onormal: (" << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << ")" << std::endl;
 		//std::cout << "IntersectionPoint = (" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ")" << std::endl;

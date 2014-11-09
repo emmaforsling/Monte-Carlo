@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	double refractiveIndexForCubeSpecular = 1.5;				// glass
 	
 		// Sphere
-	glm::dvec3 positionSphereSpecular = glm::dvec3(1.5, 1.0, 1.5);
+	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 3.5, 2.5);
 	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = false;
 	double refractiveIndexForSphereSpecular = 1.5;			// glass
@@ -51,26 +51,43 @@ int main(int argc, char *argv[])
 	Wall* room = new Wall(positionRoom, size, glm::dvec3(1.0, 0.0, 0.5), true, false);
 	Light* lightsource = new Light(positionLight, size, radiance);
 	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::dvec3(0.8, 0.0, 0.6), false);
-	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
+	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.5), false );
 
 	Sphere* sphereSpecular2 = new Sphere(glm::dvec3(1.0, 2.5, 2.5), 0.5, true, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
 
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::dvec3(1.0, 0.0, 0.0));
 
 	// Create camera
-	int raysPerPixel = 32;
-	Camera* camera = new Camera(room, eyeDistance, raysPerPixel);
-	
-	// Ray test
-	Ray* ray = new Ray(glm::dvec3(1.5, 2.5, 10.0), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
-	sphereSpecular2->calculateChildRays(ray, sphereSpecular2->calculateIntersection(ray, false));
+	//int raysPerPixel = 32;
+	Camera* camera = new Camera(room, eyeDistance);
 
+	// Object array
 	Object* objects[4];
 	objects[1] = sphereSpecular;
 	objects[2] = sphereSpecular2;
 	objects[0] = room;
 	objects[3] = cubeSpecular;
-
+	
+	// TESTING TESTING
+	Pixel* pixel = new Pixel();
+	Ray* ray = new Ray(glm::dvec3(3.1, 3.55, 10.0), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
+	std::cout << "\nCalculating intersection for ray: " << std::endl;
+	glm::dvec3 point1 = sphereSpecular->calculateIntersection(ray, false);
+	std::cout << "(" << point1.x << ", " << point1.y << ", " << point1.z << ")" << std::endl;
+	
+	sphereSpecular->calculateChildRays(ray, point1);
+	std::cout << "\nCalculating intersection for child ray (sphere): " << std::endl;
+	glm::dvec3 point2 = room->calculateIntersection(ray->childNodes, false);
+	std::cout << "(" << point2.x << ", " << point2.y << ", " << point2.z << ")" << std::endl;
+	std::cout << "\nCalculating intersection for child ray (room): " << std::endl;
+	glm::dvec3 point3 = room->calculateIntersection(ray->childNodes, false);
+	std::cout << "(" << point3.x << ", " << point3.y << ", " << point3.z << ")" << std::endl;
+	
+	std::cout << "Shadow ray" << std:: endl;
+	glm::dvec3 randomPositionOnLightSource = lightsource->getRandomPosition();
+	std::cout << "visibility: " << pixel->castShadowRay(randomPositionOnLightSource, point2, objects, 2) << std::endl;
+	glm::dvec3 localLightingContribution = ray->childNodes->calculateLocalLightingContribution(room, (randomPositionOnLightSource - point2), lightsource->getRadiance(), 2);
+	std::cout << "localLightingContribution = (" << localLightingContribution.x << ", " << localLightingContribution.y << ", " << localLightingContribution.z << ")" << std::endl;
 	/*
 	// super-duper test
 	glm::dvec3 intersectionPoint = room->calculateIntersection(ray);

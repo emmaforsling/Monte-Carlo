@@ -22,7 +22,6 @@ Camera::Camera()
 	position = glm::dvec3(0.0,0.0,0.0);
 	direction = glm::dvec3(0.0,0.0,0.0);
 	viewPlaneDistance = 0.0;
-	raysPerPixel = 0;
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		pixels[i] = nullptr;
@@ -32,7 +31,7 @@ Camera::Camera()
 /*
 	Constructor
 */
-Camera::Camera(Wall* _room, double _eyeDistance, int _raysPerPixel)
+Camera::Camera(Wall* _room, double _eyeDistance)
 {	
 	//DO not change direction //
 	direction = glm::dvec3(0.0, 0.0, -1.0);
@@ -54,12 +53,11 @@ Camera::Camera(Wall* _room, double _eyeDistance, int _raysPerPixel)
 
 
 	viewPlaneDistance = /*2.0; //*/(_eyeDistance - _room->size) * std::max(viewPlaneSizeX, viewPlaneSizeY) / _room->size;
-	raysPerPixel = _raysPerPixel;
 
 	// Creating a one dimensional array, containing all pixels for the scene  
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
-		pixels[i] = new Pixel(raysPerPixel);
+		pixels[i] = new Pixel(Pixel::raysPerPixel);
 	}
 	
 	// // // std::cout << "Camera position: " << position.x << ", " << position.y << ", " << position.z << std::endl;
@@ -116,7 +114,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		
 		// Take the current pixel, call the function shootRays 
 		//  that shoots, the given amount of rays, though that pixel
-		pixels[i]->shootRays(position, raysPerPixel, pixelPosition, pixelSize, _objects, _light);
+		pixels[i]->shootRays(position, pixelPosition, pixelSize, _objects, _light);
 
 		/* 
 			Progress bar 

@@ -39,10 +39,10 @@ Light::Light(glm::dvec3 _position, double _size, double _radiance)
 	// lightSource->positionsOfCorners[2] = glm::dvec3(size/2.0 + size/6.0, size, size/2.0 + size/6.0);
 	// lightSource->positionsOfCorners[3] = glm::dvec3(size/2.0 - size/6.0, size, size/2.0 + size/6.0);
 
-	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 2.0);
-	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 3.0);
-	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[0] = glm::dvec3(2.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[1] = glm::dvec3(3.0, 4.5, 3.0);
+	lightSource->positionsOfCorners[2] = glm::dvec3(3.0, 4.5, 4.0);
+	lightSource->positionsOfCorners[3] = glm::dvec3(2.0, 4.5, 4.0);
 
 	position = lightSource->positionsOfCorners[0];
 
@@ -89,3 +89,20 @@ double Light::getRadiance()
 	return radiance;
 }
 
+bool Light::isOnLightSource(glm::dvec3 _point)
+{
+	glm::dvec3 corner0 = lightSource->positionsOfCorners[0];
+	glm::dvec3 corner1 = lightSource->positionsOfCorners[1];
+	glm::dvec3 corner2 = lightSource->positionsOfCorners[2];
+	glm::dvec3 corner3 = lightSource->positionsOfCorners[3];
+	
+	if(_point.y >= corner0.y)
+	{
+		if( _point.x >= corner0.x && _point.x <= corner1.x && 
+			_point.z >= corner0.z && _point.z <= corner3.z)
+		{
+			return true;
+		}
+	}
+	return false;
+}

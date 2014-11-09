@@ -68,35 +68,48 @@ glm::dvec3 Ray::calculateColor()
 	
 	// TODO: Write Code
 	// Track ray through its children and blend final color.
-	return glm::dvec3(0.0, 0.0, 0.0);
+	return glm::dvec3(1.0, 0.0, 0.0);
 }
 
 
-glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, Ray* _shadowRay, double _radiance)
+glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, glm::dvec3 _directionToLight, double _radiance, int _iteration)
 {	
-	glm::dvec3 normal_surface = _object->getIntersectedNormal();
+	glm::dvec3 normal_surface = glm::normalize(_object->getIntersectedNormal());
 	glm::dvec3 color_surface = _object->getColor();
-	glm::dvec3 rayToLightSource = - _shadowRay->getDirection();
-
+	
+	//std::cout << "color at surface: = " << color_surface.x << ", " << color_surface.y << ", " << color_surface.z << ")" << std::endl;
+	//std::cout << "normal at surface: = " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
+	
 	//std::cout << "shadowRay direction = " << rayToLightSource.x << ", " << rayToLightSource.y << ", " << rayToLightSource.z << std::endl;
 	//std::cout << "magnitude = " << glm::length(rayToLightSource) << std::endl;
 	glm::dvec3 color_ray = glm::dvec3(1.0,1.0,1.0); 		//temporary
 
 	// Using Lambertian surfaces: Id * kd * (L ° N)
-	double cosineOfAngle = glm::dot(normal_surface, rayToLightSource);
+	double cosineOfAngle = glm::dot(normal_surface, glm::normalize(_directionToLight));
 	glm::dvec3 lightingContribution = glm::dvec3(0.0, 0.0, 0.0);
 	//std::cout << "dot = " << cosineOfAngle << std::endl;
 	
 	if(cosineOfAngle <= 0)
 	{
-		return lightingContribution;
+		// lightingContribution = color_ray * color_surface * _radiance;
+		// return lightingContribution;
+		return /*lightingContribution*/ glm::dvec3(0.0, 0.0, 0.0);
 	}	
 	if(cosineOfAngle > 0 && cosineOfAngle <= 1)
 	{
 		lightingContribution = color_ray * color_surface * cosineOfAngle * _radiance;
+		if(_iteration == 2)
+		{
+			// std::cout << "är det här vi får noll?" << std::endl;	
+			// std::cout << "lightingContribution = (" << lightingContribution.x << ", " << lightingContribution.y << ", " << lightingContribution.z << std::endl;
+			// std::cout << "radiance = " << _radiance << std::endl;
+			// std::cout << "color_surface = (" << color_surface.x << ", " << color_surface.y << ", " << color_surface.z << ")" << std::endl;
+			// std::cout << "normal at surface: = " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;		
+		}
+		
 		return lightingContribution;
 	}
-	return glm::dvec3(0.0,0.0,0.0);
+	return glm::dvec3(0.0,1.0,1.0);
 
 	/* 
 		Computes Le(x,theta) for the point where a ray
@@ -225,5 +238,5 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 
 glm::dvec3 Ray::refractRay()
 {
-
+	return glm::dvec3(0.0, 0.0, 0.0); 
 }

@@ -221,8 +221,6 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 	std::cout << "MORE IS WRONG IN reflectRay" << std::endl;
 	//return glm::normalize(_R);
 	return glm::normalize(_R);
-
-	
 }
 
 glm::dvec3 Ray::refractRay()

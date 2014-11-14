@@ -108,7 +108,7 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		if(t == 0)
 		{
 			//std::cout << "1. are we here?" << std::endl;
-			return glm::dvec3(0.0, 0.0, 0.0);
+			return glm::dvec3(0.0, 0.0, 0.0); //666
 		}
 		if(t < 0)
 		{

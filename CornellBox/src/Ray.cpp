@@ -38,7 +38,7 @@ Ray::Ray()
 */
 Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, glm::dvec3 _color, bool _insideObject)
 {
-
+	//std::cout << "startingPoint = (" << _startingPoint.x << ", " << _startingPoint.y << ", " << _startingPoint.z << ")" << std::endl;
 	startingPoint = _startingPoint;
 	direction = _direction/glm::length(_direction);
 	importance = _importance;
@@ -198,10 +198,7 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 
 	if( std::round(cosineOfAngle* 100)/100 < 0)
 	{
-		std::cout << "SOMETHING IN reflectRay is terribly wrong" << std::endl;
-		glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
-		glm::dvec3 _R = test - direction;
-		return /*glm::normalize(_R); //*/glm::dvec3(0.0,0.0,0.0); 		///OBSERVERA DETTA
+		return glm::dvec3(0.0,0.0,0.0); 		///OBSERVERA DETTA
 	}
 	else if(std::round(cosineOfAngle* 100)/100 == 0)
 	{
@@ -229,11 +226,11 @@ glm::dvec3 Ray::reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal)
 		
 		return glm::normalize(_R);
 	}
-	glm::dvec3 test = 2.0 * (cosineOfAngle * normal_surface);
-	glm::dvec3 _R = test - direction;
-	std::cout << "MORE IS WRONG IN reflectRay" << std::endl;
-	//return glm::normalize(_R);
-	return glm::normalize(_R);
+
+	/*std::cout << "normal_surface = (" << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
+	std::cout << "ray_direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
+	std::cout << "cosineOfAngle" << cosineOfAngle << std::endl;*/
+	return glm::dvec3(0.0,0.0,0.0);
 }
 
 glm::dvec3 Ray::refractRay()

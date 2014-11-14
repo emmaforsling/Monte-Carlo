@@ -130,7 +130,7 @@ void Wall::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	// std::cout << "\n\n\n CalculateChildRays .. IntersectionPOINT: " << intersectionPoint.x << ", " << intersectionPoint.y << ", "<< intersectionPoint.z << std::endl;
 	// glm::dvec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
 	// glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, getRefractiveIndex());
-
+	
 	// _ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, getColor(), false);
 }
 
@@ -192,24 +192,24 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 					double intersectionDistance = glm::length(intersection - _ray->getStartingPoint());
 					// std::cout << "STARTPUNKTEN = " << _ray->getStartingPoint().x << ", " << _ray->getStartingPoint().y << ", " << _ray->getStartingPoint().z ;
 					// Ray inside object
-					if(_ray->isInsideObject())
-					{
-						//// // std::cout << "Ray inside object. ";
-						if(intersectionDistance  > glm::length(finalIntersection - _ray->getStartingPoint()) )
-						{
-							//// // std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
-							wall = i;
-							finalIntersection = intersection;
-							//std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
-						}
-						else
-						{
-							//// // std::cout << "Discarding new intersection point (closer to ray origin - entry point)" << std::endl;
-						}
-					}
-					// Ray outside object
-					else
-					{
+					// if(_ray->isInsideObject())
+					// {
+					// 	//// // std::cout << "Ray inside object. ";
+					// 	if(intersectionDistance  > glm::length(finalIntersection - _ray->getStartingPoint()) )
+					// 	{
+					// 		//// // std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
+					// 		wall = i;
+					// 		finalIntersection = intersection;
+					// 		//std::cout << "Wall, finalIntersection = (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
+					// 	}
+					// 	else
+					// 	{
+					// 		//// // std::cout << "Discarding new intersection point (closer to ray origin - entry point)" << std::endl;
+					// 	}
+					// }
+					// // Ray outside object
+					// else
+					// {
 						//// // std::cout << "Ray outside object. ";
 						if( intersectionDistance > 0.0 && intersectionDistance < glm::length(finalIntersection - _ray->getStartingPoint()) )
 						{
@@ -222,7 +222,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 						{
 							//// // std::cout << "Discarding new intersection point (farther from ray origin - exit point)" << std::endl;
 						}
-					}
+					// }
 				}			
 			}	
 		}
@@ -237,7 +237,6 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 	//std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
 	return finalIntersection;
-
 
 	// return glm::dvec3(0.0, 0.0, 0.0);
 }

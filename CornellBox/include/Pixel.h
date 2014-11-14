@@ -33,7 +33,7 @@ public:
 	glm::dvec3 getColorOfPixel();
 
 	// Public variables
-	static const int raysPerPixel = 64;
+	static const int raysPerPixel = 4;
 
 private:
 	glm::dvec3 colorOfPixel;						// vec4 for alpha?

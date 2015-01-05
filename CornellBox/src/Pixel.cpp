@@ -75,7 +75,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 		glm::dvec3 finalIntersection;
 		int closestIntersectedObjectIndex;																	// temporary
 		const int numberOfObjects = 2;																		// temporary...
-		int numberOfIterations = 2;																			// number of children
+		int numberOfIterations = 3;																			// number of children
 		int iteration = 1;		
 		Ray* currentChildRay = rays[i];
 		glm::dvec3 intersectionPoints[numberOfObjects];

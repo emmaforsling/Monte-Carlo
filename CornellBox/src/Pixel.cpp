@@ -5,7 +5,7 @@
 	Class Pixel  
 	
 	private members:
-	- glm::dvec3 colorOfPixel;						// vec4 for alpha?
+	- glm::dvec3 colorOfPixel;
 	- glm::dvec3 position;
 	- static const int raysPerPixel = 32;
 	- Ray* rays[raysPerPixel];

@@ -170,10 +170,14 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
-	glm::dvec3 testIntersectionPoint = intersectionPoint + (0.0 * intersectedNormal);
-	testIntersectionPoint.x > 5 ? testIntersectionPoint.x = 4.9 : testIntersectionPoint.x = testIntersectionPoint.x;
-	testIntersectionPoint.y > 5 ? testIntersectionPoint.y = 4.9 : testIntersectionPoint.y = testIntersectionPoint.y;
-	testIntersectionPoint.z > 5 ? testIntersectionPoint.z = 4.9 : testIntersectionPoint.z = testIntersectionPoint.z;
+	glm::dvec3 testIntersectionPoint = intersectionPoint + (1.0 * intersectedNormal);
+	testIntersectionPoint.x = testIntersectionPoint.x > 5 ? 4.9 : testIntersectionPoint.x;
+	testIntersectionPoint.y = testIntersectionPoint.y > 5 ? 4.9 : testIntersectionPoint.y;
+	testIntersectionPoint.z = testIntersectionPoint.z > 5 ? 4.9 : testIntersectionPoint.z;
+
+	// testIntersectionPoint.x > 5 ? testIntersectionPoint.x = 4.9 : testIntersectionPoint.x = testIntersectionPoint.x;
+	// testIntersectionPoint.y > 5 ? testIntersectionPoint.y = 4.9 : testIntersectionPoint.y = testIntersectionPoint.y;
+	// testIntersectionPoint.z > 5 ? testIntersectionPoint.z = 4.9 : testIntersectionPoint.z = testIntersectionPoint.z;
 	//fattar inte på detta
 
 	//std::cout << "HEEEEELLLLOOOOO???!?!?" << std::endl;

@@ -179,7 +179,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 			else
 			{
 				//std::cout << "\nclosest object = " << closestIntersectedObjectIndex << std::endl;
-				colorOfPixel = glm::dvec3(1.0,0.0,0.0); //testing something emma, 2015-01-05
+				colorOfPixel = glm::dvec3(0.0,0.0,0.0); //testing something emma, 2015-01-05
 			
 			}
 			

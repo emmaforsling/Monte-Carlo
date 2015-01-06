@@ -167,7 +167,7 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 			if( intersection == glm::dvec3(0.0, 0.0, 0.0) )
 			{
-				// std::cout << "				- NO INTERSECTIONS - " << std::endl;
+				 //std::cout << "				- NO INTERSECTIONS - " << std::endl;
 			}
 			if( intersection != glm::dvec3(0.0, 0.0, 0.0) )
 			{

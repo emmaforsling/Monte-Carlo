@@ -145,7 +145,7 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 	}
 	else
 	{
-		std::cout << "4. maybe here?" << std::endl;
+		//std::cout << "4. maybe here?" << std::endl;
 		return glm::dvec3(0.0, 0.0, 0.0); 			// no intersection
 	}
 }

@@ -85,7 +85,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 	glm::dvec3 centerPoint = position;
 	
 	// Calculate a, b and c
-	a = (direction.x)*(direction.x) + (direction.y)*(direction.y) + (direction.z)*(direction.z);
+	a = 1.0;//(direction.x)*(direction.x) + (direction.y)*(direction.y) + (direction.z)*(direction.z);
 	b = 2*( (direction.x)*(startingPoint.x - centerPoint.x) + 
 			(direction.y)*(startingPoint.y - centerPoint.y) +
 			(direction.z)*(startingPoint.z - centerPoint.z) );
@@ -93,7 +93,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		(startingPoint.y - centerPoint.y)*(startingPoint.y - centerPoint.y) +
 		(startingPoint.z - centerPoint.z)*(startingPoint.z - centerPoint.z)
 		- radius*radius;
-
+	
 	// Calculate delta
 	delta = b*b - 4*a*c;
 		
@@ -144,18 +144,32 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		else
 		{
 			
-			if(min_t != 0.0)
+			if(min_t > 0.0)
 			{
 				finalIntersection.x = startingPoint.x + min_t * direction.x;
 				finalIntersection.y = startingPoint.y + min_t * direction.y;
 				finalIntersection.z = startingPoint.z + min_t * direction.z;
 			}
-			else
+			else if(min_t == 0)
 			{
 				finalIntersection.x = startingPoint.x + max_t * direction.x;
 				finalIntersection.y = startingPoint.y + max_t * direction.y;
 				finalIntersection.z = startingPoint.z + max_t * direction.z;
 			}
+			else{
+
+			}
+			/*
+			t = (-b + sqrt((b * b) - (4 * c)))/2;
+			if(t > 0){
+				finalIntersection = startingPoint + (direction * t);
+			}
+			
+			t = (-b - sqrt((b * b) - (4 * c)))/2;
+			if(t > 0){
+				finalIntersection = startingPoint + (direction * t);
+			}
+			*/
 			if(!_isShadowRay)
 			{
 				intersectedNormal = glm::normalize(finalIntersection - centerPoint);
@@ -170,6 +184,16 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
+	glm::dvec3 testIntersectionPoint = intersectionPoint + (0.01 * intersectedNormal);
+	/*testIntersectionPoint.x = testIntersectionPoint.x > 5 ? 4.9 : testIntersectionPoint.x;
+	testIntersectionPoint.y = testIntersectionPoint.y > 5 ? 4.9 : testIntersectionPoint.y;
+	testIntersectionPoint.z = testIntersectionPoint.z > 5 ? 4.9 : testIntersectionPoint.z;
+*/
+	// testIntersectionPoint.x > 5 ? testIntersectionPoint.x = 4.9 : testIntersectionPoint.x = testIntersectionPoint.x;
+	// testIntersectionPoint.y > 5 ? testIntersectionPoint.y = 4.9 : testIntersectionPoint.y = testIntersectionPoint.y;
+	// testIntersectionPoint.z > 5 ? testIntersectionPoint.z = 4.9 : testIntersectionPoint.z = testIntersectionPoint.z;
+	//fattar inte på detta
+
 	//std::cout << "HEEEEELLLLOOOOO???!?!?" << std::endl;
 	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
@@ -208,7 +232,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		//std::cout << "refracted ray direction in calculateChildRays = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 		//if(glm::length(refractedRayDirection) != 0)
 		//{
-			_ray->childNodes = new Ray(intersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
+			_ray->childNodes = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
 		//}
 	}
 	else
@@ -217,10 +241,13 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		reflectedRayDirection = glm::reflect(glm::normalize(direction), glm::normalize(intersectedNormal));
 		//std::cout << "interseted onormal: (" << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << ")" << std::endl;
 		//std::cout << "IntersectionPoint = (" << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << ")" << std::endl;
+		// std::cout << "Sphere::calcChild, Direction = (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
+		// std::cout << "Sphere::calcChild, intersectedNormal = (" << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << ")" << std::endl;
+		//std::cout << "testIntersectionPoint = (" << testIntersectionPoint.x << ", " << testIntersectionPoint.y << ", " << testIntersectionPoint.z << ")" << std::endl;
 		glm::dvec3 test = _ray->reflectRay(direction, intersectedNormal);	// Kallar på den egna funktionen
 		//std::cout << "ray direction in calculateChildRays: (" << test.x << ", " << test.y << ", " << test.z << ")" << std::endl;
 		// std::cout << "reflected ray direction in calculateChildRays = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
-		_ray->childNodes = new Ray(intersectionPoint, /*test*/glm::normalize(reflectedRayDirection), _ray->getImportance(), color, false);
+		_ray->childNodes = new Ray(testIntersectionPoint, test/*glm::normalize(reflectedRayDirection)*/, _ray->getImportance(), color, false);
 	}
 }
 

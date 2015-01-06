@@ -217,10 +217,85 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 	glm::dvec3 direction = _ray->getDirection();
 	//std::cout << "CalculateChildRay, direction " << direction.x << ", " << direction.y << ", " << direction.z << std::endl;
 
+
 	if(transparent)
-	{
-		//std::cout << "CALCULATING REFRACTION" << std::endl;
+	{/*
+		if(transparent == true){
+			//Refraction
+			double n1 = 1.0;
+        	double n2 = refractiveIndex;
+        
+        	if(r->getInsideObject() == true){
+            	n1 = refractiveIndex;
+            	n2 = 1.0;
+        	}
+
+			double n = n1/n2;
+			double cosI = glm::dot(intersectionNormal, inDirection);
+			double sinT2 = 1.0 - n * n * (1.0 - cosI * cosI);
+
+			if(sinT2 >= 0.0){
+				refractedDirection = n * inDirection - (n * cosI + (double)sqrt(sinT2)) * intersectionNormal;
+				r->refractionRay = new Ray(refractedDirection, intersectionAt);
+				if(r->getInsideObject() == false){
+                	r->refractionRay->setInsideObject(true);
+            	}else{
+                	r->refractionRay->setInsideObject(false);
+            	}
+			}
+		}*/
+		// Refraction
+		double n1 = 1.0;
+		double n2 = refractiveIndex;
+
 		if(_ray->isInsideObject())
+		{
+			n1 = refractiveIndex;
+			n2 = 1.0;
+			//refractedRayIsInside = false;
+			refractedRayDirection = glm::refract(direction, intersectedNormal, refractiveIndex); // test, ska tas bort
+		}
+		else{
+			refractedRayDirection = glm::refract(direction, intersectedNormal, 1.0/refractiveIndex); // test, ska tas bort
+			//refractedRayIsInside = true;
+		}
+
+		double n = n1/n2;
+		double cosTheta1 = glm::dot(intersectedNormal, direction);
+		double cosTheta2 = sqrt(1 - n * n * (1 - cosTheta1 * cosTheta1) );
+
+		double sinT2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1); // tim
+
+		if(sinT2 >= 0.0){
+			//refractedRayDirection = n * direction - (n * cosTheta1 + (double)sqrt(sinT2)) * intersectedNormal; //tims
+			//refractedRayDirection = n * direction + (n * cosTheta1 - cosTheta2) * intersectedNormal; // min
+			if(_ray->isInsideObject()){
+                refractedRayIsInside = false;	
+            }else{
+                refractedRayIsInside = true;
+            }
+			_ray->childNodes = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
+			
+		}
+		
+		
+
+		//reflectedRayDirection = direction - 2 * cosTheta1 * intersectedNormal;
+		
+		/*
+		glm::dvec3 reflectedDirection = -1.0 * (2.0 * (glm::dot(intersectionNormal,inDirection) * intersectionNormal) - inDirection);
+		
+
+    	// Move the starting pos out from the object a bit, to avoid infinite bounces in on point
+		r->reflectionRay = new Ray(reflectedDirection, intersectionAt + (intersectionNormal)*0.1);
+	*/
+		
+		//reflectedRayDirection = glm::reflect(glm::normalize(direction), glm::normalize(intersectedNormal));
+		//_ray->childNodes = new Ray(testIntersectionPoint, glm::normalize(reflectedRayDirection), _ray->getImportance(), color, false);
+
+
+		//std::cout << "CALCULATING REFRACTION" << std::endl;
+		/*if(_ray->isInsideObject())
 		{
 			//reflectedRayDirection = glm::reflect(_ray->getDirection(), -intersectedNormal);
 			refractedRayDirection = glm::refract(direction, intersectedNormal, 1.0/refractiveIndex);
@@ -231,7 +306,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 			//reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
 			refractedRayDirection = glm::refract(direction, intersectedNormal, refractiveIndex);
 			refractedRayIsInside = true;
-		}
+		}*/
 		
 		//_ray->isInsideObject() ? refractedRayIsInside = false : refractedRayIsInside = true;
 
@@ -239,7 +314,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		//std::cout << "refracted ray direction in calculateChildRays = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 		//if(glm::length(refractedRayDirection) != 0)
 		//{
-			_ray->childNodes = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
+			//_ray->childNodes = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
 		//}
 	}
 	else

@@ -143,23 +143,23 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		}	
 		else
 		{
-			
+			/*
 			if(min_t > 0.0)
 			{
-				finalIntersection.x = startingPoint.x + min_t * direction.x;
-				finalIntersection.y = startingPoint.y + min_t * direction.y;
-				finalIntersection.z = startingPoint.z + min_t * direction.z;
+				finalIntersection.x = (1000.0 * startingPoint.x + 1000.0 * min_t * direction.x)/1000.0;
+				finalIntersection.y = (1000.0 * startingPoint.y + 1000.0 * min_t * direction.y)/1000.0;
+				finalIntersection.z = (1000.0 * startingPoint.z + 1000.0 * min_t * direction.z)/1000.0;
 			}
 			else if(min_t == 0)
 			{
-				finalIntersection.x = startingPoint.x + max_t * direction.x;
-				finalIntersection.y = startingPoint.y + max_t * direction.y;
-				finalIntersection.z = startingPoint.z + max_t * direction.z;
+				finalIntersection.x = (1000.0 * startingPoint.x + 1000.0 * max_t * direction.x)/1000.0;
+				finalIntersection.y = (1000.0 * startingPoint.y + 1000.0 * max_t * direction.y)/1000.0;
+				finalIntersection.z = (1000.0 * startingPoint.z + 1000.0 * max_t * direction.z)/1000.0;
 			}
 			else{
 
-			}
-			/*
+			}*/
+			
 			t = (-b + sqrt((b * b) - (4 * c)))/2;
 			if(t > 0){
 				finalIntersection = startingPoint + (direction * t);
@@ -169,7 +169,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			if(t > 0){
 				finalIntersection = startingPoint + (direction * t);
 			}
-			*/
+			
 			if(!_isShadowRay)
 			{
 				intersectedNormal = glm::normalize(finalIntersection - centerPoint);
@@ -184,7 +184,8 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
-	glm::dvec3 testIntersectionPoint = intersectionPoint + (0.01 * intersectedNormal);
+	// 
+	glm::dvec3 testIntersectionPoint = (1000.0*intersectionPoint + (1000.0* 0.1 * intersectedNormal) )/1000.0;
 	/*testIntersectionPoint.x = testIntersectionPoint.x > 5 ? 4.9 : testIntersectionPoint.x;
 	testIntersectionPoint.y = testIntersectionPoint.y > 5 ? 4.9 : testIntersectionPoint.y;
 	testIntersectionPoint.z = testIntersectionPoint.z > 5 ? 4.9 : testIntersectionPoint.z;

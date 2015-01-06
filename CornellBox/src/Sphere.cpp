@@ -143,23 +143,27 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		}	
 		else
 		{
-			/*
+
+			// if the smallest value of t (t_min) is positive, it corresponds to the closest point in the positive direction of the ray,
+			// which is the point of interest.
+
 			if(min_t > 0.0)
 			{
-				finalIntersection.x = (1000.0 * startingPoint.x + 1000.0 * min_t * direction.x)/1000.0;
-				finalIntersection.y = (1000.0 * startingPoint.y + 1000.0 * min_t * direction.y)/1000.0;
-				finalIntersection.z = (1000.0 * startingPoint.z + 1000.0 * min_t * direction.z)/1000.0;
+				finalIntersection = (1000.0 * startingPoint + 1000.0 * min_t * direction)/1000.0;
 			}
+			// if the smallest value of t (t_min) is zero, it corresponds to the ray origin, which is not of intersest. Instead,
+			// the greatest value (max_t), which corresponds to a point farther along the ray direction, is of interest.
 			else if(min_t == 0)
 			{
-				finalIntersection.x = (1000.0 * startingPoint.x + 1000.0 * max_t * direction.x)/1000.0;
-				finalIntersection.y = (1000.0 * startingPoint.y + 1000.0 * max_t * direction.y)/1000.0;
-				finalIntersection.z = (1000.0 * startingPoint.z + 1000.0 * max_t * direction.z)/1000.0;
+				finalIntersection = (1000.0 * startingPoint + 1000.0 * max_t * direction)/1000.0;
 			}
+			// if the smallest value of t is negative, it corresponds to a point along the negative ray direction,
+			// which never is of interest.
 			else{
-
-			}*/
+				// do nothing
+			}
 			
+			/* ====== En annan variant... ======
 			t = (-b + sqrt((b * b) - (4 * c)))/2;
 			if(t > 0){
 				finalIntersection = startingPoint + (direction * t);
@@ -169,7 +173,9 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			if(t > 0){
 				finalIntersection = startingPoint + (direction * t);
 			}
-			
+			===================================*/
+
+			// if the incoming ray is not a shadow ray, update intersectedNormal.
 			if(!_isShadowRay)
 			{
 				intersectedNormal = glm::normalize(finalIntersection - centerPoint);

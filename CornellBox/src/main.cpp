@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	glm::dvec3 positionRoom = glm::dvec3(0.0, 0.0, 0.0);
 	
 		// Light
-	double radiance = 1.0;		//calculateLightConttribution			// emitted radiance Le
+	double radiance = 1.0;		//calculateLightingContribution			// emitted radiance Le
 	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube
@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
 	double refractiveIndexForCubeSpecular = 1.5;						// glass
 	
 		// Sphere
-	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 1.0, 0.5);
+	glm::dvec3 positionSphereSpecular = glm::dvec3(2.5, 2.5, 2.5);
 	double radiusForSphereSpecular = 1.0;
-	bool transparencyForSphereSpecular = false;
+	bool transparencyForSphereSpecular = true;
 	double refractiveIndexForSphereSpecular = 1.5;						// glass
 
 	// glm::dvec3 positionSphereTransparent = glm::dvec3(0.0, 0.0, 0.0);
@@ -66,30 +66,45 @@ int main(int argc, char *argv[])
 	objects[0] = room;
 	objects[1] = sphereSpecular;
 	objects[2] = sphereSpecular2;
-	objects[1] = cubeSpecular;
+	objects[3] = cubeSpecular;
 	
 	// TESTING TESTING
+	/*
 	Pixel* pixel = new Pixel();
+	
+	std::cout << "\nCalculating first ray..." << std::endl;
 	Ray* ray = new Ray(glm::dvec3(2.5, 2.5, 10.0), glm::dvec3(0.0, 0.0, -1.0), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);
-	std::cout << "\nCalculating intersection for ray: " << std::endl;
+	std::cout << "\nCalculating intersection for ray (on sphere): " << std::endl;
 	std::cout << "Direction of first ray: (" << ray->getDirection().x << ", " << ray->getDirection().y << ", " << ray->getDirection().z << ")" << std::endl;
 	glm::dvec3 point1 = sphereSpecular->calculateIntersection(ray, false);
 	std::cout << "First intersection point: (" << point1.x << ", " << point1.y << ", " << point1.z << ")" << std::endl;
+	std::cout << "Normal at intersection point: (" << sphereSpecular->getIntersectedNormal().x << ", " << sphereSpecular->getIntersectedNormal().y << ", " << sphereSpecular->getIntersectedNormal().z << ")" << std::endl;
 	
+	std::cout << "\nCalculating second ray..." << std::endl;
 	sphereSpecular->calculateChildRays(ray, point1);
-	std::cout << "\nCalculating intersection for child ray (sphere): " << std::endl;
-	std::cout << "Direction of child ray: (" << ray->childNodes->getDirection().x << ", " << ray->childNodes->getDirection().y << ", " << ray->childNodes->getDirection().z << ")" << std::endl;
-	glm::dvec3 point2 = sphereSpecular->calculateIntersection(ray->childNodes, false);
-	std::cout << "New intersection point : (" << point2.x << ", " << point2.y << ", " << point2.z << ")" << std::endl;
-	std::cout << "\nCalculating intersection for child ray (room): " << std::endl;
-	glm::dvec3 point3 = room->calculateIntersection(ray->childNodes, false);
-	std::cout << "(" << point3.x << ", " << point3.y << ", " << point3.z << ")" << std::endl;
+	Ray* secondRay = ray->refractedRay;
+	std::cout << "Direction of child ray: (" << secondRay->getDirection().x << ", " << secondRay->getDirection().y << ", " << secondRay->getDirection().z << ")" << std::endl;
+	std::cout << "\nCalculating intersection for second ray (on sphere): " << std::endl;
+	glm::dvec3 point2 = sphereSpecular->calculateIntersection(secondRay, false);
+	std::cout << "Second intersection point: (" << point2.x << ", " << point2.y << ", " << point2.z << ")" << std::endl;
+	std::cout << "Normal at intersection point: (" << sphereSpecular->getIntersectedNormal().x << ", " << sphereSpecular->getIntersectedNormal().y << ", " << sphereSpecular->getIntersectedNormal().z << ")" << std::endl;
 	
+	std::cout << "\nCalculating third ray..." << std::endl;
+	sphereSpecular->calculateChildRays(secondRay, point2);
+	Ray* thirdRay = secondRay->refractedRay;
+	std::cout << "Direction of child ray: (" << thirdRay->getDirection().x << ", " << thirdRay->getDirection().y << ", " << thirdRay->getDirection().z << ")" << std::endl;
+	std::cout << "\nCalculating intersection for third ray (on room): " << std::endl;
+	glm::dvec3 point3 = room->calculateIntersection(thirdRay, false);
+	std::cout << "Third intersection point: (" << point3.x << ", " << point3.y << ", " << point3.z << ")" << std::endl;
+	std::cout << "Normal at intersection point: (" << room->getIntersectedNormal().x << ", " << room->getIntersectedNormal().y << ", " << room->getIntersectedNormal().z << ")" << std::endl;
+	*/
+	/*
 	std::cout << "Shadow ray" << std:: endl;
 	glm::dvec3 randomPositionOnLightSource = lightsource->getRandomPosition();
 	std::cout << "visibility: " << pixel->castShadowRay(randomPositionOnLightSource, point2, objects, 2) << std::endl;
-	glm::dvec3 localLightingContribution = ray->childNodes->calculateLocalLightingContribution(room, (randomPositionOnLightSource - point2), lightsource->getRadiance(), 2);
+	glm::dvec3 localLightingContribution = ray->refractedRay->calculateLocalLightingContribution(room, (randomPositionOnLightSource - point2), lightsource->getRadiance(), 2);
 	std::cout << "localLightingContribution = (" << localLightingContribution.x << ", " << localLightingContribution.y << ", " << localLightingContribution.z << ")" << std::endl;
+	*/
 	/*
 	// super-duper test
 	glm::dvec3 intersectionPoint = room->calculateIntersection(ray);

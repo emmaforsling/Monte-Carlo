@@ -33,11 +33,11 @@ public:
 	
 	// Set functions
 	void setIsInsideObject(bool _insideObject);
-
+	void setIsRefractedRay(bool refracted){isRefracted = refracted;};
 	// Bool functions
 	bool isInsideObject();
 	bool russianRoulette(glm::dvec3 colorForTheReflectedRay, double survivalOds);
-
+	bool isRefractedRay(){return isRefracted;};
 	// Reflect and refract
 	glm::dvec3 reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal);
 	glm::dvec3 refractRay();
@@ -52,6 +52,7 @@ private:
 	glm::dvec3 color;							// vec4 for alpha?
 	glm::dvec3 direction;
 	bool insideObject;
+	bool isRefracted;
 	bool finalNode;
 	double importance;
 	glm::dvec3 startingPoint;

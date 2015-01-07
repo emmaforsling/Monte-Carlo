@@ -117,9 +117,7 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		}
 
 		// Determine intersectionPoint
-		intersectionPoint.x = startingPoint.x + (t * direction.x);
-		intersectionPoint.y = startingPoint.y + (t * direction.y);
-		intersectionPoint.z = startingPoint.z + (t * direction.z);
+		intersectionPoint = startingPoint + t*direction;
 
 		// Checking if intersection point is contained within rectangle bounds
 		// Rectangle bounds (min(), max() needed due to orientation of rectangles)

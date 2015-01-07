@@ -74,13 +74,17 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 																												// e.g. sphere, sphere, cube, wall
 		glm::dvec3 finalIntersection;
 		int closestIntersectedObjectIndex;																		// temporary
-		const int numberOfObjects = 3;																			// temporary...
-		int numberOfIterations = 6;																				// number of children
+		const int numberOfObjects = 2;																			// temporary...
+		int numberOfIterations = 2;																				// number of children
 		int iteration = 0;		
-		Ray* currentChildRay = rays[i];
+		//Ray* currentChildRay = rays[i];
 		glm::dvec3 intersectionPoints[numberOfObjects];
+		
+		std::vector<Ray*> childRays;
+		childRays.push_back(rays[i]);
+		int rayChildIndex = 0;
 
-		while(currentChildRay != nullptr && iteration < numberOfIterations)
+		while(rayChildIndex < childRays.size() && iteration < numberOfIterations)
 		{
 			//std::cout << "direction in iteration " << iteration << " (" << currentChildRay->getDirection().x << ", " << currentChildRay->getDirection().y << ", " << currentChildRay->getDirection().z << ")" << std::endl;
 			// resetting finalIntersection for each iteration
@@ -191,7 +195,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 					// 	std::cout << "closest object: " << closestIntersectedObjectIndex << std::endl;
 					// 	std::cout << "localLightingContribution = (" << localLightingContribution.x << ", " << localLightingContribution.y << ", " << localLightingContribution.z << ")"  << std::endl;;
 					// }
-					colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * localLightingContribution;// + 0.0002f * _objects[closestIntersectedObjectIndex]->getColor();
+					colorOfPixel += currentChildRay->getImportance() * intersectionPointVisibleFromLightSource * localLightingContribution;
 				}
 
 				//if(colorOfPixel == glm::dvec3(0.0,0.0,0.0))
@@ -212,15 +216,17 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 					//std::cout << "Pixle::shootRays(), currentChildRay->getStartingPoint=(" << currentChildRay->getStartingPoint().x << ", " << currentChildRay->getStartingPoint().y << ", " << currentChildRay->getStartingPoint().z << ")" << std::endl;
 				}
 				//std::cout << "nu gör jag en ny stråle" << std::endl;
-				
-				// HÄR
-				if(iteration == 1){
-					currentChildRay = new Ray(currentChildRay->getStartingPoint(), -currentChildRay->getDirection(), currentChildRay->getImportance(), glm::dvec3(0.0, 0.0, 0.0), false);
-					//colorOfPixel = glm::vec3(0.4, 0.2, 1.0);
-				}
 
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
-				currentChildRay = currentChildRay->childNodes;
+				//currentChildRay = currentChildRay->childNodes;
+				if(currentChildRay->reflectedRay != nullptr)
+				{
+					childRays.push_back(currentChildRay->reflectedRay);
+				}
+				if(currentChildRay->refractedRay != nullptr)
+				{
+					childRays.push_back(currentChildRay->refractedRay);
+				}
 			}
 			else
 			{
@@ -229,6 +235,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 			}
 			
 			iteration++;
+			rayChildIndex++;
 		}
 	}
 

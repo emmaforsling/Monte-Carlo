@@ -32,6 +32,7 @@ public:
 	virtual glm::dvec3 getIntersectedNormal();
 	virtual int getIntersectedSide();
 	virtual double getRefractiveIndex();
+	
 
 
 

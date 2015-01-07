@@ -43,7 +43,9 @@ public:
 	glm::dvec3 refractRay();
 
 	// Public variables
-	Ray* childNodes;							// maybe just one
+	//Ray* childNodes;							// maybe just one
+	Ray* reflectedRay;
+	Ray* refractedRay;
 	glm::dvec3 intersectionPoint;
 
 private:

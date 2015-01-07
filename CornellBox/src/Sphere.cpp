@@ -192,7 +192,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
-	glm::dvec3 testIntersectionPoint = intersectionPoint + (0.01 * intersectedNormal);
+	glm::dvec3 testIntersectionPoint = intersectionPoint + (0.001 * intersectedNormal);
 	/*testIntersectionPoint.x = testIntersectionPoint.x > 5 ? 4.9 : testIntersectionPoint.x;
 	testIntersectionPoint.y = testIntersectionPoint.y > 5 ? 4.9 : testIntersectionPoint.y;
 	testIntersectionPoint.z = testIntersectionPoint.z > 5 ? 4.9 : testIntersectionPoint.z;
@@ -241,6 +241,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		//if(glm::length(refractedRayDirection) != 0)
 		//{
 			_ray->childNodes = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);
+
 		//}
 	}
 	else

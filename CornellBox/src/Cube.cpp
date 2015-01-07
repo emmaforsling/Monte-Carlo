@@ -64,40 +64,45 @@ void Cube::initializeRectangles()
 	   0 -- 1
 	*/
 	sides[0] = new Rectangle();		//left
-	sides[0]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
-	sides[0]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0) + position;
-	sides[0]->positionsOfCorners[2] = glm::dvec3(0.0, size, 0.0) + position;
-	sides[0]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
+	sides[0]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, 0.0) + position;
+	sides[0]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
+	sides[0]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
+	sides[0]->positionsOfCorners[3] = glm::dvec3(0.0, size, 0.0) + position;
 
 	sides[1] = new Rectangle();		//up
-	sides[1]->positionsOfCorners[0] = glm::dvec3(0.0, size, 0.0) + position;
-	sides[1]->positionsOfCorners[1] = glm::dvec3(size, size, 0.0) + position;
-	sides[1]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
-	sides[1]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
+	sides[1]->positionsOfCorners[0] = glm::dvec3(size, size, 0.0) + position;
+	sides[1]->positionsOfCorners[1] = glm::dvec3(0.0, size, 0.0) + position;
+	sides[1]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
+	sides[1]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
+	
 
 	sides[2] = new Rectangle();		//right
-	sides[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
-	sides[2]->positionsOfCorners[1] = glm::dvec3(size, 0.0, size) + position;
-	sides[2]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
-	sides[2]->positionsOfCorners[3] = glm::dvec3(size, size, 0.0) + position;
+	sides[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
+	sides[2]->positionsOfCorners[1] = glm::dvec3(size, 0.0, 0.0) + position;
+	sides[2]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
+	sides[2]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
+	
 	
 	sides[3] = new Rectangle();		//down
-	sides[3]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
-	sides[3]->positionsOfCorners[1] = glm::dvec3(size, 0.0, size) + position;
-	sides[3]->positionsOfCorners[2] = glm::dvec3(size, 0.0, 0.0) + position;
-	sides[3]->positionsOfCorners[3] = glm::dvec3(0.0, 0.0, 0.0) + position;
+	sides[3]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
+	sides[3]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
+	sides[3]->positionsOfCorners[2] = glm::dvec3(0.0, 0.0, 0.0) + position;
+	sides[3]->positionsOfCorners[3] = glm::dvec3(size, 0.0, 0.0) + position;
+	
 
 	sides[4] = new Rectangle();		//back
-	sides[4]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, 0.0) + position;
-	sides[4]->positionsOfCorners[1] = glm::dvec3(size, 0.0, 0.0) + position;
-	sides[4]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
-	sides[4]->positionsOfCorners[3] = glm::dvec3(0.0, size, 0.0) + position;
+	sides[4]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
+	sides[4]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0) + position;
+	sides[4]->positionsOfCorners[2] = glm::dvec3(0.0, size, 0.0) + position;
+	sides[4]->positionsOfCorners[3] = glm::dvec3(size, size, 0.0) + position;
+	
 
 	sides[5] = new Rectangle();		//front
-	sides[5]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
-	sides[5]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
-	sides[5]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
-	sides[5]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
+	sides[5]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
+	sides[5]->positionsOfCorners[1] = glm::dvec3(size, 0.0, size) + position;
+	sides[5]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
+	sides[5]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
+	
 	
 	/*
 	// // std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
@@ -124,76 +129,94 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 	// Kolla ifall de intersectar med kuben
 	// Ta reda på insida/utsida
 	int side = 666;
-	for(int i=0; i<6; i++)
+	for(int i = 0; i < 6; i++)
 	{
 		intersection = sides[i]->calculateIntersection(_ray);
 
-		//if intersection == glm::vec(0.0,0.0,0.0) then no intersection
+		if(intersection != glm::dvec3(0.0, 0.0, 0.0))
+		{
+			if(intersection != _ray->getStartingPoint())
+			{
+				if(glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()))
+				{
+					finalIntersection = intersection;
+					side = i;
+				}
+			}
+		}		
+
+		/* HÄR
+
+		// if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 		if( intersection == glm::dvec3(0.0, 0.0, 0.0) )
 		{
-			// // std::cout << "				- NO INTERSECTIONS - " << std::endl;
+			// std::cout << "				- NO INTERSECTIONS - " << std::endl;
 		}
 		if( intersection != glm::dvec3(0.0, 0.0, 0.0) )
 		{
 			// first detected intersection
 			if(finalIntersection == glm::dvec3(0.0, 0.0, 0.0))
 			{
-				// // std::cout << "Detected first intersection (";
+				// std::cout << "Detected first intersection (";
 				finalIntersection = intersection;
-				side = i;
-				// // std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 
+				// store which side was intersected
+				side = i;
+				// std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
 			}
+			
 			// second detected intersection
 			else
 			{
 				// // std::cout << "Detected second intersection (";
 				// // std::cout << intersection.x << ", " << intersection.y << ", " << intersection.z << ")" << std::endl;
-				/* message */
+				
+				// === message
 				// // // std::cout << "sides[" << i << "].calculateIntersection(Ray* _ray) = " << intersection.x << ", " 
 				// << intersection.y << ", " << intersection.z << std::endl;
-				/* end message */
+				// === end message
 
 				// Ray inside object
 				if(_ray->isInsideObject())
 				{
-					//// // std::cout << "Ray inside object. ";
+					// std::cout << "Ray inside object. ";
 					if( glm::length(intersection - _ray->getStartingPoint()) > glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
-						//// // std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
+						// std::cout << "Choosing new intersection point (farther from ray origin - exit point)." << std::endl;
 						side = i;
 						finalIntersection = intersection;
 					}
 					else
 					{
-						//// // std::cout << "Discarding new intersection point (closer to ray origin - entry point)" << std::endl;
+						// std::cout << "Discarding new intersection point (closer to ray origin - entry point)" << std::endl;
 					}
 				}
 				// Ray outside object
 				else
 				{
-					//// // std::cout << "Ray outside object. ";
+					// std::cout << "Ray outside object. ";
 					if( glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()) )
 					{
-						//// // std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
+						// std::cout << "Choosing new intersection point (closer to ray origin - entry point)." << std::endl;
 						side = i;
 						finalIntersection = intersection;
 					}
 					else
 					{
-						//// // std::cout << "Discarding new intersection point (farther from ray origin - exit point)" << std::endl;
+						// std::cout << "Discarding new intersection point (farther from ray origin - exit point)" << std::endl;
 					}
 				}
 			}			
 		}
+		*/
 	}
+
 	if(side != 666)
 	{
-		//// // std::cout << "The side for the final intersection point is " << side << std::endl;
-		//// // std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
+		// std::cout << "The side for the final intersection point is " << side << std::endl;
+		// std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
 		intersectedNormal = sides[side]->getNormal();
 		intersectedSide = side;
-
 	}
 		
 	
@@ -227,7 +250,7 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 	return glm::dvec3(0.0,0.0,0.0);
 	*/
 	// // std::cout << "Returning final intersection: (" << finalIntersection.x << ", " << finalIntersection.y << ", " << finalIntersection.z << ")" << std::endl;
-	
+
 	return finalIntersection;
 }
 
@@ -242,7 +265,7 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	// glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, false);
+	_ray->childNodes = new Ray(intersectionPoint + 0.001 * intersectedNormal, reflectedRayDirection, _ray->getImportance(), color, false);
 }
 
 /*

@@ -28,7 +28,9 @@ Ray::Ray()
 	importance = 0.0;
 	color = glm::dvec3(0.0, 0.0, 0.0);
 	finalNode = false;
-	childNodes = nullptr;
+	//childNodes = nullptr;
+	reflectedRay = nullptr;
+	refractedRay = nullptr;
 	insideObject = false;
 	//std::cout << "\n\n HELLLO MEEE THIS IS WORLD\n" << std::endl;
 }
@@ -45,7 +47,9 @@ Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, g
 	color = _color;
 	insideObject = _insideObject;
 	finalNode = false;
-	childNodes = nullptr;
+	//childNodes = nullptr;
+	reflectedRay = nullptr;
+	refractedRay = nullptr;
 }
 
 /*
@@ -53,7 +57,9 @@ Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, g
 */
 Ray::~Ray()
 {
- 	delete childNodes;
+ 	//delete childNodes;
+ 	delete reflectedRay;
+	delete refractedRay;
 }
 
 /*
@@ -88,7 +94,7 @@ glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, glm::dvec3 _
 	double cosineOfAngle = glm::dot(normal_surface, glm::normalize(_directionToLight));
 	glm::dvec3 lightingContribution = glm::dvec3(0.0, 0.0, 0.0);
 	//std::cout << "dot = " << cosineOfAngle << std::endl;
-	
+
 	if(cosineOfAngle <= 0)
 	{
 		// lightingContribution = color_ray * color_surface * _radiance;

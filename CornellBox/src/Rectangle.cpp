@@ -112,7 +112,7 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		}
 		if(t < 0)
 		{
-			//std::cout << "2. are we here jet?" << std::endl;
+			//std::cout << "\n\n\n2. are we here jet?" << std::endl;
 			return glm::dvec3(0.0, 0.0, 0.0); //668
 		}
 
@@ -130,9 +130,9 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		double zPosMin = std::min(positionsOfCorners[0].z, positionsOfCorners[2].z);
 		double zPosMax = std::max(positionsOfCorners[0].z, positionsOfCorners[2].z);
 
-		if( std::round(intersectionPoint.x * 100)/100 >= std::round(xPosMin * 100)/100 && std::round(intersectionPoint.x * 100)/100 <= std::round(xPosMax * 100)/100 &&
-			std::round(intersectionPoint.y * 100)/100 >= std::round(yPosMin * 100)/100 && std::round(intersectionPoint.y * 100)/100 <= std::round(yPosMax * 100)/100 &&
-			std::round(intersectionPoint.z * 100)/100 >= std::round(zPosMin * 100)/100 && std::round(intersectionPoint.z * 100)/100 <= std::round(zPosMax * 100)/100 )
+		if( std::round(intersectionPoint.x * 100.0)/100.0 >= std::round(xPosMin * 100.0)/100.0 && std::round(intersectionPoint.x * 100.0)/100.0 <= std::round(xPosMax * 100.0)/100.0 &&
+			std::round(intersectionPoint.y * 100.0)/100.0 >= std::round(yPosMin * 100.0)/100.0 && std::round(intersectionPoint.y * 100.0)/100.0 <= std::round(yPosMax * 100.0)/100.0 &&
+			std::round(intersectionPoint.z * 100.0)/100.0 >= std::round(zPosMin * 100.0)/100.0 && std::round(intersectionPoint.z * 100.0)/100.0 <= std::round(zPosMax * 100.0)/100.0 )
 		{
 			return intersectionPoint;				// intersection point on the rectangle
 		}

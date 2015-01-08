@@ -76,7 +76,9 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 		int closestIntersectedObjectIndex;																		// temporary
 		const int numberOfObjects = 2;																			// temporary...
 		int numberOfIterations = 4;																				// number of children
-		int iteration = 0;		
+		int iteration = 0;
+		rays[i]->setImportance(1 / raysPerPixel); //emma 2015-01-08
+		std::cout << "rays[i]->getImportance()" << rays[i]->getImportance() << std::endl;		
 		
 		glm::dvec3 intersectionPoints[numberOfObjects];
 		

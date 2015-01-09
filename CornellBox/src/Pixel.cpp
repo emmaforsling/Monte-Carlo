@@ -76,7 +76,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 		int closestIntersectedObjectIndex;																		// temporary
 		
 		const int numberOfObjects = 4;																			// temporary...
-		int numberOfIterations = 6;																				// number of children
+		int numberOfIterations = 18;																				// number of children
 		int iteration = 0;
 		//rays[i]->setImportance(1 / raysPerPixel); //emma 2015-01-08
 		//std::cout << "rays[i]->getImportance()" << rays[i]->getImportance() << std::endl;			
@@ -204,7 +204,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 			else
 			{
 				//std::cout << "\nclosest object = " << closestIntersectedObjectIndex << std::endl;
-				colorOfPixel = glm::dvec3(0.0,0.0,0.0); //testing something emma, 2015-01-05
+				//colorOfPixel = glm::dvec3(1.0,0.0,0.0); //testing something emma, 2015-01-05
 			}
 			
 
@@ -251,6 +251,14 @@ void Pixel::clearMemory()
 		delete childRays[0];
 		childRays.erase(childRays.begin());
 	}
+
+	/* // Annan variant
+	for(int i = 0; i < childRays.size(); i++)
+	{
+		delete childRays[i];
+	}	
+	childRays.clear();
+	*/
 }
 
 /*

@@ -124,6 +124,7 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 {
 	glm::dvec3 intersection;
 	glm::dvec3 finalIntersection = glm::dvec3(0.0,0.0,0.0);
+	//finalIntersection = _ray->getStartingPoint();
 
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
@@ -141,11 +142,12 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 				{
 					finalIntersection = intersection;
 					side = i;
+					//std::cout << "sida: " << i << " I ";
 				}
 			}
-		}		
+		}
 
-		/* HÄR
+		/* // HÄR
 
 		// if intersection == glm::vec(0.0,0.0,0.0) then no intersection
 		if( intersection == glm::dvec3(0.0, 0.0, 0.0) )
@@ -256,6 +258,8 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
+	//intersectedNormal = glm::dvec3(0.0, 1.0, 0.0);
+	glm::dvec3 testIntersectionPoint = (1000.0 * intersectionPoint + (1000.0 * 0.001 * intersectedNormal))/1000.0;
 	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
 	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
 	// // std::cout << "====== Reflection/refraction =====" << std::endl;
@@ -265,7 +269,7 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	// glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
 	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
 
-	_ray->reflectedRay = new Ray(intersectionPoint + 0.001 * intersectedNormal, reflectedRayDirection, _ray->getImportance(), color, false);
+	_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
 }
 
 /*

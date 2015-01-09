@@ -16,7 +16,7 @@ public:
 
 	// Calculation functions
 	void calculateChildRays();					// only called on cube
-	glm::dvec3 calculateIntersection(Ray* ray);
+	glm::dvec3 calculateIntersection(Ray* _ray);
 	
 	// Get functions
 	glm::dvec3 getColor();

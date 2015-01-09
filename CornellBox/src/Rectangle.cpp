@@ -36,7 +36,7 @@ Rectangle::~Rectangle()
 	Calculations functions
 */
 
-glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
+glm::dvec3 Rectangle::calculateIntersection(Ray* _ray)
 {
 	/*
 		Plane: Ax + By + Cz + D = 0
@@ -77,10 +77,10 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 	glm::dvec3 direction = glm::dvec3(0.0, 0.0, 0.0);
 
 	// Get the startingPoint for the ray
-	startingPoint = ray->getStartingPoint();
+	startingPoint = _ray->getStartingPoint();
 	
 	// Get the direction for the ray
-	direction = ray->getDirection();
+	direction = _ray->getDirection();
 
 	// Set the intersectionPoint to 
 	glm::dvec3 intersectionPoint = glm::dvec3(0.0, 0.0, 0.0);
@@ -128,9 +128,9 @@ glm::dvec3 Rectangle::calculateIntersection(Ray* ray)
 		double zPosMin = std::min(positionsOfCorners[0].z, positionsOfCorners[2].z);
 		double zPosMax = std::max(positionsOfCorners[0].z, positionsOfCorners[2].z);
 
-		if( std::round(intersectionPoint.x * 100.0)/100.0 >= std::round(xPosMin * 100.0)/100.0 && std::round(intersectionPoint.x * 100.0)/100.0 <= std::round(xPosMax * 100.0)/100.0 &&
-			std::round(intersectionPoint.y * 100.0)/100.0 >= std::round(yPosMin * 100.0)/100.0 && std::round(intersectionPoint.y * 100.0)/100.0 <= std::round(yPosMax * 100.0)/100.0 &&
-			std::round(intersectionPoint.z * 100.0)/100.0 >= std::round(zPosMin * 100.0)/100.0 && std::round(intersectionPoint.z * 100.0)/100.0 <= std::round(zPosMax * 100.0)/100.0 )
+		if( std::round(intersectionPoint.x * 1000.0)/1000.0 >= std::round(xPosMin * 1000.0)/1000.0 && std::round(intersectionPoint.x * 1000.0)/1000.0 <= std::round(xPosMax * 1000.0)/1000.0 &&
+			std::round(intersectionPoint.y * 1000.0)/1000.0 >= std::round(yPosMin * 1000.0)/1000.0 && std::round(intersectionPoint.y * 1000.0)/1000.0 <= std::round(yPosMax * 1000.0)/1000.0 &&
+			std::round(intersectionPoint.z * 1000.0)/1000.0 >= std::round(zPosMin * 1000.0)/1000.0 && std::round(intersectionPoint.z * 1000.0)/1000.0 <= std::round(zPosMax * 1000.0)/1000.0 )
 		{
 			return intersectionPoint;				// intersection point on the rectangle
 		}

@@ -130,8 +130,16 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 		if(_ray->isInsideObject())
 		{
+
+			if(max_t > 0)
+			{
+				finalIntersection = (1000.0 * startingPoint + 1000.0 * max_t * direction)/1000.0;		
+			}
+			else
+			{
+				// do nothing
+			}
 			//std::cout << "Ray inside object!" << std::endl;
-			finalIntersection = (1000.0 * startingPoint + 1000.0 * max_t * direction)/1000.0;	
 			
 			if(!_isShadowRay)
 			{
@@ -143,13 +151,11 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			return finalIntersection;
 		}	
 		else
-		{
-
-			
-			if(_ray->isRefractedRay()){
-				finalIntersection = (1000.0 * startingPoint + 1000.0 * max_t * direction)/1000.0;	
-			}
-			else{
+		{	
+			//if(_ray->isRefractedRay()){
+			//	finalIntersection = (1000.0 * startingPoint + 1000.0 * max_t * direction)/1000.0;	
+			//}
+			//else{
 				// if the smallest value of t (t_min) is positive, it corresponds to the closest point in the positive direction of the ray,
 				// which is the point of interest.
 				if(min_t > 0.0)
@@ -167,7 +173,7 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 				else{
 					// do nothing
 				}
-			}
+			//}
 			/* ====== En annan variant... ======
 			t = (-b + sqrt((b * b) - (4 * c)))/2;
 			if(t > 0){
@@ -218,28 +224,48 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		double cosTheta1;
 		if(_ray->isInsideObject())
 		{
+			if(_ray->getIteration() == 2)
+			{
+				//std::cout << "Direction of ray: (" << _ray->getDirection().x << ", " << _ray->getDirection().y << ", " << _ray->getDirection().z << ")" << std::endl;
+			}
+
 			n1 = refractiveIndex;
 			n2 = 1.0;
-			testIntersectionPoint = (1000.0*intersectionPoint - (1000.0* 0.001 * intersectedNormal) )/1000.0;
 			// Flip normals
 			intersectedNormal = -intersectedNormal;
+			testIntersectionPoint = (1000.0*intersectionPoint + (1000.0 * 0.001 * intersectedNormal) )/1000.0;
 			refractedRayDirection = glm::refract(direction, intersectedNormal, refractiveIndex); // test, ska tas bort
-			cosTheta1 = glm::dot(intersectedNormal, direction);
+			cosTheta1 = glm::dot(intersectedNormal, -direction);
+			if(cosTheta1<0){
+				std::cout << "========= WRONG     1 ==========";
+				cosTheta1 = glm::dot(intersectedNormal, direction);
+			}
+			else{
+				//std::cout << "är jag hääääääääääääääääääääääääääääääääär 1?" << std::endl;
+			}
 		}
 		else{
-			testIntersectionPoint = (1000.0*intersectionPoint + (1000.0* 000.1 * intersectedNormal) )/1000.0;
+			testIntersectionPoint = (1000.0*intersectionPoint + (1000.0 * 0.001 * intersectedNormal) )/1000.0;
 			refractedRayDirection = glm::refract(direction, intersectedNormal, 1.0/refractiveIndex); // test, ska tas bort
-			cosTheta1 = glm::dot(-intersectedNormal, direction);
+			cosTheta1 = glm::dot(intersectedNormal, -direction);
+			if(cosTheta1<0){
+				std::cout << "========= WRONG 2 ==========";
+				cosTheta1 = glm::dot(intersectedNormal, direction);
+			}
+			else{
+				//std::cout << "är jag hääääääääääääääääääääääääääääääääär2 ?" << std::endl;
+			}
 		}
+
 
 		double n = n1/n2;	
 		//double cosTheta1 = glm::dot(intersectedNormal, direction);
-		double cosTheta2 = sqrt(1.0 - n * n * (1.0 - cosTheta1 * cosTheta1) );
-		double sinT2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1); // tim
+		double cosTheta2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1);
+		//double sinT2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1); // tim
 
-		if(sinT2 >= 0.0){
-			//refractedRayDirection = n * direction - (n * cosTheta1 + (double)sqrt(sinT2)) * -intersectedNormal; //tims
-			//refractedRayDirection = n * direction + (n * cosTheta1 - cosTheta2) * intersectedNormal; // min			
+		if(cosTheta2 >= 0.0){
+			//refractedRayDirection = n * direction - (n * cosTheta1 + (double)sqrt(cosTheta2)) * -intersectedNormal; //tims
+			refractedRayDirection = n * direction + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min			
 			if(_ray->isInsideObject()){
                 refractedRayIsInside = false;
                 reflectedRayIsInside = true;
@@ -248,8 +274,6 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
                 refractedRayIsInside = true;
             }
 			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance()/1.0, color, refractedRayIsInside);	
-			_ray->setIsRefractedRay(true);
-
 		/* smallpt*/
 			// refractedRayDirection = n * direction - (n * cosTheta1 + (double)sqrt(sinT2)) * -intersectedNormal; //tims
 			// double a = 1.5 - 1.0; 	// n1 n2
@@ -277,12 +301,21 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
    //   		radiance(reflRay,depth,Xi)*RP:radiance(Ray(x,tdir),depth,Xi)*TP) :
    // 			 radiance(reflRay,depth,Xi)*Re+radiance(Ray(x,tdir),depth,Xi)*Tr);
 			//_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, reflectedRayIsInside);		
+
+			//_ray->setIsRefractedRay(true);
 		}
-		else{
-			//std::cout << "\n\n JAHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
+		else{ // if(cosTheta2 < 0) - total internal reflection
+			intersectedNormal = -intersectedNormal;
+			testIntersectionPoint = (1000.0*intersectionPoint + (1000.0* 0.001 * intersectedNormal) )/1000.0;
+			reflectedRayDirection = glm::reflect(glm::normalize(direction), glm::normalize(intersectedNormal));
+			//glm::dvec3 test = _ray->reflectRay(direction, intersectedNormal);	// Kallar på den egna funktionen
+			//_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance(), color, _ray->isInsideObject());
+			_ray->reflectedRay = nullptr;
 			//_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance(), color, refractedRayIsInside);	
+			//std::cout << "================TOTAL INTERNAL REFLECTION ???????????????==============\n\n\n";
+			//_ray->refractedRay = nullptr;
 		}
-		_ray->reflectedRay = nullptr;
+		//_ray->reflectedRay = nullptr;
 		//reflectedRayDirection = direction - 2 * cosTheta1 * intersectedNormal;	// mine
 		//glm::dvec3 reflectedDirection = -1.0 * (2.0 * (glm::dot(intersectedNormal,direction) * intersectedNormal) - direction); //tim
 		//reflectedRayDirection = glm::reflect(glm::normalize(direction), glm::normalize(intersectedNormal));

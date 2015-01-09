@@ -1,4 +1,4 @@
-#include "../include/Ray.h"
+ #include "../include/Ray.h"
 #include <iostream>
 
 #include "../include/Object.h"
@@ -58,8 +58,8 @@ Ray::Ray(glm::dvec3 _startingPoint, glm::dvec3 _direction, double _importance, g
 Ray::~Ray()
 {
  	//delete childNodes;
- 	delete reflectedRay;
-	delete refractedRay;
+ 	//delete reflectedRay;
+	//delete refractedRay;
 }
 
 /*

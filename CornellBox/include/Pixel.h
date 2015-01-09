@@ -40,6 +40,7 @@ private:
 	glm::dvec3 colorOfPixel;						// vec4 for alpha?
 	glm::dvec3 position;
 	Ray* rays[raysPerPixel];
+	std::vector<Ray*> childRays;
 
 };
 

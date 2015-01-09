@@ -128,7 +128,6 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
 	// Ta reda på insida/utsida
-	int side = 666;
 	for(int i = 0; i < 6; i++)
 	{
 		intersection = sides[i]->calculateIntersection(_ray);
@@ -140,7 +139,8 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 				if(glm::length(intersection - _ray->getStartingPoint()) < glm::length(finalIntersection - _ray->getStartingPoint()))
 				{
 					finalIntersection = intersection;
-					side = i;
+					intersectedNormal = sides[i]->getNormal();
+					intersectedSide = i;
 				}
 			}
 		}		
@@ -211,13 +211,13 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		*/
 	}
 
-	if(side != 666)
-	{
-		// std::cout << "The side for the final intersection point is " << side << std::endl;
-		// std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
-		intersectedNormal = sides[side]->getNormal();
-		intersectedSide = side;
-	}
+	// if(side != 666)
+	// {
+	// 	// std::cout << "The side for the final intersection point is " << side << std::endl;
+	// 	// std::cout << "The normal is " << sides[side]->getNormal().x << ", " << sides[side]->getNormal().y << ", " << sides[side]->getNormal().z << std::endl;
+	// 	intersectedNormal = sides[side]->getNormal();
+	// 	intersectedSide = side;
+	// }
 		
 	
 	/*

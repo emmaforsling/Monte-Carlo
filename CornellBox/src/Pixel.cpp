@@ -58,7 +58,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 	glm::dvec3 direction;
 	glm::dvec3 color;
 	bool intersectionPointVisibleFromLightSource;
-
+	//std::vector<Ray*> childRays;
 	//srand(time(NULL));
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
@@ -74,13 +74,12 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 																												// e.g. sphere, sphere, cube, wall
 		glm::dvec3 finalIntersection;
 		int closestIntersectedObjectIndex;																		// temporary
-		const int numberOfObjects = 3;																			// temporary...
+		const int numberOfObjects = 4;																			// temporary...
 		int numberOfIterations = 6;																				// number of children
 		int iteration = 0;		
 		
 		glm::dvec3 intersectionPoints[numberOfObjects];
 		
-		std::vector<Ray*> childRays;
 		childRays.push_back(rays[i]);
 		int rayChildIndex = 0;
 		Ray* currentChildRay = nullptr;
@@ -88,6 +87,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 		while(rayChildIndex < childRays.size() && iteration < numberOfIterations)
 		{
 			currentChildRay = childRays.at(rayChildIndex);
+			currentChildRay->setIteration(iteration);
 			//std::cout << "direction in iteration " << iteration << " (" << currentChildRay->getDirection().x << ", " << currentChildRay->getDirection().y << ", " << currentChildRay->getDirection().z << ")" << std::endl;
 			// resetting finalIntersection for each iteration
 			closestIntersectedObjectIndex = 666;
@@ -186,33 +186,44 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 
 				_objects[closestIntersectedObjectIndex]->calculateChildRays(currentChildRay, finalIntersection);
 				//currentChildRay = currentChildRay->childNodes;
+				//std::cout << "Nu ska vi se här!" << std::endl;
 				if(currentChildRay->reflectedRay != nullptr)
 				{
 					childRays.push_back(currentChildRay->reflectedRay);
+					//std::cout << "lagt till reflekterad!" << std::endl;
 				}
 				if(currentChildRay->refractedRay != nullptr)
 				{
 					childRays.push_back(currentChildRay->refractedRay);
+					//std::cout << "lagt till refrakterad!" << std::endl;
 				}
 			}
 			else
 			{
 				//std::cout << "\nclosest object = " << closestIntersectedObjectIndex << std::endl;
-				colorOfPixel = glm::dvec3(1.0,0.0,0.0); //testing something emma, 2015-01-05
-			
+				colorOfPixel = glm::dvec3(0.0,0.0,0.0); //testing something emma, 2015-01-05
 			}
 			
+
 			iteration++;
 			rayChildIndex++;
 		}
+		
+		clearMemory();
 	}
+	
 
 	if(glm::length(colorOfPixel) == 0)
 	{
 		//std::cout << "============== colorOfPixel = (0, 0, 0) ==============" << std::endl;
 	}
 	
-	clearMemory();
+	/*
+	while (!childRays.empty())
+  	{
+    	childRays.pop_back();
+  	}
+	*/
 }
 
 /*
@@ -220,20 +231,23 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 */
 void Pixel::clearMemory()
 {
-	/*
-	for(int i = 0; i < Pixel::raysPerPixel; i++)
+	//for(int i = 0; i < Pixel::raysPerPixel; i++)
+	//{
+		//for(int j = 0; j < childRays.size(); j++)
+		//{
+			//std::cout << "childRays.size() = " << childRays.size() << std::endl;
+			//delete childRays[j];
+			//childRays.erase (childRays.begin());
+		//}
+		//delete currentNode;
+	//}
+
+	while(!childRays.empty())
 	{
-		Ray* currentNode = rays[i];
-		while(currentNode->childNodes != nullptr)
-		{
-			Ray* tempNode = currentNode->childNodes;
-			currentNode->childNodes = tempNode->childNodes;
-			tempNode->childNodes = nullptr;
-			delete tempNode;
-		}
-		delete currentNode;
+		//std::cout << "childRays.size() = " << childRays.size() << std::endl;
+		delete childRays[0];
+		childRays.erase(childRays.begin());
 	}
-	*/
 }
 
 /*

@@ -42,6 +42,9 @@ public:
 	glm::dvec3 reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal);
 	glm::dvec3 refractRay();
 
+	int getIteration(){return iteration;};
+	void setIteration(int _iteration){iteration = _iteration;};
+
 	// Public variables
 	//Ray* childNodes;							// maybe just one
 	Ray* reflectedRay;
@@ -49,6 +52,7 @@ public:
 	glm::dvec3 intersectionPoint;
 
 private:
+	int iteration;
 	glm::dvec3 color;							// vec4 for alpha?
 	glm::dvec3 direction;
 	bool insideObject;

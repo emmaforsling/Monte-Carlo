@@ -249,6 +249,34 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
             }
 			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, _ray->getImportance()/1.0, color, refractedRayIsInside);	
 			_ray->setIsRefractedRay(true);
+
+		/* smallpt*/
+			// refractedRayDirection = n * direction - (n * cosTheta1 + (double)sqrt(sinT2)) * -intersectedNormal; //tims
+			// double a = 1.5 - 1.0; 	// n1 n2
+			// double b = 1.5 + 1.0;	// n1 n2
+			// double R0 = a * a / (b*b);
+			// bool into = _ray->isInsideObject();
+			// double c = (1 - into) ? (- cosTheta1) : glm::dot(refractedRayDirection, intersectedNormal);
+			// double Re = R0 + (1-R0) * c * c * c * c * c;
+			// double Tr = 1 - Re;
+			// double P = 0.25 + 0.5 * Re;
+			// double Rp = Re/P;
+			// double Tp = Tr/(1-P);
+
+			// int depth = _ray->getIteration();
+			// if(_ray->getImportance() + (color * depth) > 2)
+			// {
+			// 	if(erand48(1)<P){
+
+			// 	}
+			// }
+
+
+			//  double Re=R0+(1-R0)*c*c*c*c*c,Tr=1-Re,P=.25+.5*Re,RP=Re/P,TP=Tr/(1-P);
+			//  return obj.e + f.mult(depth>2 ? (erand48(Xi)<P ?   // Russian roulette
+   //   		radiance(reflRay,depth,Xi)*RP:radiance(Ray(x,tdir),depth,Xi)*TP) :
+   // 			 radiance(reflRay,depth,Xi)*Re+radiance(Ray(x,tdir),depth,Xi)*Tr);
+			//_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, color, reflectedRayIsInside);		
 		}
 		else{
 			//std::cout << "\n\n JAHHHHHHHHHHHHHHHHHHHHHH" << std::endl;

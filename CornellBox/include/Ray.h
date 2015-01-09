@@ -34,6 +34,7 @@ public:
 	// Set functions
 	void setIsInsideObject(bool _insideObject);
 	void setIsRefractedRay(bool refracted){isRefracted = refracted;};
+	void setImportance(double _importance){importance = _importance;};
 	// Bool functions
 	bool isInsideObject();
 	bool russianRoulette(glm::dvec3 colorForTheReflectedRay, double survivalOds);

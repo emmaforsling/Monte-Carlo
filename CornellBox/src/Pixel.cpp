@@ -156,7 +156,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 				// accumulating color for current pixel	
 				if(_light->isOnLightSource(finalIntersection))
 				{
-					colorOfPixel = glm::dvec3(1.0,1.0,1.0);
+					colorOfPixel = glm::dvec3(1.0,1.0,1.0); 
 				}
 				else
 				{

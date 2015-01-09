@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
 
 	Sphere* sphereSpecular2 = new Sphere(glm::dvec3(1.5, 1.0, 2.5), 1.0, false, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
-
 	// Sphere* sphereTransparent = new Sphere(positionSphereTransparent, radiusForSphereTransparent, transparencyForSphereTransparent, refractiveIndexForSphereTransparent, glm::dvec3(1.0, 0.0, 0.0));
 
 	// Create camera

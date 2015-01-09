@@ -156,7 +156,6 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 				if(_light->isOnLightSource(finalIntersection))
 				{
 					colorOfPixel = glm::dvec3(1.0,1.0,1.0); 
-					//colorOfPixel = glm::dvec3(1.0,1.0,1.0) - glm::dvec3(1.0,1.0,1.0)/currentChildRay->getImportance(); //test: emma 2015-01-09
 				}
 				else
 				{

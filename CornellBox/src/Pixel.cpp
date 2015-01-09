@@ -234,22 +234,10 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 */
 void Pixel::clearMemory()
 {
-	//for(int i = 0; i < Pixel::raysPerPixel; i++)
-	//{
-		//for(int j = 0; j < childRays.size(); j++)
-		//{
-			//std::cout << "childRays.size() = " << childRays.size() << std::endl;
-			//delete childRays[j];
-			//childRays.erase (childRays.begin());
-		//}
-		//delete currentNode;
-	//}
-
 	while(!childRays.empty())
 	{
-		//std::cout << "childRays.size() = " << childRays.size() << std::endl;
-		delete childRays[0];
-		childRays.erase(childRays.begin());
+	 	delete childRays[0];
+	 	childRays.erase(childRays.begin());
 	}
 
 	/* // Annan variant

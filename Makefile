@@ -73,7 +73,7 @@ room2:
 	@echo ""
 	@echo ""
 	@echo ""
-	@echo "================== running ================== "
+	@echo "================== running =================="
 	@echo ""
 	@echo ""
 	@echo ""

@@ -41,7 +41,6 @@ private:
 	glm::dvec3 position;
 	Ray* rays[raysPerPixel];
 	std::vector<Ray*> childRays;
-
 };
 
 #endif

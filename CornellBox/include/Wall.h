@@ -1,10 +1,13 @@
 #ifndef WALL_H
 #define WALL_H value
+#define GLM_FORCE_RADIANS
 
 #include "glm/glm.hpp"
 #include "Rectangle.h"
 #include "Object.h"
 #include "Ray.h"
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 
 class Wall : public Object

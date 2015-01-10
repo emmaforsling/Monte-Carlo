@@ -63,37 +63,38 @@ void Cube::initializeRectangles()
 	   |    |
 	   0 -- 1
 	*/
-	sides[0] = new Rectangle();		//left
+	   
+	sides[0] = new Rectangle();		// left
 	sides[0]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	sides[0]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
 	sides[0]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
 	sides[0]->positionsOfCorners[3] = glm::dvec3(0.0, size, 0.0) + position;
 
-	sides[1] = new Rectangle();		//up
+	sides[1] = new Rectangle();		// up
 	sides[1]->positionsOfCorners[0] = glm::dvec3(size, size, 0.0) + position;
 	sides[1]->positionsOfCorners[1] = glm::dvec3(0.0, size, 0.0) + position;
 	sides[1]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
 	sides[1]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
-
-	sides[2] = new Rectangle();		//right
+	
+	sides[2] = new Rectangle();		// right
 	sides[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
 	sides[2]->positionsOfCorners[1] = glm::dvec3(size, 0.0, 0.0) + position;
 	sides[2]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
 	sides[2]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
-	
-	sides[3] = new Rectangle();		//down
+		
+	sides[3] = new Rectangle();		// down
 	sides[3]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
 	sides[3]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
 	sides[3]->positionsOfCorners[2] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	sides[3]->positionsOfCorners[3] = glm::dvec3(size, 0.0, 0.0) + position;
-
-	sides[4] = new Rectangle();		//back
+	
+	sides[4] = new Rectangle();		// back
 	sides[4]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
 	sides[4]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	sides[4]->positionsOfCorners[2] = glm::dvec3(0.0, size, 0.0) + position;
 	sides[4]->positionsOfCorners[3] = glm::dvec3(size, size, 0.0) + position;
 
-	sides[5] = new Rectangle();		//front
+	sides[5] = new Rectangle();		// front
 	sides[5]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
 	sides[5]->positionsOfCorners[1] = glm::dvec3(size, 0.0, size) + position;
 	sides[5]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
@@ -305,20 +306,6 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance/16.0, color, reflectedRayIsInside);
 		}
 	}
-
-
-	// //intersectedNormal = glm::dvec3(0.0, 1.0, 0.0);
-	// glm::dvec3 testIntersectionPoint = (1000.0 * intersectionPoint + (1000.0 * 0.001 * intersectedNormal))/1000.0;
-	// // // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
-	// // calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
-	// // // std::cout << "====== Reflection/refraction =====" << std::endl;
-	// glm::dvec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
-	// // // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
-
-	// // glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
-	// // // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
-
-	// _ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
 }
 
 /*

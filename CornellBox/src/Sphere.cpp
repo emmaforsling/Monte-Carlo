@@ -14,7 +14,7 @@
 	Emtpy constructor
 */
 Sphere::Sphere()
-: Object(glm::dvec3(0.0, 0.0, 0.0), glm::dvec3(0.0, 0.0 ,0.0), false, false)
+: Object(glm::dvec3(0.0,0.0,0.0), glm::dvec3(0.0,0.0,0.0), false, false)
 {
 	radius = 0.0;
 	refractiveIndex = 0.0;
@@ -38,8 +38,8 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 {
 	//glm::dvec3 direction2 = _ray->getDirection();
 	//std::cout << "\tSphere::calculateIntersection(), incoming direction of ray = (" << direction2.x << ", " << direction2.y << ", " << direction2.z << std::endl;
+	
 	/*
-
 	This function should calculate the intersectionpoints between a ray 
 	and the surface of the Sphere.
 
@@ -65,7 +65,6 @@ glm::dvec3 Sphere::calculateIntersection(Ray* _ray, bool _isShadowRay)
 			if(delta<0) no intersection
 			if(delta==0) one intersection
 			if(delta>0) two intersection
-
 	*/
 
 	// Initializing the variables
@@ -232,6 +231,7 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 
 	double cosTheta1;												// cos(t1)
 	double importance = _ray->getImportance();						// Importance for the incident ray
+
 
 	bool incidentRayIsInside = _ray->isInsideObject();
 	bool refractedRayIsInside = incidentRayIsInside ? false : true;	// If the incident ray is inside, then the refractive ray will be outside

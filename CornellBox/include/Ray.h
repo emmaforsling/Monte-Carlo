@@ -39,9 +39,6 @@ public:
 	bool isInsideObject();
 	bool russianRoulette(glm::dvec3 colorForTheReflectedRay, double survivalOds);
 	bool isRefractedRay(){return isRefracted;};
-	// Reflect and refract
-	glm::dvec3 reflectRay(glm::dvec3 _direction, glm::dvec3 _intersectedNormal);
-	glm::dvec3 refractRay();
 
 	int getIteration(){return iteration;};
 	void setIteration(int _iteration){iteration = _iteration;};

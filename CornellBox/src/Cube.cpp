@@ -74,7 +74,6 @@ void Cube::initializeRectangles()
 	sides[1]->positionsOfCorners[1] = glm::dvec3(0.0, size, 0.0) + position;
 	sides[1]->positionsOfCorners[2] = glm::dvec3(0.0, size, size) + position;
 	sides[1]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
-	
 
 	sides[2] = new Rectangle();		//right
 	sides[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
@@ -82,20 +81,17 @@ void Cube::initializeRectangles()
 	sides[2]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
 	sides[2]->positionsOfCorners[3] = glm::dvec3(size, size, size) + position;
 	
-	
 	sides[3] = new Rectangle();		//down
 	sides[3]->positionsOfCorners[0] = glm::dvec3(size, 0.0, size) + position;
 	sides[3]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, size) + position;
 	sides[3]->positionsOfCorners[2] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	sides[3]->positionsOfCorners[3] = glm::dvec3(size, 0.0, 0.0) + position;
-	
 
 	sides[4] = new Rectangle();		//back
 	sides[4]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
 	sides[4]->positionsOfCorners[1] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	sides[4]->positionsOfCorners[2] = glm::dvec3(0.0, size, 0.0) + position;
 	sides[4]->positionsOfCorners[3] = glm::dvec3(size, size, 0.0) + position;
-	
 
 	sides[5] = new Rectangle();		//front
 	sides[5]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
@@ -103,18 +99,6 @@ void Cube::initializeRectangles()
 	sides[5]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
 	sides[5]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
 	
-	
-	/*
-	// // std::cout << "Nu har jag initialiserat alla sidor på kuben! Titta så fina:" << std::endl;
-	for(int i=0; i<6; i++)
-	{
-		// // std::cout << "side " << i << std::endl;
-		for(int j=0; j<4; j++)
-		{
-			// // std::cout << sides[i]->positionsOfCorners[j].x << " " << sides[i]->positionsOfCorners[j].y << " " << sides[i]->positionsOfCorners[j].z << std::endl;
-		}
-	}
-	*/
 }
 
 /*
@@ -124,7 +108,6 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 {
 	glm::dvec3 intersection;
 	glm::dvec3 finalIntersection = glm::dvec3(0.0,0.0,0.0);
-	//finalIntersection = _ray->getStartingPoint();
 
 	// Loopa igenom de 6 rektanglarna
 	// Kolla ifall de intersectar med kuben
@@ -132,7 +115,6 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 	for(int i = 0; i < 6; i++)
 	{
 		intersection = sides[i]->calculateIntersection(_ray);
-
 		if(intersection != glm::dvec3(0.0, 0.0, 0.0))
 		{
 			if(intersection != _ray->getStartingPoint())
@@ -212,6 +194,7 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 		*/
 	}
 
+
 	// if(side != 666)
 	// {
 	// 	// std::cout << "The side for the final intersection point is " << side << std::endl;
@@ -257,18 +240,85 @@ glm::dvec3 Cube::calculateIntersection(Ray* _ray, bool _isShadowRay)
 
 void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEMPORARY
 {
-	//intersectedNormal = glm::dvec3(0.0, 1.0, 0.0);
-	glm::dvec3 testIntersectionPoint = (1000.0 * intersectionPoint + (1000.0 * 0.001 * intersectedNormal))/1000.0;
-	// // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
-	// calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
-	// // std::cout << "====== Reflection/refraction =====" << std::endl;
-	glm::dvec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
-	// // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
 
-	// glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
-	// // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
+	/*
+		This function calculates the reflection (and refraction for transparent objects)
+	   I   N   R
+		\t1|t'/				where 
+	n1	 \-|-/						t1 		- angle between incident ray, I, and the normal N.
+		-----						t' 		- angle between the normal, N, and the reflected ray R 
+	n2	   |-\							 	  (and for perfect reflection t' = t1)
+		   |t2\						t2 		- angle between the normal, N, and the refracted ray T
+		       T 					n1,n2  	- refractive indicies
 
-	_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
+		To calculate the reflection, following equations have been used (in vector form):
+			cos(t1) = dot(N, -I)		(where cos(t1) > 0 (if < 0 set it to -cos(t1) ) ) 
+			Vreflect = I + 2.0 * cos(t1) * n
+
+		To calculate the refraction, following equations have been used (in vector form):
+			n = n1/n2 
+			cos(t2) = 1.0 - n * n * (1.0 - cos(t1) * cos(t1) );
+	*/
+	
+
+	glm::dvec3 testIntersectionPoint;								// A temporary intersection point is used, in which the point is either
+																	// moved inwards or outwards in the normal direction, in order to avoid 
+																	// that the new ray is created on the wrong side of the sphere
+	
+	glm::dvec3 reflectedRayDirection;								// R		
+	glm::dvec3 refractedRayDirection;								// T
+	
+	glm::dvec3 incidentRay = _ray->getDirection();					// I
+
+	double cosTheta1;												// cos(t1)
+	double importance = _ray->getImportance();						// Importance for the incident ray
+	
+
+	bool incidentRayIsInside = _ray->isInsideObject();
+	bool refractedRayIsInside = incidentRayIsInside ? false : true;	// If the incident ray is inside, then the refractive ray will be outside
+	bool reflectedRayIsInside = incidentRayIsInside;				// If the incident ray is inside, then the reflective ray will be so as well
+
+	if(intersectedNormal == glm::dvec3(0.0,-1.0,0.0))
+		// std::cout << "intersectedNormal : " << intersectedNormal.x << ", " << intersectedNormal.y << ", " << intersectedNormal.z << std::endl;
+	// Reflection
+	intersectedNormal = incidentRayIsInside ? -intersectedNormal : intersectedNormal; 	// if inside object, flip the normal
+	testIntersectionPoint = (1000.0*intersectionPoint + (1000.0* 0.001 * intersectedNormal) )/1000.0;
+	
+	cosTheta1 = glm::dot(intersectedNormal, incidentRay);
+	cosTheta1 = cosTheta1 < 0 ? -cosTheta1 : cosTheta1;							// If cos(t1) < 0, set it to -cos(t1)
+
+	reflectedRayDirection = incidentRay + 2.0 * cosTheta1 * intersectedNormal;	// Calculate the direction for the reflected ray
+	_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance, color, reflectedRayIsInside);
+
+	// Refraction
+	if(transparent)
+	{
+		double n1 = incidentRayIsInside ? refractiveIndex : 1.0;				// Refractive index n1
+		double n2 = incidentRayIsInside ? 1.0 : refractiveIndex;				// Refractive index n2
+		double n = n1/n2;		
+		double cosTheta2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1);
+
+		if(cosTheta2 >= 0.0)
+		{
+			refractedRayDirection = n * incidentRay + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min
+			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, 15.0 * importance/16.0, color, refractedRayIsInside);	
+			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance/16.0, color, reflectedRayIsInside);
+		}
+	}
+
+
+	// //intersectedNormal = glm::dvec3(0.0, 1.0, 0.0);
+	// glm::dvec3 testIntersectionPoint = (1000.0 * intersectionPoint + (1000.0 * 0.001 * intersectedNormal))/1000.0;
+	// // // std::cout << "\nCalculating child ray for intersection point " << intersectionPoint.x << ", " << intersectionPoint.y << ", " << intersectionPoint.z << std::endl << std::endl;
+	// // calculate direction for reflected or transmitted ray - WHITTED - (TEMPORARY)
+	// // // std::cout << "====== Reflection/refraction =====" << std::endl;
+	// glm::dvec3 reflectedRayDirection = glm::reflect(_ray->getDirection(), intersectedNormal);
+	// // // std::cout << "reflection = (" << reflectedRayDirection.x << ", " << reflectedRayDirection.y << ", " << reflectedRayDirection.z << ")" << std::endl;
+
+	// // glm::dvec3 refractedRayDirection = glm::refract(_ray->getDirection(), intersectedNormal, refractiveIndex);
+	// // // std::cout << "refraction = (" << refractedRayDirection.x << ", " << refractedRayDirection.y << ", " << refractedRayDirection.z << ")" << std::endl;
+
+	// _ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, _ray->getImportance(), color, false);
 }
 
 /*

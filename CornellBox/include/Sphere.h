@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 #include "Ray.h"
 #include "Object.h"
+#include "math.h"
 
 class Sphere : public Object
 {

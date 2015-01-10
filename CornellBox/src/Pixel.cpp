@@ -148,7 +148,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 			{
 				// Shadow ray
 				glm::dvec3 randomPositionOnLightSource = _light->getRandomPosition();
-				intersectionPointVisibleFromLightSource = castShadowRay(randomPositionOnLightSource, finalIntersection, _objects, numberOfObjects);
+				intersectionPointVisibleFromLightSource = castShadowRay(randomPositionOnLightSource, finalIntersection + 0.001 * _objects[closestIntersectedObjectIndex]->getIntersectedNormal(), _objects, numberOfObjects);
 
 				// calling mr dj, calling mr wrong, to find out diffuse/transp/intransp. object
 				glm::dvec3 localLightingContribution = currentChildRay->calculateLocalLightingContribution(_objects[closestIntersectedObjectIndex], (randomPositionOnLightSource - finalIntersection), _light->getRadiance(), iteration);
@@ -156,7 +156,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 				// accumulating color for current pixel	
 				if(_light->isOnLightSource(finalIntersection))
 				{
-					colorOfPixel = glm::dvec3(1.0,1.0,1.0); 
+					colorOfPixel += glm::dvec3(1.0,1.0,1.0) * currentChildRay->getImportance();
 				}
 				else
 				{
@@ -260,7 +260,7 @@ glm::dvec3 Pixel::getColorOfPixel()
 
 bool Pixel::castShadowRay(glm::dvec3 _randomPositionOnLightSource, glm::dvec3 _intersection, Object** _objects, int _numberOfObjects)
 {
-	bool intersectionPointVisibleFromLightSource = true;										// 1 = visible, 0 = not visible	
+	bool intersectionPointVisibleFromLightSource = true;										// 1 = visible, 0 = not visible
 
 	// calculating shadow ray - defined as a ray from the light source to a surface, to be able to use Object::calculateIntersection();
 	Ray* shadowRay = new Ray(_randomPositionOnLightSource, (_intersection - _randomPositionOnLightSource), 1.0, glm::dvec3(0.0, 0.0, 0.0), false);

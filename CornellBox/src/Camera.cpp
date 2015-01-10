@@ -122,11 +122,13 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		*/
 		if(i % 100 == 0)
 		{
-			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << std::endl;
+			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << "\xd";
 		}
 		
 	}
 	std::cout << "Progress: 100%" << std::endl;
+
+	std::cout << std::endl << "========================\nPixel values calculated.\n========================" << std::endl;
 	// // std::cout << "color of pixels:" << std::endl;
 	// for(int i = 0; i < numberOfPixels; i++)
 	// {
@@ -137,6 +139,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 				 
 void Camera::saveImage()
 {
+	std::cout << "\nSaving image...";
 	/* This code, for saving the image into ppm-format, is taken from http://www.kevinbeason.com/smallpt/ */ 
 	glm::dvec3 colorOfPixel = glm::dvec3(0.0, 0.0, 0.0);
 	FILE* _file = fopen("image.ppm","w");
@@ -151,6 +154,7 @@ void Camera::saveImage()
 		// // std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
  		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
 	}
+	std::cout << " Done." << std::endl;
 }
 
 

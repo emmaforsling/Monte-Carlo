@@ -79,15 +79,10 @@ glm::dvec3 Ray::calculateColor()
 
 
 glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, glm::dvec3 _directionToLight, double _radiance, int _iteration)
-{	
+{
 	glm::dvec3 normal_surface = glm::normalize(_object->getIntersectedNormal());
 	glm::dvec3 color_surface = _object->getColor();
 	
-	//std::cout << "color at surface: = " << color_surface.x << ", " << color_surface.y << ", " << color_surface.z << ")" << std::endl;
-	//std::cout << "normal at surface: = " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;
-	
-	//std::cout << "shadowRay direction = " << rayToLightSource.x << ", " << rayToLightSource.y << ", " << rayToLightSource.z << std::endl;
-	//std::cout << "magnitude = " << glm::length(rayToLightSource) << std::endl;
 	glm::dvec3 color_ray = glm::dvec3(1.0,1.0,1.0); 		//temporary
 
 	// Using Lambertian surfaces: Id * kd * (L ° N)
@@ -97,32 +92,16 @@ glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, glm::dvec3 _
 
 	if(cosineOfAngle <= 0)
 	{
-		// lightingContribution = color_ray * color_surface * _radiance;
-		// return lightingContribution;
-		return /*lightingContribution*/ glm::dvec3(0.0, 0.0, 0.0);
-	}	
+		return glm::dvec3(0.0, 0.0, 0.0);
+	}
+
 	if(cosineOfAngle > 0 && cosineOfAngle <= 1)
 	{
 		lightingContribution = color_ray * color_surface * cosineOfAngle * _radiance;
-		if(_iteration == 2)
-		{
-			// std::cout << "är det här vi får noll?" << std::endl;	
-			// std::cout << "lightingContribution = (" << lightingContribution.x << ", " << lightingContribution.y << ", " << lightingContribution.z << std::endl;
-			// std::cout << "radiance = " << _radiance << std::endl;
-			// std::cout << "color_surface = (" << color_surface.x << ", " << color_surface.y << ", " << color_surface.z << ")" << std::endl;
-			// std::cout << "normal at surface: = " << normal_surface.x << ", " << normal_surface.y << ", " << normal_surface.z << ")" << std::endl;		
-		}
-		
 		return lightingContribution;
 	}
+
 	return glm::dvec3(0.0,1.0,1.0);
-
-	/* 
-		Computes Le(x,theta) for the point where a ray
-		intersects a surface
-	*/
-
-	//TODO: Write Code
 }
 
 /*
@@ -153,7 +132,6 @@ glm::dvec3 Ray::getStartingPoint()
 */
 void Ray::setIsInsideObject(bool _insideObject)
 {
-	//std::cout << "setting isInsideObject to " << _insideObject << std::endl;
 	insideObject = _insideObject;
 }
 

@@ -73,6 +73,8 @@ void Wall::initializeRectangles()
 	glm::dvec3 BLUE = glm::dvec3(0.1,0.1,0.8);
 	glm::dvec3 GRAY = glm::dvec3(0.5, 0.5, 0.5);
 	glm::dvec3 LIGHT_GRAY = glm::dvec3(0.8, 0.8, 0.8);
+	glm::dvec3 DARK_GRAY = glm::dvec3(0.1, 0.1, 0.1);
+	glm::dvec3 BLACK = glm::dvec3(0.0, 0.0, 0.0);
 
 	walls[0] = new Rectangle();		//left
 	walls[0]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, size) + position;
@@ -107,7 +109,7 @@ void Wall::initializeRectangles()
 	walls[4]->positionsOfCorners[1] = glm::dvec3(size, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
 	walls[4]->positionsOfCorners[3] = glm::dvec3(0.0, size, 0.0) + position;
-	walls[4]->setColor(WHITE);
+	walls[4]->setColor(LIGHT_GRAY);
 	
 	// // std::cout << "Nu har jag initialiserat alla sidor på rummet! Titta så fina:" << std::endl;
 	// for(int i=0; i<5; i++)

@@ -158,28 +158,31 @@ void Camera::saveImage()
 }
 
 
-void Camera::mappingFunction()
-{
-	/* Converts radiometric values into photometric ones. */
-	//TODO: Write code
-}
-
 /*
 	Private functions
-	
-	"The output of the radiance function is a set of unbounded
-	colors.  This has to be converted to be between 0 and 255 for 
-	display purposes.  The following functions do this.  The toInt 
-	function applies a gamma correction of 2.2."
 */
-double Camera::clamp(double _x)
-{
-	return _x<0 ? 0 : _x>1 ? 1 : _x;
-}
 
 int Camera::toInt(double _x)
 {
-	return int(pow(clamp(_x),1/2.2)*255+.5);
+
+	/* Gamma correction 
+		Vc = Vs^1/g
+			where
+		Vc = is the correct signal
+		Vs = is the source signal		(which should have a value between 0 and 1)
+		g = gamma value 2.2
+	*/ 
+	double Vs = _x<0 ? 0 : _x>1 ? 1 : _x;		// clamp the value _x
+												// if the value is smaller than 0, set it to 0,
+												// if the value is larger than 1, set it to 1,
+												// if not, set it to to value _x
+
+	double Vc = pow(Vs, 1/2.2);					// perform gamma correction
+
+	return int(Vc * 255 + 0.5);					//return the value between a value between 0 and 255, (adding + 0.5 to round it up, when turning it to an int) 
+
 }
+
+
 
 

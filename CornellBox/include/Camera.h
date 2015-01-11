@@ -27,9 +27,7 @@ public:
 	// Image functions
 	void renderImage(Object** _objects, Light* _light);		// - Loops over all pixels and computes
 															//   their values.
-	void saveImage();										
-	void mappingFunction();									// - Converts radiometric values into
-															//   photometric ones.
+	void saveImage();																		
 private:
 	glm::dvec3 direction;
 	glm::dvec3 position;
@@ -45,8 +43,8 @@ private:
 	Pixel* pixels[resolutionX * resolutionY];
 
 	// private functions, used when to save the image
-	double clamp(double _x);
-	int toInt(double _x);
+	int toInt(double _x);		// - Converts radiometric values into
+								//   photometric ones.
 };
 
 #endif

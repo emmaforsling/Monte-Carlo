@@ -88,7 +88,7 @@ void Wall::initializeRectangles()
 	walls[1]->positionsOfCorners[1] = glm::dvec3(size, size, 0.0) + position;
 	walls[1]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
 	walls[1]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
-	walls[1]->setColor(LIGHT_GRAY);
+	walls[1]->setColor(DARK_GRAY);
 
 	walls[2] = new Rectangle();		//right
 	walls[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
@@ -102,15 +102,15 @@ void Wall::initializeRectangles()
 	walls[3]->positionsOfCorners[1] = glm::dvec3(size, 0.0, size) + position;
 	walls[3]->positionsOfCorners[2] = glm::dvec3(size, 0.0, 0.0) + position;
 	walls[3]->positionsOfCorners[3] = glm::dvec3(0.0, 0.0, 0.0) + position;
-	walls[3]->setColor(LIGHT_GRAY);
+	walls[3]->setColor(DARK_GRAY);
 
 	walls[4] = new Rectangle();		//back
 	walls[4]->positionsOfCorners[0] = glm::dvec3(0.0, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[1] = glm::dvec3(size, 0.0, 0.0) + position;
 	walls[4]->positionsOfCorners[2] = glm::dvec3(size, size, 0.0) + position;
 	walls[4]->positionsOfCorners[3] = glm::dvec3(0.0, size, 0.0) + position;
-	walls[4]->setColor(LIGHT_GRAY);
-	
+	walls[4]->setColor(DARK_GRAY);
+
 }
 
 /*
@@ -281,8 +281,8 @@ glm::dvec3 Wall::calculateIntersection(Ray* _ray, bool _isShadowRay)
 				}			
 			}	
 		}
-
 	}
+
 	if(wall != 666 && !_isShadowRay)
 	{
 		intersectedNormal = walls[wall]->getNormal();

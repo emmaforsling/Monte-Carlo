@@ -299,11 +299,13 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 		double n = n1/n2;		
 		double cosTheta2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1);
 
+		double reflectansRatio = (pow(n1-n2,2.0))/(pow(n1+n2,2.0));
+		double refractionsRatio = 1.0 - reflectansRatio;
 		if(cosTheta2 >= 0.0)
 		{
 			refractedRayDirection = n * incidentRay + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min
-			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, 15.0 * importance/16.0, color, refractedRayIsInside);	
-			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance/16.0, color, reflectedRayIsInside);
+			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, importance * refractionsRatio, color, refractedRayIsInside);	
+			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * reflectansRatio, color, reflectedRayIsInside);
 		}
 	}
 }

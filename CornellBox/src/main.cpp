@@ -39,11 +39,6 @@ int main(int argc, char *argv[])
 	double sizeForCubeSpecular2 = 3.0;
 	bool transparencyForCubeSpecular2 = false;
 	double refractiveIndexForCubeSpecular2 = 1.5;						// glass
-
-	// glm::dvec3 positionCube2 = glm::dvec3(4.9, 0.5, 1.0);
-	// double sizeForCubeSpecular2 = 3.0;
-	// bool transparencyForCubeSpecular2 = false;
-	// double refractiveIndexForCubeSpecular2 = 1.5;						// glass
 	
 		//Sphere
 	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 1.0, 3.75);

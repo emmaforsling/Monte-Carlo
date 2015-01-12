@@ -37,8 +37,8 @@ private:
 	const int viewPlaneSizeX = 1;
 	const int viewPlaneSizeY = 1;
 	
-	static const int resolutionX = 1000;
-	static const int resolutionY = 1000;
+	static const int resolutionX = 500;
+	static const int resolutionY = 500;
 	
 	Pixel* pixels[resolutionX * resolutionY];
 

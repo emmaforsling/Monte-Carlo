@@ -29,39 +29,39 @@ int main(int argc, char *argv[])
 	glm::dvec3 positionLight = glm::dvec3(1.0, 3.0, 5.0);
 	
 		// Cube
-	glm::dvec3 positionCube = glm::dvec3(-2.9, 0.5, 1.0);
-	double sizeForCubeSpecular = 3.0;
-	bool transparencyForCubeSpecular = false;
-	double refractiveIndexForCubeSpecular = 1.5;						// glass
+	// glm::dvec3 positionCube = glm::dvec3(-2.9, 0.5, 1.0);
+	// double sizeForCubeSpecular = 3.0;
+	// bool transparencyForCubeSpecular = false;
+	// double refractiveIndexForCubeSpecular = 1.5;						// glass
 		
 		// Cube 2
-	// glm::dvec3 positionCube2 = glm::dvec3(1.0, 0.5, -2.9);		//background mirror
-	// double sizeForCubeSpecular2 = 3.0;
-	// bool transparencyForCubeSpecular2 = false;
-	// double refractiveIndexForCubeSpecular2 = 1.5;						// glass
-
-	glm::dvec3 positionCube2 = glm::dvec3(7.9, 0.5, 1.0);
+	glm::dvec3 positionCube2 = glm::dvec3(1.0, 0.5, -2.9);		//background mirror
 	double sizeForCubeSpecular2 = 3.0;
 	bool transparencyForCubeSpecular2 = false;
 	double refractiveIndexForCubeSpecular2 = 1.5;						// glass
+
+	// glm::dvec3 positionCube2 = glm::dvec3(4.9, 0.5, 1.0);
+	// double sizeForCubeSpecular2 = 3.0;
+	// bool transparencyForCubeSpecular2 = false;
+	// double refractiveIndexForCubeSpecular2 = 1.5;						// glass
 	
-		// Sphere
+		//Sphere
 	glm::dvec3 positionSphereSpecular = glm::dvec3(3.5, 1.0, 3.75);
 	double radiusForSphereSpecular = 1.0;
 	bool transparencyForSphereSpecular = true;
 	double refractiveIndexForSphereSpecular = 1.5;						// glass
 
-	// glm::dvec3 positionSphereTransparent = glm::dvec3(0.0, 0.0, 0.0);
-	// double radiusForSphereTransparent = 1.0;
-	// bool transparencyForSphereTransparent = true;
-	// double refractiveIndexForSphereTransparent = 1.5;				// glass
+	glm::dvec3 positionSphereTransparent = glm::dvec3(0.0, 0.0, 0.0);
+	double radiusForSphereTransparent = 1.0;
+	bool transparencyForSphereTransparent = true;
+	double refractiveIndexForSphereTransparent = 1.5;				// glass
 	
 	/*
 		=== Creating Scene ===
 	*/
 	Wall* room = new Wall(positionRoom, size, glm::dvec3(1.0, 0.0, 0.5), true, false);
 	Light* lightsource = new Light(positionLight, size, radiance);
-	Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::dvec3(0.0, 0.0, 0.0), false);
+	//Cube* cubeSpecular = new Cube(positionCube, sizeForCubeSpecular, transparencyForCubeSpecular, refractiveIndexForCubeSpecular, glm::dvec3(0.0, 0.0, 0.0), false);
 	Cube* cubeSpecular2 = new Cube(positionCube2, sizeForCubeSpecular2, transparencyForCubeSpecular2, refractiveIndexForCubeSpecular2, glm::dvec3(0.0, 0.0, 0.0), false);
 	Sphere* sphereSpecular = new Sphere(positionSphereSpecular, radiusForSphereSpecular, transparencyForSphereSpecular, refractiveIndexForSphereSpecular, glm::dvec3(0.0, 0.0, 0.0), false );
 
@@ -78,8 +78,8 @@ int main(int argc, char *argv[])
 	objects[0] = room;
 	objects[3] = sphereSpecular;
 	objects[2] = sphereSpecular2;
-	objects[1] = cubeSpecular;
-	objects[4] = cubeSpecular2;
+	//objects[1] = cubeSpecular;
+	objects[1] = cubeSpecular2;
 	
 	// TESTING TESTING
 	/*

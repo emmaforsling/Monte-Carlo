@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	bool transparencyForSphereTransparent = false;
 	double refractiveIndexForSphereTransparent = 1.1;				// glass
 	
-	double refractiveIndexForGlass = 1.3;
+	double refractiveIndexForGlass = 1.5;
 	/*
 		=== Creating Scene ===
 	*/

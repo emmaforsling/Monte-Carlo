@@ -235,19 +235,19 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 */
 void Pixel::clearMemory()
 {
-	while(!childRays.empty())
-	{
-	 	delete childRays[0];
-	 	childRays.erase(childRays.begin());
-	}
+	//while(!childRays.empty())
+//	{
+//	 	delete childRays[0];
+//	 	childRays.erase(childRays.begin());
+//	}
 
-	/* // Annan variant
+	// Annan variant
 	for(int i = 0; i < childRays.size(); i++)
 	{
 		delete childRays[i];
 	}	
 	childRays.clear();
-	*/
+	
 }
 
 /*

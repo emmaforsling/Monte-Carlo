@@ -73,7 +73,7 @@ void Wall::initializeRectangles()
 	glm::dvec3 BLUE = glm::dvec3(0.1,0.1,0.8);
 	glm::dvec3 GRAY = glm::dvec3(0.5, 0.5, 0.5);
 	glm::dvec3 LIGHT_GRAY = glm::dvec3(0.8, 0.8, 0.8);
-	glm::dvec3 DARK_GRAY = glm::dvec3(0.1, 0.1, 0.1);
+	glm::dvec3 DARK_GRAY = glm::dvec3(0.2, 0.2, 0.2);
 	glm::dvec3 BLACK = glm::dvec3(0.0, 0.0, 0.0);
 
 	walls[0] = new Rectangle();		//left
@@ -88,7 +88,7 @@ void Wall::initializeRectangles()
 	walls[1]->positionsOfCorners[1] = glm::dvec3(size, size, 0.0) + position;
 	walls[1]->positionsOfCorners[2] = glm::dvec3(size, size, size) + position;
 	walls[1]->positionsOfCorners[3] = glm::dvec3(0.0, size, size) + position;
-	walls[1]->setColor(WHITE);
+	walls[1]->setColor(LIGHT_GRAY);
 
 	walls[2] = new Rectangle();		//right
 	walls[2]->positionsOfCorners[0] = glm::dvec3(size, 0.0, 0.0) + position;
@@ -129,54 +129,63 @@ void Wall::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	// _ray->childNodes = new Ray(intersectionPoint, reflectedRayDirection, _ray->getImportance()/2.0, getColor(), false);
 
 	// ===== here comes them Monte Carlos, yeah =====
-	if(_ray->getImportance() >= (1.0 / Pixel::raysPerPixel) / 16.0 )
+	if(_ray->getImportance() >= (1.0 / Pixel::raysPerPixel) / 8.0 )
 	{
 		glm::dvec3 reflectedRayDirection;
 		double PI = 3.14159265358979323846;
 		double randomAngle1 =  PI * (static_cast <double>(rand()) / static_cast<double>(RAND_MAX) - 0.5);
 		double randomAngle2 =  PI * (static_cast <double>(rand()) / static_cast<double>(RAND_MAX) - 0.5);
 
-		//std::cout << "random angles: " << randomAngle1 << ", " << randomAngle2 << std::endl;
+		double absorptionChance = 0.5;
+		double randomNumber = static_cast <double>(rand()) / static_cast<double>(RAND_MAX);
+		if(randomNumber < 1 - absorptionChance)
+		{
+			// absorbtion, do nothing...
+		}
+		else
+		{
+			// left
+			if(intersectedNormal == glm::dvec3(1.0, 0.0, 0.0))
+			{
+				reflectedRayDirection = glm::rotateY(intersectedNormal, randomAngle1);
+				reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+			}
+			
+			// top
+			else if(intersectedNormal == glm::dvec3(0.0, -1.0, 0.0))
+			{
+				reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
+				reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+			}
+			
+			// right
+			else if(intersectedNormal == glm::dvec3(-1.0, 0.0, 0.0))
+			{
+				reflectedRayDirection = glm::rotateY(intersectedNormal, randomAngle1);
+				reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+			}
+			
+			// bottom
+			else if(intersectedNormal == glm::dvec3(0.0, 1.0, 0.0))
+			{
+				reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
+				reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+			}
+			
+			// back
+			else if(intersectedNormal == glm::dvec3(0.0, 0.0, 1.0))
+			{
+				reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
+				reflectedRayDirection = glm::rotateY(reflectedRayDirection, randomAngle2);
+			}
 
-		// left
-		if(intersectedNormal == glm::dvec3(1.0, 0.0, 0.0))
-		{
-			reflectedRayDirection = glm::rotateY(intersectedNormal, randomAngle1);
-			reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
-		}
-		
-		// top
-		else if(intersectedNormal == glm::dvec3(0.0, -1.0, 0.0))
-		{
-			reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
-			reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
-		}
-		
-		// right
-		else if(intersectedNormal == glm::dvec3(-1.0, 0.0, 0.0))
-		{
-			reflectedRayDirection = glm::rotateY(intersectedNormal, randomAngle1);
-			reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
-		}
-		
-		// bottom
-		else if(intersectedNormal == glm::dvec3(0.0, 1.0, 0.0))
-		{
-			reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
-			reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
-		}
-		
-		// back
-		else if(intersectedNormal == glm::dvec3(0.0, 0.0, 1.0))
-		{
-			reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
-			reflectedRayDirection = glm::rotateY(reflectedRayDirection, randomAngle2);
-		}
 
-		_ray->reflectedRay = new Ray(intersectionPoint + 0.001 * intersectedNormal, reflectedRayDirection, _ray->getImportance()/8.0, getColor(), false);
+			double importanceWeight = glm::dot(reflectedRayDirection, intersectedNormal) / PI;
+
+			_ray->reflectedRay = new Ray(intersectionPoint + 0.001 * intersectedNormal, reflectedRayDirection, _ray->getImportance() * importanceWeight, getColor(), false);
+		}
 	}	
 	// ==== here is it slut =====
-
 }
 
 /* either one intersection or none (ray leaving) */

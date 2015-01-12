@@ -4,7 +4,7 @@ Executable=CornellBox
 CFlags=-c -std=c++11 -g -Iinc -ffloat-store #-fopenmp
 #If mac remove the LDFlags, since in this makefile the LDFlags are
 #written to make the program runnable on Windows…
-#LDFlags=-Wl,--large-address-aware #-fopenmp
+LDFlags=-Wl,--large-address-aware #-fopenmp
 #--large-address-aware to allow 32-bit windows more than 2 Gb memory
 LDFlags= #-fopenmp
 ObjectDir=CornellBox/obj/

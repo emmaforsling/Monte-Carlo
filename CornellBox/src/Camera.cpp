@@ -122,7 +122,8 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		*/
 		if(i % 100 == 0)
 		{
-			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << "\xd";
+			std::cout.precision(4);
+			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << "     \xd";
 		}
 		
 	}
@@ -144,6 +145,15 @@ void Camera::saveImage()
 	glm::dvec3 colorOfPixel = glm::dvec3(0.0, 0.0, 0.0);
 	FILE* _file = fopen("image.ppm","w");
 	fprintf(_file, "P3\n%d %d\n%d\n", resolutionX, resolutionY, 255);
+
+	double maxValue = 0;
+	for(int i = 0; i < resolutionX * resolutionY; i++)
+	{
+		maxValue = (pixels[i]->getColorOfPixel().x > maxValue) ? pixels[i]->getColorOfPixel().x : maxValue;
+		maxValue = (pixels[i]->getColorOfPixel().y > maxValue) ? pixels[i]->getColorOfPixel().y : maxValue;
+		maxValue = (pixels[i]->getColorOfPixel().z > maxValue) ? pixels[i]->getColorOfPixel().z : maxValue;
+	}
+
 	for(int i = 0; i < resolutionX * resolutionY; i++)
 	{
 		colorOfPixel = pixels[i]->getColorOfPixel();
@@ -152,7 +162,7 @@ void Camera::saveImage()
 		//	std::cout << "colorOfPixel = (0, 0, 0)..." << std::endl;
 		//}
 		// // std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
- 		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x), toInt(colorOfPixel.y), toInt(colorOfPixel.z));
+ 		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x/maxValue), toInt(colorOfPixel.y/maxValue), toInt(colorOfPixel.z/maxValue));
 	}
 	std::cout << " Done." << std::endl;
 }

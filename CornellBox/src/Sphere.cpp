@@ -255,13 +255,13 @@ void Sphere::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// T
 		double n = n1/n2;		
 		double cosTheta2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1);
 
-		double reflectansRatio = (pow(n1-n2,2.0))/(pow(n1+n2,2.0));
-		double refractionsRatio = 1.0 - reflectansRatio;
+		double reflectanceRatio = (pow(n1-n2,2.0))/(pow(n1+n2,2.0));
+		double refractionRatio = 1.0 - reflectanceRatio;
 		if(cosTheta2 >= 0.0)
 		{
 			refractedRayDirection = n * incidentRay + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min
-			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, importance * refractionsRatio, color, refractedRayIsInside);	
-			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * reflectansRatio, color, reflectedRayIsInside);
+			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, importance * refractionRatio, color, refractedRayIsInside);	
+			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * reflectanceRatio, color, reflectedRayIsInside);
 		}
 	}
 }

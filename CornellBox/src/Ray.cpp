@@ -90,18 +90,18 @@ glm::dvec3 Ray::calculateLocalLightingContribution(Object* _object, glm::dvec3 _
 	glm::dvec3 lightingContribution = glm::dvec3(0.0, 0.0, 0.0);
 	//std::cout << "dot = " << cosineOfAngle << std::endl;
 
-	if(cosineOfAngle <= 0)
+	if(cosineOfAngle <= 0.0)
 	{
 		return glm::dvec3(0.0, 0.0, 0.0);
 	}
 
-	if(cosineOfAngle > 0 && cosineOfAngle <= 1)
+	if(cosineOfAngle > 0.0 && cosineOfAngle <= 1.0)
 	{
 		lightingContribution = color_ray * color_surface * cosineOfAngle * _radiance;
 		return lightingContribution;
 	}
 
-	return glm::dvec3(0.0,1.0,1.0);
+	return glm::dvec3(0.0,0.0,0.0);
 }
 
 /*

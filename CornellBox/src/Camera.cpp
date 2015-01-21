@@ -104,7 +104,7 @@ void Camera::renderImage(Object** _objects, Light* _light)
 	int numberOfPixels = resolutionX * resolutionY;
 	//srand(time(NULL));
 
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for(int i = 0; i < numberOfPixels; i++)					//Loop through all the pixels
 	{
 		// To determine the pixelPosition
@@ -120,11 +120,14 @@ void Camera::renderImage(Object** _objects, Light* _light)
 		/* 
 			Progress bar 
 		*/
+		
+		
 		if(i % 100 == 0)
 		{
 			std::cout.precision(4);
 			std::cout << "Progress: " << (i/(double)numberOfPixels) * 100 << "%" << "     \xd";
 		}
+		
 		
 	}
 	std::cout << "Progress: 100%" << std::endl;
@@ -162,7 +165,7 @@ void Camera::saveImage()
 		//	std::cout << "colorOfPixel = (0, 0, 0)..." << std::endl;
 		//}
 		// // std::cout << "COLOR_OF_PIXEL " << colorOfPixel.x << ", " <<colorOfPixel.y << ", "<< colorOfPixel.z << std::endl;
- 		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x/maxValue), toInt(colorOfPixel.y/maxValue), toInt(colorOfPixel.z/maxValue));
+ 		fprintf(_file,"%d %d %d\n", toInt(colorOfPixel.x/1.0), toInt(colorOfPixel.y/1.0), toInt(colorOfPixel.z/1.0));
 	}
 	std::cout << " Done." << std::endl;
 }

@@ -3,6 +3,7 @@
 #define GLM_FORCE_RADIANS
 
 #include "glm/glm.hpp"
+#include "../include/glm/gtx/rotate_vector.hpp"
 #include "Rectangle.h"
 #include "Object.h"
 #include "Ray.h"

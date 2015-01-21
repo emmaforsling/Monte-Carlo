@@ -60,7 +60,7 @@ void Pixel::shootRays(glm::dvec3 _cameraPosition, glm::dvec3 _pixelPosition, dou
 	bool intersectionPointVisibleFromLightSource;
 	//std::vector<Ray*> childRays;
 	//srand(time(NULL));
-	
+	#pragma omp for schedule(dynamic,1)
 	for(int i = 0; i < Pixel::raysPerPixel; i++)
 	{
 		// Calculating random point on the pixel

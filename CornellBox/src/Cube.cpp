@@ -1,6 +1,7 @@
 #include "../include/Cube.h"
 #include <iostream>
 
+
 /* 	
 	Class Cube  
 	
@@ -269,7 +270,7 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	glm::dvec3 reflectedRayDirection;								// R		
 	glm::dvec3 refractedRayDirection;								// T
 	
-	glm::dvec3 incidentRay = _ray->getDirection();					// I
+	glm::dvec3 incidentRayDirection = _ray->getDirection();					// I
 
 	double cosTheta1;												// cos(t1)
 	double importance = _ray->getImportance();						// Importance for the incident ray
@@ -285,11 +286,76 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 	intersectedNormal = incidentRayIsInside ? -intersectedNormal : intersectedNormal; 	// if inside object, flip the normal
 	testIntersectionPoint = (1000.0*intersectionPoint + (1000.0* 0.001 * intersectedNormal) )/1000.0;
 	
-	cosTheta1 = glm::dot(intersectedNormal, incidentRay);
+	cosTheta1 = glm::dot(intersectedNormal, incidentRayDirection);
 	cosTheta1 = cosTheta1 < 0 ? -cosTheta1 : cosTheta1;							// If cos(t1) < 0, set it to -cos(t1)
 
-	reflectedRayDirection = incidentRay + 2.0 * cosTheta1 * intersectedNormal;	// Calculate the direction for the reflected ray
-	_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance, color, reflectedRayIsInside);
+	reflectedRayDirection = incidentRayDirection + 2.0 * cosTheta1 * intersectedNormal;	// Calculate the direction for the reflected ray
+
+
+	/* Fultest */
+
+	double PI = 3.14159265358979323846;
+	double randomAngle1 =  0.025 * PI * (static_cast <double>(rand()) / static_cast<double>(RAND_MAX) - 0.5);
+	double randomAngle2 =  0.025 * PI * (static_cast <double>(rand()) / static_cast<double>(RAND_MAX) - 0.5);
+
+	double randomNumber = static_cast <double>(rand()) / static_cast<double>(RAND_MAX);
+
+	// left
+	if(intersectedNormal == glm::dvec3(1.0, 0.0, 0.0))
+	{
+		reflectedRayDirection = glm::rotateY(reflectedRayDirection, randomAngle1);
+		reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+	}
+	
+	// top
+	else if(intersectedNormal == glm::dvec3(0.0, -1.0, 0.0))
+	{
+		reflectedRayDirection = glm::rotateX(reflectedRayDirection, randomAngle1);
+		reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+	}
+	
+	// right
+	else if(intersectedNormal == glm::dvec3(-1.0, 0.0, 0.0))
+	{
+		reflectedRayDirection = glm::rotateY(reflectedRayDirection, randomAngle1);
+		reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+	}
+	
+	// bottom
+	else if(intersectedNormal == glm::dvec3(0.0, 1.0, 0.0))
+	{
+		reflectedRayDirection = glm::rotateX(intersectedNormal, randomAngle1);
+		reflectedRayDirection = glm::rotateZ(reflectedRayDirection, randomAngle2);
+	}
+	
+	// back
+	else if(intersectedNormal == glm::dvec3(0.0, 0.0, 1.0))
+	{
+		reflectedRayDirection = glm::rotateX(reflectedRayDirection, randomAngle1);
+		reflectedRayDirection = glm::rotateY(reflectedRayDirection, randomAngle2);
+	}
+
+	glm::dvec3 eyePosition = glm::dvec3(2.5, 2.5, 9.0);
+	glm::dvec3 directionToEye = glm::normalize(eyePosition - testIntersectionPoint);
+	double cosineOfAngle = glm::dot(directionToEye, reflectedRayDirection);
+	if(cosineOfAngle > 1.0)
+	{
+		cosineOfAngle = 1.0;
+	}
+	if(cosineOfAngle < 0.0)
+	{
+		cosineOfAngle = 0.0;
+	}
+	double importanceWeight = pow(cosineOfAngle, 20.0);
+	double test = std::max(2.0,50.0);
+	//std::cout << "testar max = " << test << std::endl;
+
+	_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * importanceWeight, color, reflectedRayIsInside);
+
+	/* slut */
+
+
+	//_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance, color, reflectedRayIsInside);
 
 	// Refraction
 	if(transparent)
@@ -299,13 +365,13 @@ void Cube::calculateChildRays(Ray* _ray, glm::dvec3 intersectionPoint)				// TEM
 		double n = n1/n2;		
 		double cosTheta2 = 1.0 - n * n * (1.0 - cosTheta1 * cosTheta1);
 
-		double reflectansRatio = (pow(n1-n2,2.0))/(pow(n1+n2,2.0));
-		double refractionsRatio = 1.0 - reflectansRatio;
+		double reflectanceRatio = (pow(n1-n2,2.0))/(pow(n1+n2,2.0));
+		double refractionRatio = 1.0 - reflectanceRatio;
 		if(cosTheta2 >= 0.0)
 		{
-			refractedRayDirection = n * incidentRay + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min
-			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, importance * refractionsRatio, color, refractedRayIsInside);	
-			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * reflectansRatio, color, reflectedRayIsInside);
+			refractedRayDirection = n * incidentRayDirection + (n * cosTheta1 - (double)sqrt(cosTheta2)) * intersectedNormal; // min
+			_ray->refractedRay = new Ray(testIntersectionPoint, refractedRayDirection, importance * refractionRatio, color, refractedRayIsInside);	
+			_ray->reflectedRay = new Ray(testIntersectionPoint, reflectedRayDirection, importance * reflectanceRatio, color, reflectedRayIsInside);
 		}
 	}
 }

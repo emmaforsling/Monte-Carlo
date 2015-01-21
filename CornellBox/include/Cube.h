@@ -1,10 +1,15 @@
 #ifndef CUBE_H
 #define CUBE_H value
+#define GLM_FORCE_RADIANS
 
 #include "glm/glm.hpp"
+#include "../include/glm/gtx/rotate_vector.hpp"
+#include <stdlib.h>
+#include <time.h>
 #include "Rectangle.h"
 #include "Object.h"
 #include "Ray.h"
+#include <algorithm>
 
 class Cube : public Object
 {
